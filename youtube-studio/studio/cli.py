@@ -20,6 +20,8 @@ from studio.assets import (
     save_manifest,
 )
 from studio.audio import NarrationItem, build_narration, narration_from_user_file
+from studio.authoring import check as author_check
+from studio.authoring import init_files, source_for
 from studio.budget import BudgetError, BudgetGuard, cost_report
 from studio.channels import ChannelProfile, get_channel, load_channels
 from studio.config import Settings, load_settings
@@ -83,6 +85,7 @@ assets_app = typer.Typer(no_args_is_help=True, help="Build and check visual asse
 cost_app = typer.Typer(no_args_is_help=True, help="Budget and cost ledger")
 channels_app = typer.Typer(no_args_is_help=True, help="Channel style profiles")
 voices_app = typer.Typer(no_args_is_help=True, help="ElevenLabs voice candidates (no generation)")
+author_app = typer.Typer(no_args_is_help=True, help="Hand-write an episode (no LLM needed)")
 diagrams_app = typer.Typer(no_args_is_help=True, help="Diagram library (code + YAML templates)")
 app.add_typer(episode_app, name="episode")
 app.add_typer(claim_app, name="claim")
@@ -91,6 +94,7 @@ app.add_typer(cost_app, name="cost")
 app.add_typer(channels_app, name="channels")
 app.add_typer(voices_app, name="voices")
 app.add_typer(diagrams_app, name="diagrams")
+app.add_typer(author_app, name="author")
 
 KNOWN_ERRORS = (IllegalTransition, BudgetError, ResearchError, ReviewBlocked, PublishBlocked,
                 KeyError, ValueError, FileNotFoundError, RuntimeError)
@@ -276,12 +280,12 @@ def research(episode: str) -> None:
     with session_scope(s.db_path) as session:
         ep, ws, _ = _load(session, s, episode)
         enter_step(session, ep, EpisodeState.RESEARCH, note="research pack generated")
-        provider = MockLLMProvider(s.samples_dir)
+        provider, sample, src_hash = source_for(ws, s.samples_dir, ep.sample, "research.yaml")
         BudgetGuard(session, s).preflight(provider=provider.name, operation="research",
                                           estimate_usd=0.0, paid=provider.paid)
 
         def work():
-            pack = provider.research(ep.id, ep.topic, ep.sample)
+            pack = provider.research(ep.id, ep.topic, sample)
             if ws.research_file.exists():  # keep human verification on re-run
                 old = load_pack(ws)
                 for c in pack.claims:
@@ -292,7 +296,7 @@ def research(episode: str) -> None:
             save_pack(ws, pack)
             return pack, ws.research_file
 
-        pack = run_job(session, ep.id, "research", provider.name, work)
+        pack = run_job(session, ep.id, "research", src_hash, work)
         BudgetGuard(session, s).record(provider=provider.name, operation="research",
                                        episode_id=ep.id)
         unverified = [c for c in pack.claims if c.status != VerificationStatus.VERIFIED]
@@ -451,14 +455,15 @@ def script(episode: str) -> None:
         ep, ws, ch = _load(session, s, episode)
         pack = load_pack(ws)
         enter_step(session, ep, EpisodeState.SCRIPT, note="script generated")
-        provider = MockLLMProvider(s.samples_dir)
+        provider, sample, src_hash = source_for(ws, s.samples_dir, ep.sample, "script.yaml")
 
         def work():
-            sc = provider.script(ep.id, ep.title, ch, pack, ep.target_minutes, ep.sample)
+            sc = provider.script(ep.id, ep.title, ch, pack, ep.target_minutes, sample)
             save_script(ws, sc, pack)
             return sc, ws.script_file
 
-        sc = run_job(session, ep.id, "script", sha256_file(ws.research_file), work)
+        sc = run_job(session, ep.id, "script", f"{sha256_file(ws.research_file)}:{src_hash}",
+                     work)
         BudgetGuard(session, s).record(provider=provider.name, operation="script",
                                        episode_id=ep.id)
         if sc.title != ep.title:
@@ -635,7 +640,8 @@ def voice(episode: str,
 
             wav = ws.audio / "user_narration_22k.wav"
             ff.to_wav_22k_mono(s.ffmpeg_binary(), file, wav)
-            track, record = narration_from_user_file(ws, ep.id, items, wav, speaker=speaker)
+            track, record = narration_from_user_file(ws, ep.id, items, wav, speaker=speaker,
+                                                     binary=s.ffmpeg_binary())
         else:
             vp = make_voice(provider, ch, s)
             est = vp.estimate_usd(" ".join(i.text for i in items))
@@ -713,8 +719,8 @@ def render(episode: str, preview: Annotated[bool, typer.Option("--preview")] = F
                                                       manifest, preview=preview,
                                                       scene_badges=badges), r.video))
         music = ws.audio / "music_bed.wav"
-        if music.exists():
-            manifest = load_manifest(ws, ep.id)
+        manifest = load_manifest(ws, ep.id)
+        if music.exists() and not manifest.get("music-track"):
             manifest.upsert(music_record(ws, music))
             save_manifest(ws, manifest)
         mode = "preview" if preview else "master"
@@ -748,9 +754,10 @@ def shorts(episode: str, count: int = 3,
         count = min(count, 3)
         pack = load_pack(ws)
         sc = load_script(ws)
-        specs = MockLLMProvider(s.samples_dir).shorts(ep.id, ep.title, pack, count, ep.sample)
+        provider, sample, _ = source_for(ws, s.samples_dir, ep.sample, "shorts.yaml")
+        specs = provider.shorts(ep.id, ep.title, pack, count, sample)
         if not specs:
-            warn("Mock provider has no Shorts for this topic; write shorts.json manually.")
+            warn("No Shorts for this topic: write authoring/shorts.yaml (`studio author init`).")
             return
         issues = shorts_issues(specs, sc, pack, ch)
         save_shorts(ws, specs)
@@ -814,6 +821,12 @@ def review(episode: str) -> None:
         pset = load_proposals(ws)
         if pset:
             write_report(ws, load_pack(ws), pset, _used_claims(ws))
+        from studio.publish import build_metadata
+
+        meta = build_metadata(ep, ws, ch, None)
+        atomic_write_text(ws.review / "description.txt", meta["description"] + "\n")
+        atomic_write_text(ws.review / "upload_metadata.json",
+                          json.dumps(meta, indent=2, ensure_ascii=False) + "\n")
         pkg = write_release_candidate(ws, report, ep.title)
         for c in report.checklists:
             color = typer.colors.GREEN if c.passed else typer.colors.RED
@@ -1168,6 +1181,62 @@ def diagrams_preview(ref: str, channel: str = "engineering_explained",
         frames_to_mp4(s.ffmpeg_binary(), frames, round(video * fps), (1280, 720), fps, mp4,
                       preset="veryfast", crf=24)
         ok(f"motion preview -> {mp4}")
+
+
+@author_app.command("init")
+@handled
+def author_init(episode: str, overwrite: bool = False) -> None:
+    """Create authoring/ skeletons (research, script, Shorts) from the channel structure."""
+    s = settings()
+    with session_scope(s.db_path) as session:
+        ep, ws, ch = _load(session, s, episode)
+        for path in init_files(ws, ch, ep.title, ep.topic, overwrite=overwrite):
+            ok(f"wrote {path}")
+        typer.echo("Edit the files, then `studio author check` until clean.")
+
+
+@author_app.command("check")
+@handled
+def author_check_cmd(episode: str) -> None:
+    """Validate the hand-written files without changing the episode state."""
+    s = settings()
+    with session_scope(s.db_path) as session:
+        ep, ws, ch = _load(session, s, episode)
+        problems = author_check(ws, ch, ep.target_minutes)
+        for p_ in problems:
+            typer.echo(f"  - {p_}")
+        if problems:
+            raise typer.Exit(2)
+        ok("Authoring files pass all checks.")
+
+
+@app.command()
+@handled
+def thumbnail(episode: str,
+              hook: Annotated[str, typer.Option(help="2-5 punchy words for variants B/C")] = "",
+              diagram: Annotated[str, typer.Option(help="diagram id for the artwork")] = ""
+              ) -> None:
+    """Render three thumbnail variants (classic / big hook / split) for an A/B choice."""
+    from studio.thumbnails import readability_issues, render_variants
+
+    s = settings()
+    with session_scope(s.db_path) as session:
+        ep, ws, ch = _load(session, s, episode)
+        board = load_storyboard(ws)
+        ref = diagram or next((sc.visual.ref for sc in board.scenes
+                               if sc.visual.kind == "diagram"
+                               and "cross_section" in sc.visual.ref), None) or next(
+            (sc.visual.ref for sc in board.scenes if sc.visual.kind == "diagram"), "")
+        if not ref:
+            raise ValueError("No diagram in the storyboard; pass --diagram <id>")
+        variants = render_variants(ws.render / "thumbnails", title=ep.title,
+                                   hook=hook or ep.title, channel=ch, diagram=ref)
+        for v in variants:
+            ok(f"{v.key}: {v.path} ({v.size_bytes / 1e3:.0f} KB, text "
+               f"{v.min_text_px_at_mobile:.0f}px on a phone)")
+        for issue in readability_issues(variants):
+            warn(f"  {issue}")
+        typer.echo("Pick one and copy it to render/thumbnail_draft.png (or keep the default).")
 
 
 def main() -> None:  # pragma: no cover

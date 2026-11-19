@@ -52,29 +52,103 @@ def require_approved_artifact(episode: Episode, ws: Workspace) -> ReviewDecision
     return decision
 
 
-def build_metadata(episode: Episode, ws: Workspace, channel: ChannelProfile,
-                   decision: ReviewDecision) -> dict:
+def fmt_ts(seconds: float) -> str:
+    s = int(seconds)
+    h, rem = divmod(s, 3600)
+    m, sec = divmod(rem, 60)
+    return f"{h}:{m:02d}:{sec:02d}" if h else f"{m}:{sec:02d}"
+
+
+def chapters(ws: Workspace) -> list[tuple[float, str]]:
+    """YouTube chapters from section starts: first at 0:00, >= 3 chapters, each >= 10 s.
+
+    Returns [] when the rules cannot be met (YouTube would ignore them anyway)."""
+    from studio.models import NarrationTrack
+    from studio.storyboard import load_storyboard
+
+    if not (ws.storyboard_file.exists() and ws.narration_file.exists()):
+        return []
+    board = load_storyboard(ws)
+    track = read_model(ws.narration_file, NarrationTrack)
+    timing = {s.scene_id: s for s in track.scenes}
+    out: list[tuple[float, str]] = []
+    for sc in board.scenes:
+        if sc.starts_section and sc.id in timing:
+            start = 0.0 if not out else timing[sc.id].start
+            if out and start - out[-1][0] < 10:
+                continue  # too close to the previous chapter: merge into it
+            out.append((start, sc.section_heading))
+    if len(out) < 3 or track.duration_s - out[-1][0] < 10:
+        return out if len(out) >= 3 and track.duration_s - out[-1][0] >= 10 else []
+    return out
+
+
+DISCLOSURE_LINE = ("Narration uses a synthetic AI voice. Script researched and fact-checked "
+                   "by a human editor. Diagrams are schematic, not to scale.")
+
+
+def build_description(episode: Episode, ws: Workspace, channel: ChannelProfile, *,
+                      synthetic_voice: bool) -> str:
     pack = load_pack(ws)
     manifest = load_manifest(ws, episode.id)
-    lines = [f"{episode.title}", ""]
+    lines = [episode.title, ""]
+    chaps = chapters(ws)
+    if chaps:
+        lines += ["Chapters:"] + [f"{fmt_ts(t)} {title}" for t, title in chaps] + [""]
+    used: list[str] = []  # claims actually spoken in the video or a Short
+    if ws.script_file.exists():
+        from studio.editorial import load_script
+        from studio.shorts import load_shorts
+
+        sc = load_script(ws)
+        used = [c for sec in sc.sections for para in sec.paragraphs for c in para.claim_ids]
+        used += [c for sh in load_shorts(ws) for c in sh.claim_ids]
+    cited: list[str] = []
+    for cid in used:
+        try:
+            for sid in pack.claim(cid).source_ids:
+                if sid not in cited:
+                    cited.append(sid)
+        except KeyError:
+            continue
+    sources = [pack.source(sid) for sid in cited] if cited else pack.sources
     lines += ["Sources:"]
-    for s in pack.sources:
-        lines.append(f"- {s.title} ({s.publisher}): {s.url}")
+    for s in sources:
+        pub = f" ({s.publisher})" if s.publisher else ""
+        lines.append(f"- {s.title}{pub}: {s.url}")
     credits = attributions(manifest)
     if credits:
         lines += ["", "Credits:"] + [f"- {c}" for c in credits]
     if channel.key == "business_uncovered":
         lines += ["", "This video is for education only and is not investment advice."]
+    if synthetic_voice:
+        lines += ["", DISCLOSURE_LINE]
     lines += ["", "Corrections: tell us in the comments and we will check the source."]
+    return "\n".join(lines)[:5000]
+
+
+def build_metadata(episode: Episode, ws: Workspace, channel: ChannelProfile,
+                   decision: ReviewDecision | None) -> dict:
+    from studio.models import NarrationTrack
+
+    synthetic = False
+    if ws.narration_file.exists():
+        synthetic = read_model(ws.narration_file, NarrationTrack).provider not in {
+            "user_recording", "mock_voice"}
+    srt = ws.render / f"{episode.id}.en.srt"
+    thumb = ws.render / "thumbnail_draft.png"
     return {
         "title": episode.title[:100],
-        "description": "\n".join(lines)[:5000],
+        "description": build_description(episode, ws, channel, synthetic_voice=synthetic),
         "tags": channel.default_tags,
         "privacyStatus": "private",
         "defaultLanguage": channel.language,
-        "containsSyntheticMedia": bool(decision.ai_disclosure_altered_content),
+        "containsSyntheticMedia": bool(decision and decision.ai_disclosure_altered_content),
         "channel": channel.key,
         "youtube_channel_id": channel.youtube_channel_id or None,
+        "captions_file": str(srt) if srt.exists() else None,
+        "thumbnail_file": str(thumb) if thumb.exists() else None,
+        "chapters": [[fmt_ts(t), title] for t, title in chapters(ws)],
     }
 
 

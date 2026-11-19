@@ -335,9 +335,8 @@ def render_episode(settings: Settings, ws: Workspace, title: str, channel: Chann
 
     video_only = ws.render / f"video_only_{profile.name}.mp4"
     ffmpeg.concat_segments(binary, segments, video_only)
-    music = ws.audio / "music_bed.wav"
-    if not music.exists() or ffmpeg.probe_duration(binary, music) + 0.05 < track.duration_s:
-        ffmpeg.make_music_bed(binary, music, track.duration_s + 1)
+    music, _music_source = ffmpeg.music_for(binary, ws.audio, manifest, ws.root,
+                                            track.duration_s + 1)
     suffix = "preview" if preview else "master"
     out = ws.render / f"{board.episode_id}_{suffix}.mp4"
     ffmpeg.mux_with_ducking(binary, video_only, ws.root / track.audio_path, music, out,

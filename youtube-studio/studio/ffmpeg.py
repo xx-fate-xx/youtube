@@ -98,15 +98,69 @@ def concat_segments(binary: str, segments: list[Path], out: Path) -> None:
     lst.unlink(missing_ok=True)
 
 
+# Original pad: Am - F - C - G, one chord every 8 s with triangular crossfades, slow tremolo.
+CHORDS = [(110.0, 130.81, 164.81), (87.31, 110.0, 130.81), (130.81, 164.81, 196.0),
+          (98.0, 123.47, 146.83)]
+CHORD_S = 8.0
+
+
+def music_bed_expression() -> str:
+    p = f"mod(t/{CHORD_S},{len(CHORDS)})"
+    terms = []
+    for k, chord in enumerate(CHORDS):
+        w = f"max(0,1-abs({p}-{k}))" + (f"+max(0,1-abs({p}-{len(CHORDS)}))" if k == 0 else "")
+        voices = "+".join(f"{amp}*sin(2*PI*{f}*t)"
+                          for f, amp in zip(chord, (0.05, 0.035, 0.025), strict=True))
+        shimmer = f"0.008*sin(2*PI*{chord[2] * 2}*t)"
+        terms.append(f"({w})*({voices}+{shimmer})")
+    return "(" + "+".join(terms) + ")*(0.75+0.25*sin(2*PI*0.07*t))"
+
+
 def make_music_bed(binary: str, out: Path, duration: float) -> None:
-    """Original ambient pad synthesised from sine waves (no third-party music)."""
-    partials = [(110.0, 0.05, 0.05), (164.81, 0.04, 0.07), (220.0, 0.03, 0.03),
-                (261.63, 0.025, 0.09), (329.63, 0.015, 0.11)]
-    expr = "+".join(f"{a}*sin(2*PI*{f}*t)*(0.6+0.4*sin(2*PI*{lfo}*t))" for f, a, lfo in partials)
+    """Original ambient bed synthesised from sine waves (no third-party music)."""
     fade_out_start = max(0.0, duration - 3)
-    run(binary, ["-f", "lavfi", "-i", f"aevalsrc={expr}:s=48000:d={duration:.3f}",
-                 "-af", f"lowpass=f=1200,afade=t=in:d=3,afade=t=out:st={fade_out_start:.3f}:d=3",
+    run(binary, ["-f", "lavfi", "-i",
+                 # commas inside the expression must be escaped in a filter description
+                 f"aevalsrc={music_bed_expression().replace(',', chr(92) + ',')}"
+                 f":s=48000:d={duration:.3f}",
+                 "-af", f"lowpass=f=1400,aecho=0.6:0.5:90|180:0.25|0.15,volume=1.8,"
+                        f"afade=t=in:d=3,afade=t=out:st={fade_out_start:.3f}:d=3",
                  "-ac", "2", str(out)])
+
+
+def prepare_music(binary: str, src: Path, out: Path, duration: float) -> None:
+    """Licensed user track -> looped/trimmed 48 kHz stereo bed with fades."""
+    fade_out_start = max(0.0, duration - 3)
+    run(binary, ["-stream_loop", "-1", "-i", str(src), "-t", f"{duration:.3f}",
+                 "-af", f"aresample=48000,afade=t=in:d=2,"
+                        f"afade=t=out:st={fade_out_start:.3f}:d=3",
+                 "-ac", "2", str(out)])
+
+
+def music_for(binary: str, ws_audio: Path, manifest, ws_root: Path, duration: float,
+              name: str = "music_bed.wav") -> tuple[Path, str]:
+    """Pick the music bed: a cleared licensed track ('music-track') or the generated pad.
+
+    Returns (wav path, source) where source is 'licensed:<id>' or 'generated'."""
+    from studio.fsutil import sha256_text
+    from studio.models import LicenseClearance
+
+    rec = manifest.get("music-track") if manifest else None
+    if rec and rec.clearance == LicenseClearance.CLEARED:
+        src = ws_root / rec.path
+        key = sha256_text(rec.sha256 or str(src), f"{duration:.2f}")[:12]
+        out = ws_audio / f"music_track_{key}.wav"
+        if not out.exists():
+            prepare_music(binary, src, out, duration)
+        return out, f"licensed:{rec.id}"
+    out = ws_audio / name
+    stamp = out.with_suffix(".expr")
+    expr = music_bed_expression()
+    if (not out.exists() or probe_duration(binary, out) + 0.05 < duration
+            or not stamp.exists() or stamp.read_text() != expr):
+        make_music_bed(binary, out, duration)
+        stamp.write_text(expr)
+    return out, "generated"
 
 
 def mux_with_ducking(binary: str, video: Path, narration: Path, music: Path | None, out: Path,

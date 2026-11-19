@@ -136,7 +136,8 @@ def build_report(settings: Settings, session: Session, episode: Episode, ws: Wor
             narration.blockers.append(f"narration is a placeholder ({track.provider})")
         narration.info.append(f"provider={track.provider} voice={track.voice} "
                               f"timing={track.timing_method}")
-        if track.timing_method not in {"exact", "provider_alignment"}:
+        if track.timing_method not in {"exact", "provider_alignment",
+                                       "sentence_pause_aligned"}:
             narration.warnings.append(
                 f"caption timings are {track.timing_method} (not word-exact); spot-check sync "
                 "or narrate with a provider that returns alignment (ElevenLabs)")
@@ -216,8 +217,13 @@ def license_audit_markdown(ws: Workspace, manifest, shorts: list) -> str:
         lines.append(f"| {s.id} narration | narration | {meta.get('narration_provider', '?')} "
                      f"| {lic.get('license', 'not recorded')} | {clear} | {ok} | "
                      f"{lic.get('proof', '')[:160]} |")
-        lines.append(f"| {s.id} music bed | music | generated_local | original sine synthesis "
-                     "| cleared | yes | studio/ffmpeg.py:make_music_bed |")
+        music = meta.get("music", "generated")
+        if music == "generated":
+            lines.append(f"| {s.id} music bed | music | generated_local | original sine "
+                         "synthesis | cleared | yes | studio/ffmpeg.py:make_music_bed |")
+        else:
+            lines.append(f"| {s.id} music | music | {music} | see the manifest entry "
+                         "'music-track' above | - | - | - |")
     lines += ["", "## Toolchain (does not license the output)", "",
               "| tool | role | note | status |", "|---|---|---|---|"]
     lines += [f"| {a} | {b} | {c} | {d} |" for a, b, c, d in TOOLCHAIN]
@@ -265,7 +271,8 @@ def write_release_candidate(ws: Workspace, report: ReviewReport, episode_title: 
     for f in (ws.script / "script.md", ws.research / "VERIFICATION_REPORT.md",
               ws.research / "sources.md", ws.storyboard / "storyboard.md", ws.manifest_file,
               ws.review / "LICENSE_AUDIT.md", ws.review / "AI_DISCLOSURE_AUDIT.md",
-              ws.research / "FACT_CONFIRMATION.md", ws.review / "REVIEW.md"):
+              ws.research / "FACT_CONFIRMATION.md", ws.review / "REVIEW.md",
+              ws.review / "description.txt", ws.review / "upload_metadata.json"):
         if f.exists():
             files.append((f.name, f))
     for rel, src in files:

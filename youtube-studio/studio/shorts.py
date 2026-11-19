@@ -396,8 +396,10 @@ def render_short(settings: Settings, ws: Workspace, spec: ShortSpec, channel: Ch
     video_only = out_dir / "video_only.mp4"
     frames_to_mp4(binary, frames(), n, SIZE, fps, video_only, preset=profile.preset,
                   crf=profile.crf)
-    music = out_dir / "music_bed.wav"
-    ffmpeg.make_music_bed(binary, music, total + 1)
+    from studio.assets import load_manifest
+
+    music, music_source = ffmpeg.music_for(binary, out_dir, load_manifest(ws, ws.root.name),
+                                           ws.root, total + 1)
     out = out_dir / f"{spec.id}_{'preview' if preview else 'master'}.mp4"
     ffmpeg.mux_with_ducking(binary, video_only, wav, music, out, total, profile)
     atomic_write_json(out_dir / "metadata.json", {
@@ -410,6 +412,7 @@ def render_short(settings: Settings, ws: Workspace, spec: ShortSpec, channel: Ch
                               "clearance": provider.license().clearance.value,
                               "proof": provider.license().proof},
         "timing_method": provider.timing_method,
+        "music": music_source,
         "legibility_issues": legibility,
         "labels_hidden_for_vertical_frame": dropped,
     })
