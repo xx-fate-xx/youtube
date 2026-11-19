@@ -15,7 +15,7 @@ from studio.audio import NarrationItem, synthesize
 from studio.captions import cues_from_words, to_srt
 from studio.channels import ChannelProfile
 from studio.config import Settings
-from studio.diagrams import DIAGRAMS
+from studio.diagrams import get_diagram, has_diagram
 from studio.episodes import Workspace
 from studio.fsutil import atomic_write_json, atomic_write_text
 from studio.models import ResearchPack, Script, ShortSpec
@@ -58,7 +58,7 @@ def shorts_issues(shorts: list[ShortSpec], script: Script, pack: ResearchPack,
         if not MIN_S <= est + END_CARD_S <= MAX_S:
             issues.append(f"{s.id}: estimated {est:.0f}s narration outside {MIN_S:.0f}-"
                           f"{MAX_S:.0f}s")
-        if s.diagram not in DIAGRAMS:
+        if not has_diagram(s.diagram):
             issues.append(f"{s.id}: unknown diagram {s.diagram}")
         for cid in s.claim_ids:
             if cid not in claim_ids:
@@ -289,7 +289,7 @@ def separate_labels(canvas: Canvas, plan: ScenePlan, samples: int = 48) -> int:
 def prepare_short(spec: ShortSpec, theme: Theme,
                   duration: float) -> tuple[Canvas, ScenePlan, list[str]]:
     """Boost labels for the widest framing used, drop labels the frame would cut, plan."""
-    canvas = DIAGRAMS[spec.diagram].build(theme)
+    canvas = get_diagram(spec.diagram).build(theme)
     plan = short_plan(spec, canvas, duration)
     widest = max(s.vw for _, s, _ in plan.keys)
     canvas = boost_text(canvas, SIZE[0] / widest)

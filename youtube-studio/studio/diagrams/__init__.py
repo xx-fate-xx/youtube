@@ -13,8 +13,12 @@ Motion hints understood by studio.motion (ignored by the static SVG export):
 from __future__ import annotations
 
 import math
+import os
 from collections.abc import Callable
 from dataclasses import dataclass
+from pathlib import Path
+
+import yaml
 
 from studio.visuals import Canvas, Theme, base_frame, blob, quad_curve
 
@@ -23,11 +27,12 @@ LIGHT = "#E6FFFB"
 POWER = "#E8A33D"
 
 
-@dataclass(frozen=True)
+@dataclass
 class Diagram:
     id: str
     title: str
     build: Callable[[Theme], Canvas]
+    default_camera: str = "auto"
 
 
 def _x_mark(c: Canvas, x: float, y: float, color: str, step: int, size: float = 30,
@@ -127,7 +132,7 @@ def route_schematic(t: Theme) -> Canvas:
     c.rect(1440, 560, 260, 160, stroke=t.accent2, sw=4, r=20, step=3, anim="grow")
     c.text(1570, 740, "Chokepoint", size=32, color=t.accent2, anchor="mt", bold=True, step=3,
            delay=0.6)
-    c.text(1570, 780, "many cables, one corridor", size=26, color=t.fg, anchor="mt", step=3,
+    c.text(1570, 788, "many cables, one corridor", size=26, color=t.fg, anchor="mt", step=3,
            delay=0.8)
     # step 4: route diversity - one route cut, traffic carried by the others
     c.line(curves["AD"], color=t.accent2, width=9, step=4, anim="fade", flow=LIGHT,
@@ -401,8 +406,8 @@ def cable_cross_section(t: Theme) -> Canvas:
         c.line([(lx, ly), (1060, ly)], color=t.fg, width=2, step=step, delay=0.5)
         c.circle(lx, ly, 6, fill=t.fg, step=step)
         c.text(1080, ly, label, size=32, color=t.fg, anchor="lm", step=step, delay=0.9)
-    c.text(1080, 830, "Deep-sea cable has fewer protective layers than shore-end cable",
-           size=28, color=t.muted, anchor="lm", step=4)
+    c.paragraph(1080, 800, "Deep-sea cable has fewer protective layers than shore-end cable",
+                size=28, color=t.muted, max_width=780, step=4)
     return c
 
 
@@ -428,15 +433,15 @@ def cable_laying(t: Theme) -> Canvas:
                  until=0)
     c.text(810, 520, "Hazards to avoid", size=28, color=t.danger, anchor="mb", step=0,
            until=0)
-    c.text(1300, 160, "Survey the route first", size=34, color=t.accent2, anchor="mb",
+    c.text(640, 210, "Survey the route first", size=34, color=t.accent2, anchor="mb",
            bold=True, step=0, until=0)
     # step 1: cable ship pays out cable over the stern
     _ship(c, 1250, sea_y - 60, t, 1)
     c.rect(1150, sea_y - 52, 70, 40, fill=t.accent2, step=1, delay=0.8)
-    c.text(1060, sea_y - 30, "Cable hold", size=24, color=t.fg, anchor="rm", step=1, delay=0.9)
+    c.text(1060, sea_y - 30, "Cable tank", size=24, color=t.fg, anchor="rm", step=1, delay=0.9)
     lay = quad_curve((1080, sea_y + 10), (950, 560), (560, 640))
     c.line(lay + [(100, 600)], color=t.accent2, width=6, step=1, delay=1.0, dur=2.6)
-    c.text(1250, 160, "Paid out over the stern as the ship moves", size=34, color=t.accent2,
+    c.text(600, 210, "Laid along the route as the ship moves", size=34, color=t.accent2,
            anchor="mb", bold=True, step=1)
     # step 2: plough burial in shallow water, deep water laid on the bottom
     c.rect(330, 585, 120, 50, fill=t.fg, r=8, step=2, anim="slide", slide_from=(-200.0, 0.0))
@@ -456,7 +461,7 @@ def cable_repair(t: Theme) -> Canvas:
     c.line([(0, sea_y), (1920, sea_y)], color=t.accent, width=3)
     c.rect(0, 760, 1920, 120, fill=t.muted + "88")
     c.rect(60, 180, 180, 120, fill=t.muted + "88", stroke=t.fg, sw=2, r=8)
-    c.text(150, 165, "Shore station", size=26, color=t.fg, anchor="mb")
+    c.text(255, 205, "Shore station", size=26, color=t.fg, anchor="lm")
     # step 0: fault location by test signals
     c.line([(240, 290), (300, 760), (1100, 755)], color=t.accent, width=6, step=0, until=1)
     c.line([(1180, 755), (1860, 760)], color=t.accent, width=6, step=0, until=1)
@@ -484,7 +489,7 @@ def cable_repair(t: Theme) -> Canvas:
     # step 3: lowered back, slightly longer
     c.line([(900, 755), (980, 830), (1320, 830), (1400, 755)], color=t.accent2, width=6,
            step=3, dur=1.8)
-    c.text(1150, 850, "New section - the cable is now a little longer", size=28,
+    c.text(1150, 842, "New section - the cable is now a little longer", size=28,
            color=t.accent2, anchor="mt", step=3)
     return c
 
@@ -585,8 +590,8 @@ def fiber_vs_satellite(t: Theme) -> Canvas:
     c.line([a, (960, 210), b], color=t.danger, width=4, dash=(16, 10), step=0, until=1)
     c.line([a, (960, 210), b], color=t.danger, width=1, step=0, until=1, anim="none",
            flow=t.danger, flow_gap=900, flow_speed=330, nofocus=True)
-    c.text(1010, 150, "Geostationary: very high, long round trip", size=30, color=t.danger,
-           anchor="lb", step=0, until=1)
+    c.text(140, 250, "Geostationary: very high, long round trip", size=30, color=t.danger,
+           anchor="lt", step=0, until=1)
     # fibre along the surface for comparison
     c.line(quad_curve(a, (960, earth_y - 150), b), color=t.accent, width=1, step=0, until=1,
            anim="none", flow=LIGHT, flow_gap=300, flow_speed=900, nofocus=True)
@@ -630,7 +635,7 @@ def satellite_roles(t: Theme) -> Canvas:
            flow=t.accent2, flow_gap=160, flow_speed=220, nofocus=True)
     c.text(hut[0], hut[1] + 70, "Places not yet wired", size=32, color=t.fg, anchor="mt",
            bold=True)
-    c.text(hut[0], hut[1] + 110, "with fibre", size=32, color=t.fg, anchor="mt", bold=True)
+    c.text(hut[0], hut[1] + 118, "with fibre", size=32, color=t.fg, anchor="mt", bold=True)
     # step 1: one source to many locations
     dishes = [(1180, 680), (1400, 650), (1620, 690)]
     for k, (x, y) in enumerate(dishes):
@@ -689,3 +694,88 @@ DIAGRAMS: dict[str, Diagram] = {
         Diagram("recap", "Recap", recap),
     ]
 }
+
+
+# ------------------------------------------------------------------------------ YAML templates
+# Specs live in <repo>/diagram_specs/<id>.yaml (override with STUDIO_DIAGRAM_SPECS).
+
+SPECS_DIR = Path(__file__).resolve().parents[2] / "diagram_specs"
+_SPEC_CACHE: dict[str, tuple[float, Diagram]] = {}
+
+
+def specs_dir() -> Path:
+    env = os.environ.get("STUDIO_DIAGRAM_SPECS", "").strip()
+    return Path(env) if env else SPECS_DIR
+
+
+def load_spec(path: Path):
+    from pydantic import TypeAdapter
+
+    from studio.diagrams.templates import DiagramSpec
+
+    data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+    data.setdefault("id", path.stem)
+    try:
+        return TypeAdapter(DiagramSpec).validate_python(data)
+    except Exception as exc:  # pydantic ValidationError -> readable message
+        raise ValueError(f"{path.name}: {exc}") from exc
+
+
+def spec_ids() -> list[str]:
+    d = specs_dir()
+    return sorted(p.stem for p in d.glob("*.yaml")) if d.exists() else []
+
+
+def has_diagram(ref: str) -> bool:
+    return ref in DIAGRAMS or (specs_dir() / f"{ref}.yaml").exists()
+
+
+def get_diagram(ref: str) -> Diagram:
+    """Hand-coded diagram, or a YAML template spec of the same id."""
+    if ref in DIAGRAMS:
+        return DIAGRAMS[ref]
+    path = specs_dir() / f"{ref}.yaml"
+    if not path.exists():
+        raise KeyError(f"Unknown diagram '{ref}' (no code diagram, no {path})")
+    mtime = path.stat().st_mtime
+    cached = _SPEC_CACHE.get(str(path))
+    if cached and cached[0] == mtime:
+        return cached[1]
+    spec = load_spec(path)
+    d = Diagram(ref, spec.title, spec.build, spec.default_camera())
+    d.spec = spec  # type: ignore[attr-defined]
+    _SPEC_CACHE[str(path)] = (mtime, d)
+    return d
+
+
+def diagram_claims(ref: str) -> list[str]:
+    d = get_diagram(ref)
+    spec = getattr(d, "spec", None)
+    return list(spec.claims) if spec else []
+
+
+def layout_issues(canvas: Canvas, *, top: float = 140, bottom: float = 880,
+                  gap: float = 6) -> list[str]:
+    """Static layout QA per build step: overlapping labels, text off-canvas, text under the
+    title strip or inside the caption band."""
+    from studio.visuals import element_bbox
+
+    issues: set[str] = set()
+    for step in range(canvas.max_step + 1):
+        texts = [e for e in canvas.visible(step) if e["kind"] == "text" and not e.get("hud")]
+        boxes = [(e["s"], element_bbox(e), e.get("group")) for e in texts]
+        for s, (x0, y0, x1, y1), _g in boxes:
+            if x0 < 20 or x1 > 1900:
+                issues.add(f"'{s[:30]}' runs off the canvas horizontally")
+            if y0 < top:
+                issues.add(f"'{s[:30]}' sits under the title strip (y={y0:.0f})")
+            if y1 > bottom:
+                issues.add(f"'{s[:30]}' enters the caption band (y={y1:.0f})")
+        for i, (sa, a, ga) in enumerate(boxes):
+            for sb, b, gb in boxes[i + 1:]:
+                if ga and ga == gb:
+                    continue  # lines of one paragraph
+                if (min(a[2], b[2]) - max(a[0], b[0]) > -gap / 2
+                        and min(a[3], b[3]) - max(a[1], b[1]) > -gap / 2):
+                    issues.add(f"labels overlap at step {step}: '{sa[:24]}' / '{sb[:24]}'")
+    return sorted(issues)

@@ -110,6 +110,12 @@ script`). Illegal transitions raise `IllegalTransition`; every change is logged.
 | Visuals | code-generated diagrams/cards | `studio assets add` for your own / Pexels footage with licence proof |
 | YouTube | release folder | OAuth upload (`STUDIO_ENABLE_YOUTUBE=1`, `uv sync --extra youtube`) |
 
+## Diagram library
+
+New diagrams are YAML, not code: `diagram_specs/<id>.yaml` with one of seven templates
+(map, cross_section, process, comparison, timeline, flow, stat). See
+[docs/DIAGRAM-LIBRARY.md](docs/DIAGRAM-LIBRARY.md); `studio diagrams list|check|preview`.
+
 ## Motion engine (Phase 2)
 
 Frames are rendered per scene with Pillow and piped to FFmpeg (`studio/motion.py`):

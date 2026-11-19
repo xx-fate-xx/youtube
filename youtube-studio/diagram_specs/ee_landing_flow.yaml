@@ -1,0 +1,12 @@
+# Flow (block diagram) template: blocks + links with travelling pulses.
+type: flow
+title: From sea floor to the network on land
+blocks:
+  - {id: cable, x: 140, y: 430, w: 300, h: 140, label: Submarine cable, step: 0}
+  - {id: station, x: 700, y: 430, w: 380, h: 140, label: Cable landing station, step: 0}
+  - {id: pfe, x: 700, y: 690, w: 380, h: 120, label: Power feed equipment, step: 1, color: accent2}
+  - {id: land, x: 1380, y: 430, w: 380, h: 140, label: Networks on land, step: 2}
+links:
+  - {from: cable, to: station, label: light, step: 0}
+  - {from: pfe, to: station, label: direct current into the cable, step: 1, color: accent2}
+  - {from: station, to: land, step: 2}

@@ -1,0 +1,10 @@
+# Cross-section template: layers listed from the centre outwards.
+type: cross_section
+title: Inside a submarine cable
+layers:
+  - {label: Optical fibres in a protective tube, kind: core, thickness: 70, color: "#E9EEF1", step: 0}
+  - {label: Steel strength wires, kind: wires, thickness: 60, color: "#A9B4BB", count: 18, step: 1}
+  - {label: Copper conductor - carries power, kind: ring, thickness: 26, color: "#B08D57", step: 2}
+  - {label: Polyethylene insulation, kind: ring, thickness: 70, color: "#1F2A30", step: 3}
+  - {label: Extra armour near the shore, kind: wires, thickness: 46, color: "#5E6B73", count: 36, step: 4}
+footnote: Deep-sea cable has fewer protective layers than shore-end cable

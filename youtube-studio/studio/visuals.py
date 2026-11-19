@@ -149,9 +149,10 @@ class Canvas:
                   bold: bool = False, line_height: float = 1.25, anchor_h: str = "l",
                   step: int = 0, until: int | None = None, **fx: Any) -> float:
         """Wrapped text block; returns the y below the block."""
+        group = f"p{len(self.elements)}"
         for line in wrap_text(s, size, max_width, bold):
             self.text(x, y, line, size=size, color=color, anchor=f"{anchor_h}t", bold=bold,
-                      step=step, until=until, **fx)
+                      step=step, until=until, group=group, **fx)
             y += size * line_height
         return y
 

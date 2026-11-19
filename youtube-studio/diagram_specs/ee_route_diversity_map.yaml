@@ -1,0 +1,24 @@
+# Map template: regions, landing stations, curved routes, a cut and a highlight.
+type: map
+title: Many routes keep a region connected
+regions:
+  - {x: 330, y: 500, rx: 250, ry: 300, seed: 1}
+  - {x: 1620, y: 360, rx: 290, ry: 210, seed: 4}
+  - {x: 1600, y: 830, rx: 300, ry: 110, seed: 7}
+nodes:
+  - {id: A, x: 560, y: 330, label: Landing station, label_pos: left}
+  - {id: B, x: 575, y: 520}
+  - {id: C, x: 540, y: 680}
+  - {id: D, x: 1345, y: 320}
+  - {id: E, x: 1330, y: 470}
+  - {id: F, x: 1310, y: 760}
+routes:
+  - {from: A, to: D, step: 0}
+  - {from: B, to: E, step: 1, bend: 0.05}
+  - {from: C, to: F, step: 1, bend: -0.12}
+cuts:
+  - {route: B-E, at: 0.5, step: 2}
+highlights:
+  - {x: 780, y: 170, w: 360, h: 130, label: Traffic shifts to this route, step: 3}
+caption:
+  - {text: One route cut - the others carry the traffic, step: 2}

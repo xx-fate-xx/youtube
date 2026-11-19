@@ -1,0 +1,7 @@
+# Stat template: one big verified number with its source on screen.
+type: stat
+title: What breaks cables
+claims: [C9]
+value: "70-80%"
+label: of submarine cable faults are accidental - mostly fishing and ships' anchors
+source: International Cable Protection Committee, 2025

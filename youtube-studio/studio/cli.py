@@ -73,6 +73,7 @@ from studio.verification import (
     load_proposals,
     write_report,
 )
+from studio.visuals import Theme
 
 app = typer.Typer(no_args_is_help=True, help="AI YouTube Studio - local-first production "
                   "assistant. Nothing is published automatically.")
@@ -82,12 +83,14 @@ assets_app = typer.Typer(no_args_is_help=True, help="Build and check visual asse
 cost_app = typer.Typer(no_args_is_help=True, help="Budget and cost ledger")
 channels_app = typer.Typer(no_args_is_help=True, help="Channel style profiles")
 voices_app = typer.Typer(no_args_is_help=True, help="ElevenLabs voice candidates (no generation)")
+diagrams_app = typer.Typer(no_args_is_help=True, help="Diagram library (code + YAML templates)")
 app.add_typer(episode_app, name="episode")
 app.add_typer(claim_app, name="claim")
 app.add_typer(assets_app, name="assets")
 app.add_typer(cost_app, name="cost")
 app.add_typer(channels_app, name="channels")
 app.add_typer(voices_app, name="voices")
+app.add_typer(diagrams_app, name="diagrams")
 
 KNOWN_ERRORS = (IllegalTransition, BudgetError, ResearchError, ReviewBlocked, PublishBlocked,
                 KeyError, ValueError, FileNotFoundError, RuntimeError)
@@ -1084,6 +1087,87 @@ def voices_use(key: str, channel: str = "engineering_explained") -> None:
     assert {k: v for k, v in doc2.items() if k != "narration"} == {
         k: v for k, v in doc.items() if k != "narration"}
     ok(f"{channel}: ElevenLabs voice set to {cand['name']} ({cand['voice_id']})")
+
+
+@diagrams_app.command("list")
+@handled
+def diagrams_list() -> None:
+    """All diagrams: hand-coded ones and YAML templates in diagram_specs/."""
+    from studio.diagrams import DIAGRAMS, get_diagram, spec_ids, specs_dir
+
+    typer.echo("code:")
+    for k, d in DIAGRAMS.items():
+        typer.echo(f"  {k:28} {d.title}")
+    typer.echo(f"templates ({specs_dir()}):")
+    for k in spec_ids():
+        try:
+            d = get_diagram(k)
+            typer.echo(f"  {k:28} {d.spec.type:13} {d.title}")  # type: ignore[attr-defined]
+        except ValueError as exc:
+            typer.secho(f"  {k:28} INVALID: {exc}", fg=typer.colors.RED)
+
+
+@diagrams_app.command("check")
+@handled
+def diagrams_check(channel: str = "engineering_explained") -> None:
+    """Validate every template and run layout QA (overlaps, off-canvas, caption band)."""
+    from studio.diagrams import DIAGRAMS, get_diagram, layout_issues, spec_ids
+
+    s = settings()
+    theme = Theme.from_identity(get_channel(s.channels_dir, channel).visual)
+    bad = 0
+    for ref in [*DIAGRAMS, *spec_ids()]:
+        try:
+            issues = layout_issues(get_diagram(ref).build(theme))
+        except ValueError as exc:
+            issues = [str(exc)]
+        if issues:
+            bad += 1
+            typer.secho(f"{ref}:", fg=typer.colors.YELLOW)
+            for i in issues:
+                typer.echo(f"   {i}")
+    if bad:
+        raise typer.Exit(2)
+    ok("All diagrams pass validation and layout QA.")
+
+
+@diagrams_app.command("preview")
+@handled
+def diagrams_preview(ref: str, channel: str = "engineering_explained",
+                     out: Path = Path("diagram_previews"),
+                     video: Annotated[float, typer.Option(
+                         help="also render an animated MP4 of N seconds (0 = off)")] = 0.0
+                     ) -> None:
+    """Render a step-by-step contact sheet (PNG) and optionally a short motion preview."""
+    from PIL import Image
+
+    from studio.diagrams import get_diagram, layout_issues
+    from studio.motion import SceneRenderer, frames_to_mp4, plan_scene
+
+    s = settings()
+    theme = Theme.from_identity(get_channel(s.channels_dir, channel).visual)
+    canvas = get_diagram(ref).build(theme)
+    n = canvas.max_step + 1
+    tiles = [canvas.to_image(k, (960, 540), supersample=1) for k in range(n)]
+    sheet = Image.new("RGB", (960 * min(2, n), 540 * ((n + 1) // 2)), "white")
+    for i, im in enumerate(tiles):
+        sheet.paste(im, ((i % 2) * 960, (i // 2) * 540))
+    out.mkdir(parents=True, exist_ok=True)
+    png = out / f"{ref}.png"
+    sheet.save(png)
+    ok(f"{n} steps -> {png}")
+    for issue in layout_issues(canvas):
+        warn(f"  layout: {issue}")
+    if video > 0:
+        plan = plan_scene(canvas, list(range(n)), video,
+                          camera=get_diagram(ref).default_camera)
+        rend = SceneRenderer(canvas, plan, (1280, 720), layer_scale=1.5)
+        fps = 30
+        frames = (rend.frame(i / fps) for i in range(round(video * fps)))
+        mp4 = out / f"{ref}.mp4"
+        frames_to_mp4(s.ffmpeg_binary(), frames, round(video * fps), (1280, 720), fps, mp4,
+                      preset="veryfast", crf=24)
+        ok(f"motion preview -> {mp4}")
 
 
 def main() -> None:  # pragma: no cover

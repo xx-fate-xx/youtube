@@ -1,0 +1,8 @@
+# Timeline template. Years are numbers, so the claims that back them are required.
+type: timeline
+title: Moments that shaped the network
+claims: [C11, C10, C17]
+events:
+  - {when: "1858", label: First transatlantic telegraph cable works - for a few weeks}
+  - {when: "2006", label: Earthquake off Taiwan breaks cables across the region}
+  - {when: "2026", label: ITU and ICPC advisory body names global chokepoints}

@@ -7,7 +7,7 @@ from datetime import UTC, datetime
 from pathlib import Path
 
 from studio.channels import ChannelProfile
-from studio.diagrams import DIAGRAMS
+from studio.diagrams import get_diagram
 from studio.episodes import Workspace
 from studio.fsutil import atomic_write_json, read_model, sha256_file
 from studio.models import (
@@ -60,7 +60,7 @@ def scene_asset_id(scene: Scene) -> str:
 def scene_canvas(scene: Scene, theme: Theme, channel: ChannelProfile) -> Canvas | None:
     v = scene.visual
     if v.kind == "diagram":
-        return DIAGRAMS[v.ref].build(theme)
+        return get_diagram(v.ref).build(theme)
     if v.kind == "title":
         return title_card(theme, v.ref or scene.section_heading, channel.name)
     if v.kind == "card":

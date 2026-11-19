@@ -1,0 +1,11 @@
+# Business Uncovered example: generic business-model schematic (no figures).
+type: process
+title: How a subscription business earns
+schematic: false
+steps:
+  - {title: Acquire, text: Marketing and free trials bring new customers in}
+  - {title: Activate, text: The product proves its value early}
+  - {title: Retain, text: Customers keep paying each period}
+  - {title: Expand, text: Upgrades and add-ons raise revenue per customer}
+caption:
+  - {text: "The model works only if customers stay longer than they cost to win", step: 3}

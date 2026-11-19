@@ -1,0 +1,6 @@
+# Comparison template. Qualitative by default (data: false) - a footnote says so on screen.
+type: comparison
+title: Capacity between continents
+items:
+  - {label: Submarine cables, value: 1.0, color: accent, step: 0}
+  - {label: Satellites, value: 0.12, color: muted, note: "Best for places not yet wired, and one-to-many", step: 1}

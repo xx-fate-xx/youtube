@@ -1,0 +1,11 @@
+# Process template. Reveals one step per build step; arrows flow between steps.
+type: process
+title: Life of a submarine cable
+steps:
+  - {title: Survey the route, text: Marine surveys pick a path that avoids hazards}
+  - {title: Load the ship, text: Cable is stored in large tanks on board}
+  - {title: Lay and bury, text: Buried near shore by a plough; laid on the deep seabed}
+  - {title: Operate, text: Repeaters powered from shore keep the light strong}
+  - {title: Repair, text: Grapnel recovery and a new section spliced in on board}
+caption:
+  - {text: "Each stage is planned around one goal: keeping the cable undisturbed", step: 4}

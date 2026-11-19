@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from studio.channels import ChannelProfile
-from studio.diagrams import DIAGRAMS
+from studio.diagrams import diagram_claims, has_diagram
 from studio.episodes import Workspace
 from studio.fsutil import atomic_write_json, atomic_write_text, read_model
 from studio.models import Scene, Script, Storyboard, VisualSpec
@@ -30,9 +30,14 @@ def build_storyboard(script: Script, channel: ChannelProfile) -> tuple[Storyboar
         count = len(section.paragraphs)
         for i, para in enumerate(section.paragraphs):
             visual = para.visual
-            if visual.kind == "diagram" and visual.ref not in DIAGRAMS:
+            if visual.kind == "diagram" and not has_diagram(visual.ref):
                 warnings.append(f"unknown diagram '{visual.ref}' in {section.id}; using a card")
                 visual = VisualSpec(kind="card", ref=section.heading, note="fallback")
+            if visual.kind == "diagram" and has_diagram(visual.ref):
+                missing = [c for c in diagram_claims(visual.ref) if c not in para.claim_ids]
+                if missing:
+                    warnings.append(f"{section.id}: diagram '{visual.ref}' shows facts from "
+                                    f"{missing} but the narration does not cite them")
             if visual.kind == "footage":
                 warnings.append(f"{section.id}: footage '{visual.ref}' must be imported with a "
                                 "licence via `studio assets add`")

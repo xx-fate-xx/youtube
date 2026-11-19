@@ -1,0 +1,15 @@
+# AI Workflow Lab example: an automation pipeline with a human checkpoint.
+type: flow
+title: Invoice intake workflow
+schematic: false
+blocks:
+  - {id: inbox, x: 110, y: 420, w: 280, h: 140, label: Email inbox, step: 0}
+  - {id: extract, x: 540, y: 420, w: 300, h: 140, label: Extract fields, step: 1}
+  - {id: review, x: 990, y: 420, w: 300, h: 140, label: Human review, step: 2, color: accent2}
+  - {id: sheet, x: 1440, y: 420, w: 330, h: 140, label: Accounting sheet, step: 3}
+links:
+  - {from: inbox, to: extract, label: attachments, step: 1}
+  - {from: extract, to: review, label: draft entry, step: 2}
+  - {from: review, to: sheet, label: approved, step: 3}
+notes:
+  - {x: 1140, y: 640, text: Nothing is posted without a person checking it, step: 2, color: accent2}

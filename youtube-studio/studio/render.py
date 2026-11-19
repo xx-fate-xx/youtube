@@ -18,7 +18,7 @@ from studio.assets import parse_steps, scene_asset_id, scene_canvas
 from studio.captions import Cue, cues_from_words, to_srt
 from studio.channels import ChannelProfile
 from studio.config import Settings
-from studio.diagrams import DIAGRAMS
+from studio.diagrams import get_diagram
 from studio.episodes import Workspace
 from studio.fsutil import atomic_write_text, sha256_text
 from studio.models import AssetManifest, NarrationTrack, Storyboard
@@ -135,7 +135,7 @@ def make_thumbnail(ws: Workspace, title: str, channel: ChannelProfile, board: St
                 and s.visual.ref == "cable_cross_section"), None) or next(
         (s.visual.ref for s in board.scenes if s.visual.kind == "diagram"), None)
     if ref:
-        canvas = DIAGRAMS[ref].build(theme)
+        canvas = get_diagram(ref).build(theme)
         # artwork only: no labels, leader lines or grid in a thumbnail
         canvas.elements = [e for e in canvas.elements if e["kind"] not in {"text", "line"}
                            and not e.get("hud")
@@ -245,7 +245,10 @@ def plan_episode(board: Storyboard, track: NarrationTrack, theme: Theme,
         words = timing[scene.id].words
         anchors = [w.start - start for k, w in enumerate(words)
                    if k == 0 or words[k - 1].word.rstrip('"\')').endswith((".", "?", "!"))]
-        plan = plan_scene(canvas, steps, end - start, camera=scene.visual.camera,
+        camera = scene.visual.camera
+        if camera in ("", "auto") and scene.visual.kind == "diagram":
+            camera = get_diagram(scene.visual.ref).default_camera
+        plan = plan_scene(canvas, steps, end - start, camera=camera,
                           anchors=anchors,
                           start_shot=prev[2].end_shot if cont else None,
                           start_prev_step=prev[2].last_step if cont else -1)
