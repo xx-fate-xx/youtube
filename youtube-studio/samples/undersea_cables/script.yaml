@@ -2,6 +2,7 @@
 # research.yaml. Numbers appear only where a claim backs them.
 # Phase 2 (2026-11-18): wording aligned with verification_proposals.json (source-supported
 # phrasing); visuals diversified and per-scene camera hints added.
+# RC 2026-11-19: narration aligned with verification_proposals_rc.json (8 changes).
 title: How Undersea Internet Cables Actually Work
 editorial_notes:
 - >-
@@ -14,8 +15,8 @@ sections:
   paragraphs:
   - text: >-
       In the summer of 1858, a telegraph cable was laid across the floor of the Atlantic Ocean.
-      For the first time, a message could cross between Europe and North America without travelling
-      on a ship. And then, after only a few weeks, the cable failed.
+      For the first time, Europe and North America were linked by telegraph. And then, within
+      weeks, the cable failed.
     claims:
     - C11
     visual:
@@ -108,8 +109,8 @@ sections:
       ref: wdm_colors
   - text: >-
       Then there is the problem of distance. Even very pure glass absorbs and scatters a little
-      of the light, so the signal fades as it travels. Across an entire ocean, it would fade away
-      completely without help along the way.
+      of the light, so the signal fades as it travels. Across an entire ocean, it would grow far
+      too weak to use without help along the way.
     claims:
     - C18
     visual:
@@ -121,9 +122,9 @@ sections:
   paragraphs:
   - text: >-
       That help comes from repeaters: pressure-resistant housings spliced into the cable at regular
-      intervals, in many long-haul designs roughly every fifty kilometres, and in some systems
-      more than a hundred kilometres apart. Inside, optical amplifiers boost the light directly,
-      without first turning it back into an electrical signal.
+      intervals, on modern transoceanic cables roughly every fifty to sixty kilometres. Inside,
+      optical amplifiers boost the light directly, without first turning it back into an electrical
+      signal.
     claims:
     - C4
     visual:
@@ -153,7 +154,7 @@ sections:
       steps: '4'
   - text: >-
       Now open the cable itself. At the centre are the fibres, protected inside a tube. Around
-      them are strength wires made of steel, a copper or aluminium power conductor, and layers
+      them are strength wires made of steel, a copper conductor that carries power, and layers
       of polyethylene insulation. In the deep ocean, where little can disturb it, the cable is
       surprisingly slim, often compared to a garden hose. Near the shore, where anchors and fishing
       gear are a real threat, extra layers of steel armour are added.
@@ -176,9 +177,8 @@ sections:
       ref: cable_laying
       steps: '0'
   - text: >-
-      Then a specialised cable ship takes over. The cable is carried in the ship's holds and fed
-      out over sheaves at the bow or stern as the ship moves along the route. Laying is deliberately
-      slow and steady, so that the cable settles properly on the bottom.
+      Then a specialised cable ship takes over. The cable is stored in large tanks on board and
+      laid along the route as the ship moves.
     claims:
     - C7
     visual:
@@ -199,10 +199,10 @@ sections:
   heading: Fixing a cable on the sea floor
   paragraphs:
   - text: >-
-      Cables do break. When one fails, engineers can locate the fault from the shore by sending
-      test signals into the cable and measuring what comes back. A repair ship then sails to the
-      area and, in deeper water, lowers a grapnel, a hook dragged across the sea floor, to catch
-      the cable and lift it to the surface.
+      Cables do break. When one fails, engineers can locate the fault by sending light pulses
+      down the fibre and timing the reflections. A repair ship then sails to the area and tows
+      a grapnel, a hook dragged across the sea floor, to catch the cable and bring both ends to
+      the surface.
     claims:
     - C8
     visual:
@@ -222,9 +222,9 @@ sections:
   heading: What breaks them
   paragraphs:
   - text: >-
-      So what breaks them? According to TeleGeography, most damage comes from human activity,
-      above all fishing and ship anchors. Dramatic explanations make better headlines, but ordinary
-      maritime activity is the everyday risk.
+      So what breaks them? According to the International Cable Protection Committee, most cable
+      faults are accidental, caused mainly by fishing and ships' anchors. Dramatic explanations
+      make better headlines, but ordinary maritime activity is the everyday risk.
     claims:
     - C9
     visual:
@@ -234,9 +234,9 @@ sections:
       camera: focus:100,170,880,660
   - text: >-
       Natural hazards are rarer, but they can be severe because they can hit several cables at
-      once. In December 2006, earthquakes off southern Taiwan triggered undersea landslides and
-      sediment flows that broke a series of cables and disrupted internet and phone services in
-      many parts of Asia, with repairs expected to take until the end of January.
+      once. In December 2006, an earthquake off southern Taiwan triggered undersea landslides
+      and sediment flows that caused more than twenty cable breaks. Internet access across the
+      region was degraded for forty-nine days while eleven cable ships carried out repairs.
     claims:
     - C10
     visual:

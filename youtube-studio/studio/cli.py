@@ -413,6 +413,51 @@ def claim_apply_proposal(
                  "re-run `studio script`/`storyboard` checks.")
 
 
+@claim_app.command("review")
+@handled
+def claim_review(episode: str,
+                 by: Annotated[str, typer.Option(prompt="Your name (recorded as verifier)")]
+                 ) -> None:
+    """Interactive human confirmation: one claim at a time (y = verify, n = reject,
+    s = skip, q = quit). Nothing is confirmed without your answer."""
+    s = settings()
+    with session_scope(s.db_path) as session:
+        _, ws, _ = _load(session, s, episode)
+        pack = load_pack(ws)
+        pset = load_proposals(ws)
+        if pset is None:
+            raise FileNotFoundError("No proposals; run `studio claim import-proposals` first")
+        pending = [p_ for p_ in pset.proposals
+                   if pack.claim(p_.claim_id).status != VerificationStatus.VERIFIED]
+        typer.echo(f"{len(pending)} claim(s) to review. Open each URL before answering.\n")
+        done = 0
+        for i, prop in enumerate(pending, 1):
+            typer.secho(f"[{i}/{len(pending)}] {prop.claim_id} - {prop.verdict}", bold=True)
+            typer.echo(f"  wording : {prop.proposed_text}")
+            typer.echo(f"  source  : {prop.source_publisher or prop.source_title}")
+            typer.echo(f"            {prop.source_url}")
+            if prop.snippet_location:
+                typer.echo(f"  where   : {prop.snippet_location}")
+            typer.echo(f"  quote   : \u201c{prop.snippet}\u201d")
+            if prop.narration_change:
+                typer.echo(f"  narration now: {prop.narration_change['proposed']}")
+            answer = typer.prompt("  verify? [y/n/s/q]", default="s").strip().lower()
+            if answer == "q":
+                break
+            if answer == "y":
+                apply_proposal(pack, prop, by=by, accept_rewording=True)
+                done += 1
+            elif answer == "n":
+                note = typer.prompt("  why rejected", default="does not match the source")
+                set_claim_status(pack, prop.claim_id, VerificationStatus.REJECTED, by=by,
+                                 notes=note)
+            save_pack(ws, pack)
+        write_report(ws, pack, pset, _used_claims(ws))
+        atomic_write_text(ws.research / "FACT_CONFIRMATION.md",
+                          confirmation_table(pack, pset, _used_claims(ws)))
+        ok(f"{done} verified by {by}. Re-run `studio review {episode}` to refresh blockers.")
+
+
 @claim_app.command("table")
 @handled
 def claim_table(episode: str) -> None:

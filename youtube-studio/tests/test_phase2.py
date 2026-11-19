@@ -326,8 +326,12 @@ def test_narration_change_is_exact_and_single_use(settings, episode):
     pset = import_proposals(ws, pack, settings.samples_dir / "undersea_cables" /
                             "verification_proposals_rc.json")
     change = pset.get("C4").narration_change
+    if change["proposed"] in script.narration_text:  # sample already carries the RC wording
+        apply_narration_change(script, {"current": change["proposed"],
+                                        "proposed": change["current"]})
     apply_narration_change(script, change)
     assert change["proposed"] in script.narration_text
+    assert change["current"] not in script.narration_text
     with pytest.raises(ResearchError):
         apply_narration_change(script, change)  # already applied -> refuses
 
@@ -366,3 +370,27 @@ def test_voices_use_writes_only_the_voice_block(settings, monkeypatch):
     after = yaml.safe_load((settings.channels_dir / "engineering_explained.yaml").read_text())
     assert {k: v for k, v in after.items() if k != "narration"} == {
         k: v for k, v in before.items() if k != "narration"}
+
+
+def test_interactive_claim_review_needs_a_human_answer(settings, episode, monkeypatch):
+    from typer.testing import CliRunner
+
+    from studio.cli import app
+    from studio.research import load_pack, save_pack
+
+    ep, ws, ch = episode
+    monkeypatch.setenv("STUDIO_ROOT", str(settings.root))
+    monkeypatch.setenv("STUDIO_PROJECTS_DIR", str(settings.projects_dir))
+    pack = MockLLMProvider(settings.samples_dir).research(ep.id, ep.topic, "undersea_cables")
+    save_pack(ws, pack)
+    import_proposals(ws, pack, settings.samples_dir / "undersea_cables" /
+                     "verification_proposals_rc.json")
+    # y for C1, n for C2 (+ reason), then quit
+    res = CliRunner().invoke(app, ["claim", "review", ep.id, "--by", "Ann"],
+                             input="y\nn\nwrong figure\nq\n")
+    assert res.exit_code == 0, res.output
+    after = load_pack(ws)
+    assert after.claim("C1").status == VerificationStatus.VERIFIED
+    assert after.claim("C1").verified_by == "Ann"
+    assert after.claim("C2").status.value == "rejected"
+    assert after.claim("C3").status == VerificationStatus.UNVERIFIED

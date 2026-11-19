@@ -37,7 +37,8 @@ uv run studio episode create --channel engineering_explained \
 uv run studio research ee-0001            # sources + per-claim citations (all unverified)
 uv run studio claim list ee-0001
 uv run studio claim verify ee-0001 C11 --snippet "<exact text from the source>" --by "Your Name"
-uv run studio claim import-proposals ee-0001 samples/undersea_cables/verification_proposals.json
+uv run studio claim import-proposals ee-0001 samples/undersea_cables/verification_proposals_rc.json
+uv run studio claim review ee-0001        # interactive: you confirm each claim (y/n/s/q)
 uv run studio claim report ee-0001        # research/VERIFICATION_REPORT.md (proposals only)
 uv run studio claim apply-proposal ee-0001 C19 --by "Your Name" [--accept-rewording]
 uv run studio script ee-0001              # narration with claim ids; numbers need citations
