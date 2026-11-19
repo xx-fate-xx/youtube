@@ -54,6 +54,9 @@ class Settings:
     elevenlabs_voice_id: str
     elevenlabs_model_id_env: str
     elevenlabs_plan: str
+    llm_model: str
+    llm_effort: str
+    anthropic_credentials_hint: bool
     ffmpeg_override: str | None
     font_path: str | None
     default_voice_provider: str
@@ -98,6 +101,10 @@ def load_settings(root: Path | None = None) -> Settings:
         elevenlabs_voice_id=os.environ.get("ELEVENLABS_VOICE_ID", "").strip(),
         elevenlabs_model_id_env=os.environ.get("ELEVENLABS_MODEL_ID", "").strip(),
         elevenlabs_plan=os.environ.get("ELEVENLABS_PLAN", "").strip(),
+        llm_model=os.environ.get("STUDIO_LLM_MODEL", "").strip() or "claude-opus-5-5",
+        llm_effort=os.environ.get("STUDIO_LLM_EFFORT", "").strip() or "high",
+        anthropic_credentials_hint=bool(os.environ.get("ANTHROPIC_API_KEY", "").strip()
+                                        or os.environ.get("ANTHROPIC_AUTH_TOKEN", "").strip()),
         ffmpeg_override=os.environ.get("STUDIO_FFMPEG", "").strip() or None,
         font_path=os.environ.get("STUDIO_FONT", "").strip() or None,
         default_voice_provider=os.environ.get("STUDIO_VOICE_PROVIDER", "mock").strip() or "mock",

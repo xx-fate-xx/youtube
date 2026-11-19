@@ -85,6 +85,9 @@ assets_app = typer.Typer(no_args_is_help=True, help="Build and check visual asse
 cost_app = typer.Typer(no_args_is_help=True, help="Budget and cost ledger")
 channels_app = typer.Typer(no_args_is_help=True, help="Channel style profiles")
 voices_app = typer.Typer(no_args_is_help=True, help="ElevenLabs voice candidates (no generation)")
+connect_app = typer.Typer(no_args_is_help=True, help="Paid/external service readiness")
+draft_app = typer.Typer(no_args_is_help=True,
+                        help="Claude drafts (PAID; needs flag + consent; writes *.draft.yaml)")
 author_app = typer.Typer(no_args_is_help=True, help="Hand-write an episode (no LLM needed)")
 diagrams_app = typer.Typer(no_args_is_help=True, help="Diagram library (code + YAML templates)")
 app.add_typer(episode_app, name="episode")
@@ -95,6 +98,8 @@ app.add_typer(channels_app, name="channels")
 app.add_typer(voices_app, name="voices")
 app.add_typer(diagrams_app, name="diagrams")
 app.add_typer(author_app, name="author")
+app.add_typer(draft_app, name="draft")
+app.add_typer(connect_app, name="connect")
 
 KNOWN_ERRORS = (IllegalTransition, BudgetError, ResearchError, ReviewBlocked, PublishBlocked,
                 KeyError, ValueError, FileNotFoundError, RuntimeError)
@@ -754,8 +759,8 @@ def shorts(episode: str, count: int = 3,
         count = min(count, 3)
         pack = load_pack(ws)
         sc = load_script(ws)
-        provider, sample, _ = source_for(ws, s.samples_dir, ep.sample, "shorts.yaml")
-        specs = provider.shorts(ep.id, ep.title, pack, count, sample)
+        text_source, sample, _ = source_for(ws, s.samples_dir, ep.sample, "shorts.yaml")
+        specs = text_source.shorts(ep.id, ep.title, pack, count, sample)
         if not specs:
             warn("No Shorts for this topic: write authoring/shorts.yaml (`studio author init`).")
             return
@@ -919,7 +924,9 @@ def visibility(episode: str, status: Annotated[str, typer.Option(
 @handled
 def analytics(channel: str | None = None, days: int = 30,
               import_csv: Annotated[Path | None, typer.Option(help="YouTube Studio CSV")] = None,
-              mock: Annotated[bool, typer.Option(help="add synthetic test rows")] = False
+              mock: Annotated[bool, typer.Option(help="add synthetic test rows")] = False,
+              api: Annotated[bool, typer.Option(
+                  help="pull from the YouTube Analytics API (needs OAuth)")] = False
               ) -> None:
     """Import stats (CSV or mock) and print the channel comparison report."""
     from sqlmodel import select
@@ -931,6 +938,18 @@ def analytics(channel: str | None = None, days: int = 30,
                 raise ValueError("--channel is required with --import-csv")
             n = analytics_mod.import_csv(session, channel, import_csv, days)
             ok(f"Imported {n} rows from {import_csv}")
+        if api:
+            if not channel:
+                raise ValueError("--channel is required with --api")
+            if not (s.enable_youtube and s.youtube_client_secrets
+                    and s.youtube_client_secrets.exists()):
+                raise PublishBlocked("YouTube OAuth not connected (STUDIO_ENABLE_YOUTUBE=1 + "
+                                     "YOUTUBE_CLIENT_SECRETS_FILE); use --import-csv instead")
+            from studio.providers.youtube import GoogleAnalyticsClient
+
+            client = GoogleAnalyticsClient(s.youtube_client_secrets, s.youtube_token_file)
+            n = analytics_mod.import_api(session, channel, client, days)
+            ok(f"Imported {n} rows from the YouTube Analytics API")
         if mock:
             channels = [channel] if channel else list(load_channels(s.channels_dir))
             for ch in channels:
@@ -1237,6 +1256,151 @@ def thumbnail(episode: str,
         for issue in readability_issues(variants):
             warn(f"  {issue}")
         typer.echo("Pick one and copy it to render/thumbnail_draft.png (or keep the default).")
+
+
+def _drafter(s: Settings):
+    from studio.providers.anthropic_llm import AnthropicDraftProvider
+
+    return AnthropicDraftProvider(model=s.llm_model, effort=s.llm_effort)
+
+
+def _run_draft(session, s: Settings, ep_id: str, operation: str, prompt_chars: int,
+               dry_run: bool, consent: bool, call):
+    """Shared guard for every paid Claude call: estimate -> preflight -> arm -> call -> ledger."""
+    drafter = _drafter(s)
+    est = drafter.estimate_usd(prompt_chars)
+    guard = BudgetGuard(session, s)
+    typer.echo(f"{operation}: model={drafter.model} effort={drafter.effort} prompt "
+               f"~{prompt_chars:,} chars; worst-case estimate ${est:.2f}")
+    if dry_run:
+        try:
+            guard.preflight(provider="anthropic", operation=operation, estimate_usd=est,
+                            paid=True, consent=True, episode_id=ep_id)
+            ok("Dry run: preflight would pass (nothing sent, nothing spent).")
+        except BudgetError as exc:
+            warn(f"Dry run: preflight would FAIL: {exc}")
+        session.rollback()
+        return None
+    guard.preflight(provider="anthropic", operation=operation, estimate_usd=est, paid=True,
+                    consent=consent, episode_id=ep_id)
+    drafter.arm(est)
+    try:
+        result = call(drafter)
+    finally:
+        if drafter.spent_usd:
+            guard.record(provider="anthropic", operation=operation, usd=drafter.spent_usd,
+                          paid=True, episode_id=ep_id)
+    ok(f"Claude ({result.served_by}) cost ${result.usage.usd():.4f} "
+       f"[in {result.usage.input_tokens} / out {result.usage.output_tokens} tokens]")
+    return result
+
+
+def _diagram_ids() -> list[str]:
+    from studio.diagrams import DIAGRAMS, spec_ids
+
+    return sorted(DIAGRAMS) + spec_ids()
+
+
+@draft_app.command("script")
+@handled
+def draft_script(episode: str,
+                 dry_run: Annotated[bool, typer.Option("--dry-run")] = False,
+                 i_consent_to_spend: Annotated[bool, typer.Option("--i-consent-to-spend")]
+                 = False) -> None:
+    """Draft a script from the research claims -> authoring/script.draft.yaml."""
+    import yaml
+
+    from studio.authoring import author_dir
+
+    s = settings()
+    with session_scope(s.db_path) as session:
+        ep, ws, ch = _load(session, s, episode)
+        pack = load_pack(ws)
+        diagrams = _diagram_ids()
+        system, user = _drafter(s).build_script_prompt(ch, pack, ep.title, ep.target_minutes,
+                                                       diagrams)
+        res = _run_draft(session, s, ep.id, "draft_script", len(system) + len(user), dry_run,
+                         i_consent_to_spend,
+                         lambda d: d.draft_script(ch, pack, ep.title, ep.target_minutes,
+                                                  diagrams))
+        if res is None:
+            return
+        out = author_dir(ws) / "script.draft.yaml"
+        out.parent.mkdir(parents=True, exist_ok=True)
+        atomic_write_text(out, "# DRAFT by Claude - review every sentence, then rename to "
+                          "script.yaml\n" + yaml.safe_dump(res.data, sort_keys=False,
+                                                           allow_unicode=True, width=92))
+        ok(f"Draft -> {out}  (not used until you rename it)")
+
+
+@draft_app.command("shorts")
+@handled
+def draft_shorts(episode: str, count: int = 3,
+                 dry_run: Annotated[bool, typer.Option("--dry-run")] = False,
+                 i_consent_to_spend: Annotated[bool, typer.Option("--i-consent-to-spend")]
+                 = False) -> None:
+    """Draft up to 3 independent Shorts -> authoring/shorts.draft.yaml."""
+    import yaml
+
+    from studio.authoring import author_dir
+
+    s = settings()
+    with session_scope(s.db_path) as session:
+        ep, ws, ch = _load(session, s, episode)
+        pack = load_pack(ws)
+        text = load_script(ws).narration_text
+        diagrams = _diagram_ids()
+        chars = len(text) + sum(len(c.text) for c in pack.claims) + 3000
+        res = _run_draft(session, s, ep.id, "draft_shorts", chars, dry_run, i_consent_to_spend,
+                         lambda d: d.draft_shorts(ch, pack, ep.title, text, diagrams,
+                                                  min(count, 3)))
+        if res is None:
+            return
+        for sh in res.data.get("shorts", []):
+            sh["link_text"] = f"Full episode: {ep.title}"
+        out = author_dir(ws) / "shorts.draft.yaml"
+        out.parent.mkdir(parents=True, exist_ok=True)
+        atomic_write_text(out, "# DRAFT by Claude - review, then rename to shorts.yaml\n"
+                          + yaml.safe_dump(res.data, sort_keys=False, allow_unicode=True,
+                                           width=92))
+        ok(f"Draft -> {out}")
+
+
+@draft_app.command("ideas")
+@handled
+def draft_ideas(channel: str, count: int = 10,
+                dry_run: Annotated[bool, typer.Option("--dry-run")] = False,
+                i_consent_to_spend: Annotated[bool, typer.Option("--i-consent-to-spend")]
+                = False) -> None:
+    """Propose episode ideas with research questions (no facts) -> ideas_<channel>.draft.yaml."""
+    import yaml
+    from sqlmodel import select
+
+    s = settings()
+    ch = get_channel(s.channels_dir, channel)
+    with session_scope(s.db_path) as session:
+        existing = [e.title for e in session.exec(select(Episode).where(
+            Episode.channel == channel)).all()]
+        res = _run_draft(session, s, "", "draft_ideas", 3000, dry_run, i_consent_to_spend,
+                         lambda d: d.propose_ideas(ch, count, existing))
+        if res is None:
+            return
+        out = s.projects_dir / f"ideas_{channel}.draft.yaml"
+        atomic_write_text(out, yaml.safe_dump(res.data, sort_keys=False, allow_unicode=True,
+                                              width=92))
+        ok(f"Ideas -> {out}")
+
+
+@connect_app.command("status")
+@handled
+def connect_status() -> None:
+    """What is connected, what is missing, and the next command - no secrets printed."""
+    from studio.connect import status, status_markdown
+
+    s = settings()
+    with session_scope(s.db_path) as session:
+        spent = BudgetGuard(session, s).month_spent()
+    typer.echo(status_markdown(status(s), spent, s.monthly_budget_usd))
 
 
 def main() -> None:  # pragma: no cover

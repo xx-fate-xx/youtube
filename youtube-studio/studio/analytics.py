@@ -6,6 +6,7 @@ import csv
 import hashlib
 import json
 import re
+from datetime import UTC, datetime
 from pathlib import Path
 
 from sqlmodel import Session, select
@@ -101,6 +102,36 @@ def add_mock_stats(session: Session, channel: str, episodes: list[Episode], days
             production_cost_usd=_episode_cost(session, ep.id), source="mock",
         ))
     return len(episodes)
+
+
+def import_api(session: Session, channel: str, client, days: int,
+               today: datetime | None = None) -> int:
+    """Pull per-video stats from the YouTube Analytics API for uploaded episodes."""
+    from datetime import timedelta
+
+    from studio.providers.youtube import fetch_video_stats
+
+    end = (today or datetime.now(UTC)).date()
+    start = end - timedelta(days=days - 1)
+    eps = [e for e in session.exec(select(Episode).where(Episode.channel == channel)).all()
+           if e.remote_video_id]
+    stats = fetch_video_stats(client, [e.remote_video_id for e in eps], start.isoformat(),
+                              end.isoformat())
+    n = 0
+    for ep in eps:
+        m = stats.get(ep.remote_video_id)
+        if not m:
+            continue
+        session.add(VideoStats(
+            channel=channel, episode_id=ep.id, remote_video_id=ep.remote_video_id,
+            title=ep.title, days=days, views=int(m.get("views", 0)),
+            avg_view_duration_s=m.get("averageViewDuration"),
+            avg_pct_viewed=m.get("averageViewPercentage"),
+            subscribers_gained=int(m["subscribersGained"]) if "subscribersGained" in m
+            else None,
+            production_cost_usd=_episode_cost(session, ep.id), source="api"))
+        n += 1
+    return n
 
 
 def channel_report(session: Session, channel: str | None = None) -> dict:

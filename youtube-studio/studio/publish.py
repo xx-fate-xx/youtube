@@ -173,12 +173,15 @@ def publish_private(settings: Settings, session: Session, episode: Episode, ws: 
                                   tags=meta["tags"], default_language="en",
                                   contains_synthetic_media=meta["containsSyntheticMedia"],
                                   thumbnail=thumb if thumb.exists() else None)
+        captions = publisher.upload_captions(result["id"], srt)
+        shorts_uploaded = _upload_shorts_private(publisher, ws, episode, result["id"])
         episode.remote_video_id = result["id"]
         episode.youtube_privacy = "private"
         transition(session, episode, EpisodeState.PRIVATE_UPLOADED,
                    note=f"uploaded private as {result['id']}")
         receipt = ws.release / "upload_receipt.json"
-        atomic_write_text(receipt, redact(result) + "\n")
+        atomic_write_text(receipt, redact({"video": result, "captions": captions,
+                                           "shorts": shorts_uploaded}) + "\n")
         return PublishResult("youtube_private", receipt, result["id"])
 
     # No OAuth: export a publish-ready local package. State stays 'approved'.
@@ -203,9 +206,36 @@ def publish_private(settings: Settings, session: Session, episode: Episode, ws: 
         "4. Upload the .srt under Subtitles, and the thumbnail.\n"
         f"5. Altered or synthetic content disclosure: "
         f"{'YES' if meta['containsSyntheticMedia'] else 'NO'} (operator decision at review).\n"
-        "6. Then record the video id: `studio publish record-remote <ep> <video-id>`.\n"
+        "6. Chapters are already in the description (first line 0:00).\n"
+        "7. Upload each Short from shorts/ the same way (Private), adding the episode link.\n"
+        "8. Then record the video id: `studio record-upload <ep> <video-id>`.\n"
     ))
     return PublishResult("release_folder", rel)
+
+
+def _upload_shorts_private(publisher: YouTubePublisher, ws: Workspace, episode: Episode,
+                           long_video_id: str) -> list[dict]:
+    """Each rendered Short as its own PRIVATE video, linking to the long episode."""
+    import json as _json
+
+    done = []
+    for short_dir in sorted(p for p in ws.shorts.glob("*") if p.is_dir() and p.name != "frames"):
+        mp4 = next(iter(sorted(short_dir.glob("*_master.mp4"))), None)
+        meta_file = short_dir / "metadata.json"
+        if not mp4 or not meta_file.exists():
+            continue
+        meta = _json.loads(meta_file.read_text(encoding="utf-8"))
+        desc = (meta.get("description", "") +
+                f"\n\nFull episode: https://youtu.be/{long_video_id}")
+        res = publisher.upload(mp4, title=meta.get("title", short_dir.name),
+                               description=desc, tags=["Shorts"])
+        srt = next(iter(sorted(short_dir.glob("*.srt"))), None)
+        if srt:
+            publisher.upload_captions(res["id"], srt)
+        meta["remote_video_id"] = res["id"]
+        atomic_write_json(meta_file, meta)
+        done.append({"short": short_dir.name, "id": res["id"]})
+    return done
 
 
 def record_manual_upload(session: Session, episode: Episode, ws: Workspace,

@@ -18,7 +18,13 @@ from typing import Any, Protocol
 PRIVATE = "private"
 ALLOWED_VISIBILITY = {"private", "unlisted", "public", "scheduled"}
 SCOPES = ["https://www.googleapis.com/auth/youtube.upload",
-          "https://www.googleapis.com/auth/youtube.readonly"]
+          "https://www.googleapis.com/auth/youtube.readonly",
+          "https://www.googleapis.com/auth/youtube.force-ssl",      # captions.insert
+          "https://www.googleapis.com/auth/yt-analytics.readonly"]  # Analytics API
+# Default Data API quota is 10,000 units/day: videos.insert ~1,600, captions.insert ~400,
+# thumbnails.set ~50. One episode + 3 Shorts with captions is roughly 8,000 units.
+QUOTA_COST = {"videos.insert": 1600, "captions.insert": 400, "thumbnails.set": 50,
+              "videos.update": 50}
 
 
 class UnsafeVisibilityError(RuntimeError):
@@ -34,6 +40,9 @@ class YouTubeClient(Protocol):
                      thumbnail: Path | None) -> dict[str, Any]: ...
 
     def update_status(self, video_id: str, status: dict[str, Any]) -> dict[str, Any]: ...
+
+    def insert_caption(self, video_id: str, srt: Path, language: str,
+                       name: str) -> dict[str, Any]: ...
 
 
 class YouTubePublisher:
@@ -65,6 +74,13 @@ class YouTubePublisher:
                 "in YouTube Studio immediately."
             )
         return result
+
+    def upload_captions(self, video_id: str, srt: Path, language: str = "en",
+                        name: str = "English") -> dict[str, Any] | None:
+        """Attach the .srt to an already uploaded (private) video."""
+        if not srt.exists():
+            return None
+        return self.client.insert_caption(video_id, srt, language, name)
 
     def set_visibility(self, video_id: str, *, episode_id: str, confirm_episode_id: str,
                        visibility: str, publish_at: datetime | None = None) -> dict[str, Any]:
@@ -128,6 +144,55 @@ class GoogleYouTubeClient:  # pragma: no cover - requires real OAuth credentials
     def update_status(self, video_id: str, status: dict[str, Any]) -> dict[str, Any]:
         return self._yt.videos().update(part="status",
                                         body={"id": video_id, "status": status}).execute()
+
+    def insert_caption(self, video_id: str, srt: Path, language: str,
+                       name: str) -> dict[str, Any]:
+        from googleapiclient.http import MediaFileUpload
+
+        body = {"snippet": {"videoId": video_id, "language": language, "name": name,
+                            "isDraft": False}}
+        return self._yt.captions().insert(
+            part="snippet", body=body,
+            media_body=MediaFileUpload(str(srt), mimetype="application/octet-stream"),
+        ).execute()
+
+
+class GoogleAnalyticsClient:  # pragma: no cover - requires real OAuth credentials
+    """YouTube Analytics API v2 (reports.query). Shares the OAuth token with uploads."""
+
+    def __init__(self, client_secrets: Path, token_file: Path):
+        uploader = GoogleYouTubeClient(client_secrets, token_file)  # same consent flow
+        from googleapiclient.discovery import build
+
+        self._ya = build("youtubeAnalytics", "v2", credentials=uploader._yt._http.credentials,
+                         cache_discovery=False)
+
+    def query(self, **params: Any) -> dict[str, Any]:
+        return self._ya.reports().query(**params).execute()
+
+
+ANALYTICS_METRICS = ("views,estimatedMinutesWatched,averageViewDuration,"
+                     "averageViewPercentage,subscribersGained")
+
+
+def fetch_video_stats(client: Any, video_ids: list[str], start: str, end: str
+                      ) -> dict[str, dict[str, float]]:
+    """Per-video metrics for `channel==MINE` between ISO dates (inclusive).
+
+    Impressions and CTR are not exposed by the Analytics API for all channels; they keep
+    coming from the Studio CSV export (`studio analytics --import-csv`)."""
+    if not video_ids:
+        return {}
+    resp = client.query(ids="channel==MINE", startDate=start, endDate=end,
+                        metrics=ANALYTICS_METRICS, dimensions="video",
+                        filters="video==" + ",".join(video_ids), maxResults=200)
+    cols = [h["name"] for h in resp.get("columnHeaders", [])]
+    out: dict[str, dict[str, float]] = {}
+    for row in resp.get("rows", []) or []:
+        rec = dict(zip(cols, row, strict=False))
+        video = str(rec.pop("video"))
+        out[video] = {k: float(v) for k, v in rec.items()}
+    return out
 
 
 def redact(obj: Any) -> str:

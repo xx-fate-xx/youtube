@@ -110,6 +110,13 @@ script`). Illegal transitions raise `IllegalTransition`; every change is logged.
 | Visuals | code-generated diagrams/cards | `studio assets add` for your own / Pexels footage with licence proof |
 | YouTube | release folder | OAuth upload (`STUDIO_ENABLE_YOUTUBE=1`, `uv sync --extra youtube`) |
 
+## Connecting services
+
+All paid/external integrations are implemented but switched off; see
+[docs/CONNECT.md](docs/CONNECT.md) and `studio connect status`. Free extras: hand-written
+episodes (`studio author init|check`), pause-aligned own narration, chapters/description,
+thumbnail variants (`studio thumbnail`), licensed music import.
+
 ## Diagram library
 
 New diagrams are YAML, not code: `diagram_specs/<id>.yaml` with one of seven templates

@@ -24,14 +24,22 @@ class FakeClient:
         self.echo = echo
         self.inserted: list[dict[str, Any]] = []
         self.updates: list[tuple[str, dict]] = []
+        self.captions: list[tuple[str, str, str]] = []
+        self._n = 0
 
     def insert_video(self, video_path: Path, body: dict, thumbnail: Path | None) -> dict:
         self.inserted.append(body)
-        return {"id": "VID123", "status": {"privacyStatus": self.echo}}
+        self._n += 1
+        vid = "VID123" if self._n == 1 else f"SHORT{self._n - 1}"
+        return {"id": vid, "status": {"privacyStatus": self.echo}}
 
     def update_status(self, video_id: str, status: dict) -> dict:
         self.updates.append((video_id, status))
         return {"id": video_id, "status": status}
+
+    def insert_caption(self, video_id: str, srt: Path, language: str, name: str) -> dict:
+        self.captions.append((video_id, srt.name, language))
+        return {"id": f"CAP-{video_id}"}
 
 
 def test_upload_has_no_visibility_parameter_and_is_private(tmp_path):
@@ -135,3 +143,75 @@ def test_no_credentials_exports_release_folder(settings, episode):
         meta = (res.path / "metadata.json").read_text()
         assert '"privacyStatus": "private"' in meta
         assert (res.path / "UPLOAD_INSTRUCTIONS.md").exists()
+
+
+def test_full_private_upload_includes_captions_and_private_shorts(settings, episode):
+    import json
+
+    ep, ws, ch = episode
+    _approve(settings, ep.id, ws)
+    (ws.render / f"{ep.id}.en.srt").write_text("1\n00:00:00,000 --> 00:00:01,000\nHi\n")
+    for k in (1, 2):
+        d = ws.shorts / f"short-{k}"
+        d.mkdir(parents=True, exist_ok=True)
+        (d / f"short-{k}_master.mp4").write_bytes(b"x")
+        (d / f"short-{k}.en.srt").write_text("1\n00:00:00,000 --> 00:00:01,000\nHi\n")
+        (d / "metadata.json").write_text(json.dumps({"title": f"S{k}", "description": "d"}))
+    client = FakeClient()
+    with session_scope(settings.db_path) as session:
+        e = get_episode(session, ep.id)
+        publish_private(settings, session, e, ws, ch, client=client)
+    assert [b["status"]["privacyStatus"] for b in client.inserted] == ["private"] * 3
+    assert "youtu.be/VID123" in client.inserted[1]["snippet"]["description"]
+    assert [c[0] for c in client.captions] == ["VID123", "SHORT1", "SHORT2"]
+    meta = json.loads((ws.shorts / "short-1" / "metadata.json").read_text())
+    assert meta["remote_video_id"] == "SHORT1"
+    receipt = (ws.release / "upload_receipt.json").read_text()
+    assert "SHORT2" in receipt
+
+
+def test_analytics_api_rows_are_mapped_per_video():
+    from studio.providers.youtube import fetch_video_stats
+
+    class FakeAnalytics:
+        def __init__(self):
+            self.params = None
+
+        def query(self, **params):
+            self.params = params
+            return {"columnHeaders": [{"name": "video"}, {"name": "views"},
+                                      {"name": "averageViewDuration"}],
+                    "rows": [["VID123", 120, 95], ["SHORT1", 900, 21]]}
+
+    fa = FakeAnalytics()
+    out = fetch_video_stats(fa, ["VID123", "SHORT1"], "2026-11-01", "2026-11-18")
+    assert out["VID123"] == {"views": 120.0, "averageViewDuration": 95.0}
+    assert fa.params["ids"] == "channel==MINE" and "VID123" in fa.params["filters"]
+    assert fetch_video_stats(fa, [], "a", "b") == {}
+
+
+def test_analytics_api_import_stores_rows_for_uploaded_episodes(settings, episode):
+    from datetime import UTC, datetime
+
+    from sqlmodel import select
+
+    from studio.analytics import import_api
+    from studio.models import VideoStats
+
+    ep, ws, ch = episode
+
+    class FakeAnalytics:
+        def query(self, **params):
+            return {"columnHeaders": [{"name": "video"}, {"name": "views"},
+                                      {"name": "subscribersGained"}],
+                    "rows": [["VIDX", 321, 4]]}
+
+    with session_scope(settings.db_path) as session:
+        e = get_episode(session, ep.id)
+        e.remote_video_id = "VIDX"
+        session.add(e)
+        session.flush()
+        n = import_api(session, ch.key, FakeAnalytics(), 28,
+                       today=datetime(2026, 11, 18, tzinfo=UTC))
+        rows = session.exec(select(VideoStats).where(VideoStats.source == "api")).all()
+    assert n == 1 and rows[0].views == 321 and rows[0].subscribers_gained == 4
