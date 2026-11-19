@@ -1,0 +1,55 @@
+key: business_uncovered
+name: Business Uncovered   # working title; handle availability not assumed
+id_prefix: bu
+language: en-US
+runtime_minutes: [8, 15]
+audience: >
+  Professionals, founders and students interested in how companies really make money and
+  how strategic decisions played out over time.
+positioning: >
+  Well-sourced corporate-history documentaries with original business-model analysis.
+  Explains mechanisms (unit economics, distribution, moats); never gives investment advice.
+tone:
+  - investigative but fair; no hero/villain caricatures
+  - numbers always attributed to filings, reports, or named reporting
+  - analytic voice clearly separated from sourced fact ("our reading is...")
+storytelling_structure:
+  - "Cold open: a pivotal decision or turning point, sourced"
+  - "Origins: the original problem and business model"
+  - "Engine: how the money actually flows (diagram of the model)"
+  - "Inflection: 1-2 strategic bets and their consequences"
+  - "Today: current model and open questions"
+  - "Lessons: transferable analysis, explicitly not investment advice"
+do:
+  - cite annual reports, filings, and dated primary sources
+  - show money-flow diagrams built from sourced figures
+  - add a "not investment advice" note in the description
+dont:
+  - stock tips, price targets, or buy/sell language
+  - unsourced revenue figures or invented executive quotes
+  - using company logos/footage without permission
+narration:
+  words_per_minute: 155
+  tone: confident documentary narrator, slightly faster, crisp
+  local_voice: Daniel
+  sentence_pause_s: 0.22
+  scene_pause_s: 0.5
+visual:
+  background: "#151515"
+  foreground: "#F4F1EA"
+  accent: "#E63946"
+  accent_2: "#F1C40F"
+  muted: "#8A8578"
+  caption_bg: "#000000C8"
+  font_family: "Avenir Next, Helvetica, Arial, sans-serif"
+  motif: newsprint texture, ledger lines, red/gold accent bars, timeline rails
+shorts_style: >
+  One counter-intuitive business-model fact per Short, shown as a single money-flow card,
+  with the source named on screen.
+idea_backlog:
+  - Why airlines make money from loyalty programs
+  - How a warehouse club makes money on memberships
+  - The business model of toll roads
+  - How franchising changed fast food economics
+  - Why printers are cheap and ink is not
+default_tags: [business, business model, company history, documentary]

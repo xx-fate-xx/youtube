@@ -1,0 +1,71 @@
+key: engineering_explained
+name: Engineering Explained   # working title; handle availability not assumed
+id_prefix: ee
+language: en-US
+runtime_minutes: [8, 15]
+audience: >
+  Curious adults and students who want to understand how physical infrastructure and
+  machines actually work, without hand-waving.
+positioning: >
+  Mechanism-first explainers. Every chapter answers "how does it physically work?" with an
+  accurate, original diagram rather than a generic image montage.
+tone:
+  - calm, precise, quietly enthusiastic
+  - plain words first, then the correct technical term
+  - honest about uncertainty and simplifications ("schematic, not to scale")
+storytelling_structure:
+  - "Hook: one surprising, verifiable fact or historical moment (<= 20 s)"
+  - "Map: where/what the system is, at a glance"
+  - "Mechanism: 2-3 chapters, each built around one diagram that animates in steps"
+  - "Operations: how it is built, maintained, repaired"
+  - "Failure modes and trade-offs vs alternatives"
+  - "Recap: three takeaways, no clickbait cliffhanger"
+do:
+  - cite a source for every number and date
+  - label simplified diagrams as schematic
+  - explain why, not only what
+dont:
+  - generic stock montages over technical explanation
+  - invented quotes, invented figures, or "experts say" without a named source
+  - sensational disaster framing
+narration:
+  words_per_minute: 150
+  tone: measured documentary narrator, medium pace, minimal emphasis
+  local_voice: Samantha
+  # ElevenLabs (paid, Starter plan). voice_id stays empty until you pick a candidate from
+  # channels/voices/engineering_explained.elevenlabs.yaml (`studio voices use <key>`).
+  elevenlabs:
+    voice_id: ""
+    name: ""
+    model_id: eleven_multilingual_v2
+    stability: 0.55
+    similarity_boost: 0.75
+    style: 0.0
+    use_speaker_boost: true
+    speed: 1.0
+  sentence_pause_s: 0.25
+  scene_pause_s: 0.6
+visual:
+  background: "#0B1D2A"
+  foreground: "#EAF2F7"
+  accent: "#2EC4B6"
+  accent_2: "#FFB703"
+  muted: "#6B8496"
+  caption_bg: "#06121BCC"
+  font_family: "Helvetica Neue, Helvetica, Arial, sans-serif"
+  motif: blueprint grid, thin technical line work, teal + amber highlights
+shorts_style: >
+  One mechanism per Short. Open on the diagram already moving, one-line hook on screen,
+  end card that points to the full episode.
+idea_backlog:
+  - How undersea internet cables actually work
+  - How a modern lock (canal lock) lifts ships without pumps
+  - How a suspension bridge carries its load
+  - How a power grid keeps frequency stable second by second
+  - How tunnel boring machines steer underground
+  - How elevators stay safe when a cable fails
+  - How water towers keep pressure in a city
+  - How jet engines turn fuel into thrust
+  - How railway signalling prevents collisions
+  - How a dam spillway controls a flood
+default_tags: [engineering, infrastructure, how it works, explainer]

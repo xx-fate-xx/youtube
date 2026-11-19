@@ -1,0 +1,133 @@
+"""Research pack: sources, per-claim citations and human verification."""
+
+from __future__ import annotations
+
+from datetime import UTC, datetime
+from urllib.parse import urlparse
+
+from studio.episodes import Workspace
+from studio.fsutil import atomic_write_json, atomic_write_text, read_model
+from studio.models import Claim, ResearchPack, Source, VerificationStatus
+
+
+class ResearchError(RuntimeError):
+    pass
+
+
+def load_pack(ws: Workspace) -> ResearchPack:
+    if not ws.research_file.exists():
+        raise ResearchError("No research pack yet. Run `studio research <episode>` first.")
+    return read_model(ws.research_file, ResearchPack)
+
+
+def save_pack(ws: Workspace, pack: ResearchPack) -> None:
+    problems = validate_pack(pack)
+    if problems:
+        raise ResearchError("Invalid research pack:\n- " + "\n- ".join(problems))
+    atomic_write_json(ws.research_file, pack)
+    atomic_write_text(ws.research / "sources.md", sources_markdown(pack))
+
+
+def validate_pack(pack: ResearchPack) -> list[str]:
+    """Structural checks: citations must point at real entries with real URLs."""
+    problems: list[str] = []
+    source_ids = [s.id for s in pack.sources]
+    claim_ids = [c.id for c in pack.claims]
+    for dup in {i for i in source_ids if source_ids.count(i) > 1}:
+        problems.append(f"duplicate source id {dup}")
+    for dup in {i for i in claim_ids if claim_ids.count(i) > 1}:
+        problems.append(f"duplicate claim id {dup}")
+    for s in pack.sources:
+        parsed = urlparse(s.url)
+        if parsed.scheme not in {"http", "https"} or not parsed.netloc:
+            problems.append(f"source {s.id} has invalid URL {s.url!r}")
+        if not s.title.strip():
+            problems.append(f"source {s.id} has no title")
+    for c in pack.claims:
+        if not c.source_ids:
+            problems.append(f"claim {c.id} has no source")
+        for sid in c.source_ids:
+            if sid not in source_ids:
+                problems.append(f"claim {c.id} cites unknown source {sid}")
+        if c.status == VerificationStatus.VERIFIED and not c.supporting_snippet.strip():
+            problems.append(f"claim {c.id} is verified without a supporting snippet")
+    return problems
+
+
+def add_source(pack: ResearchPack, *, url: str, title: str, publisher: str = "",
+               published_date: str = "", notes: str = "") -> Source:
+    sid = f"S{len(pack.sources) + 1}"
+    while any(s.id == sid for s in pack.sources):
+        sid = f"S{int(sid[1:]) + 1}"
+    src = Source(id=sid, url=url, title=title, publisher=publisher,
+                 published_date=published_date, notes=notes)
+    pack.sources.append(src)
+    return src
+
+
+def add_claim(pack: ResearchPack, *, text: str, source_ids: list[str], numeric: bool = False,
+              notes: str = "") -> Claim:
+    cid = f"C{len(pack.claims) + 1}"
+    while any(c.id == cid for c in pack.claims):
+        cid = f"C{int(cid[1:]) + 1}"
+    claim = Claim(id=cid, text=text, source_ids=source_ids, numeric=numeric, notes=notes)
+    pack.claims.append(claim)
+    return claim
+
+
+def verify_claim(pack: ResearchPack, claim_id: str, *, snippet: str, verified_by: str,
+                 notes: str = "") -> Claim:
+    """Human verification: requires the exact supporting snippet and a named verifier."""
+    if not snippet.strip():
+        raise ResearchError("Verification requires the supporting snippet copied from the source")
+    if not verified_by.strip():
+        raise ResearchError("Verification requires the verifier's name")
+    claim = pack.claim(claim_id)
+    claim.supporting_snippet = snippet.strip()
+    claim.status = VerificationStatus.VERIFIED
+    claim.verified_by = verified_by.strip()
+    claim.verified_at = datetime.now(UTC)
+    if notes:
+        claim.notes = notes
+    return claim
+
+
+def set_claim_status(pack: ResearchPack, claim_id: str, status: VerificationStatus, *,
+                     by: str, notes: str) -> Claim:
+    if status == VerificationStatus.VERIFIED:
+        raise ResearchError("Use verify_claim() to verify (snippet required)")
+    claim = pack.claim(claim_id)
+    claim.status = status
+    claim.verified_by = by
+    claim.verified_at = datetime.now(UTC)
+    claim.notes = notes
+    return claim
+
+
+def claim_blockers(pack: ResearchPack, used_claim_ids: set[str]) -> list[str]:
+    """Every claim used in the video must be verified. Unused claims are reported too."""
+    blockers: list[str] = []
+    known = {c.id for c in pack.claims}
+    for cid in sorted(used_claim_ids - known):
+        blockers.append(f"script cites unknown claim {cid}")
+    for c in pack.claims:
+        if c.id in used_claim_ids and c.status != VerificationStatus.VERIFIED:
+            blockers.append(f"claim {c.id} is {c.status.value}: {c.text[:90]}")
+    return blockers
+
+
+def sources_markdown(pack: ResearchPack) -> str:
+    lines = [f"# Sources - {pack.topic}", "", f"Generated by: `{pack.generated_by}`", ""]
+    lines += ["## Sources", ""]
+    for s in pack.sources:
+        lines.append(f"- **{s.id}** [{s.title}]({s.url}) - {s.publisher} "
+                     f"(accessed {s.accessed_at:%Y-%m-%d})")
+    lines += ["", "## Claims", "", "| id | status | claim | sources | snippet |",
+              "|---|---|---|---|---|"]
+    for c in pack.claims:
+        snippet = (c.supporting_snippet or "_missing_").replace("|", "/")
+        lines.append(f"| {c.id} | **{c.status.value}** | {c.text.replace('|', '/')} | "
+                     f"{', '.join(c.source_ids)} | {snippet[:120]} |")
+    if pack.open_questions:
+        lines += ["", "## Open questions", ""] + [f"- {q}" for q in pack.open_questions]
+    return "\n".join(lines) + "\n"

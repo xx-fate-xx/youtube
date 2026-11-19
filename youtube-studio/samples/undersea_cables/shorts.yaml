@@ -1,0 +1,50 @@
+# Three independently written Shorts. Each has its own hook, its own narration (not lifted
+# from the long script), its own composition, and an explicit link back to the full episode.
+shorts:
+  - id: short-1-glass
+    title: Your data crosses oceans inside glass
+    hook: "This hair-thin glass carries your video call across the ocean."
+    layout: diagram_center
+    diagram: fiber_tir
+    steps: "1-2"
+    focus: "150,240,900,683|420,150,900,683"
+    claims: [C1, C3]
+    link_text: "Full episode: How Undersea Internet Cables Actually Work"
+    narration: >-
+      Most of the data travelling between continents is not up in space. It is light, moving
+      through glass at the bottom of the sea. The trick is a fibre with two layers of glass.
+      Light bouncing at a shallow angle hits the outer layer and is reflected straight back in,
+      over and over, so it cannot leak out. That simple bit of optics is the reason a message
+      can ride a beam of light under an entire ocean. The full episode shows how that light is
+      kept alive along the way.
+  - id: short-2-repair
+    title: How do you fix a cable on the ocean floor?
+    hook: "A cable snaps on the ocean floor. Here is how a ship fixes it."
+    layout: diagram_top
+    diagram: cable_repair
+    steps: "0-3"
+    focus: "60,150,1000,759|760,150,1000,759|760,90,1000,759|640,320,1000,759"
+    claims: [C8]
+    link_text: "Full episode: How Undersea Internet Cables Actually Work"
+    narration: >-
+      First, engineers on shore send signals down the cable and measure the reflections to
+      find roughly where it broke. Then a repair ship heads out and drags a hook called a
+      grapnel along the bottom until it snags the cable and lifts it to the surface. On deck,
+      the crew splices in a fresh piece of cable and lowers the whole thing back down to the
+      sea floor. The repaired cable is now a little longer than before.
+  - id: short-3-satellites
+    title: Why satellites have not replaced undersea cables
+    hook: "Why not just beam the internet through space?"
+    layout: hook_card
+    diagram: fiber_vs_satellite
+    steps: "0-2"
+    focus: "380,110,1000,759|380,330,1000,759|130,170,1000,759"
+    claims: [C12, C13, C14, C15]
+    link_text: "Full episode: How Undersea Internet Cables Actually Work"
+    narration: >-
+      Satellites sound like the obvious upgrade, but two things get in the way. Distance:
+      a classic geostationary satellite is so high that a question and its answer take around
+      half a second just to travel. Low orbit satellites shrink that delay a lot. The second
+      problem is volume. Cables, with many colours of light in every fibre, move far more
+      data between continents than satellites can. So satellites fill the gaps, and the
+      sea floor does the heavy lifting.

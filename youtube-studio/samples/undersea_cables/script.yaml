@@ -1,0 +1,314 @@
+# Original narration for the pilot. Every factual sentence is tied to claim ids from
+# research.yaml. Numbers appear only where a claim backs them.
+# Phase 2 (2026-11-18): wording aligned with verification_proposals.json (source-supported
+# phrasing); visuals diversified and per-scene camera hints added.
+title: How Undersea Internet Cables Actually Work
+editorial_notes:
+- >-
+  Diagrams are schematic and labelled "not to scale"; no real map geometry is implied.
+- >-
+  Analysis sentences (route diversity reasoning) are the channel's own reasoning, not quotes.
+sections:
+- id: hook
+  heading: A cable across the Atlantic
+  paragraphs:
+  - text: >-
+      In the summer of 1858, a telegraph cable was laid across the floor of the Atlantic Ocean.
+      For the first time, a message could cross between Europe and North America without travelling
+      on a ship. And then, after only a few weeks, the cable failed.
+    claims:
+    - C11
+    visual:
+      kind: diagram
+      ref: atlantic_telegraph
+      steps: 1-3
+  - text: >-
+      More than a century and a half later, the descendants of that cable are still down there,
+      on the sea floor. They are quiet, mostly invisible, and they carry the large majority of
+      the data that crosses oceans, including, very likely, part of the journey this video took
+      to reach you.
+    claims:
+    - C1
+    visual:
+      kind: title
+      ref: How Undersea Internet Cables Actually Work
+  - text: >-
+      In this video we will follow a single pulse of light from one coast to another. We will
+      look at what is actually inside the cable, how a signal survives the trip through the dark,
+      how ships lay and repair these lines, what tends to break them, and why satellites have
+      not replaced them.
+    claims: []
+    visual:
+      kind: card
+      ref: >-
+        Inside the cable | Keeping the light alive | Laying and repair | What breaks them | Why
+
+        not satellites?
+- id: map
+  heading: The map
+  paragraphs:
+  - text: >-
+      Start with the map. If you open a submarine cable map, such as the one maintained by the
+      research firm TeleGeography, you see hundreds of lines connecting coastlines. Each line
+      is a separate cable system, owned by a telecom company, by a consortium of operators, or,
+      increasingly, by large content providers such as Google, Meta, Microsoft and Amazon.
+    claims:
+    - C2
+    - C16
+    visual:
+      kind: diagram
+      ref: route_schematic
+      steps: 0-2
+  - text: >-
+      Cables come ashore at landing stations, buildings near the coast where the undersea system
+      meets the networks on land. Routes cluster where demand and geography meet, and some pass
+      through narrow corridors such as the Red Sea and the Strait of Malacca, where many cables
+      share the same stretch of water.
+    claims:
+    - C17
+    visual:
+      kind: diagram
+      ref: landing_station
+      steps: 0-2
+  - text: >-
+      What matters on this map is not only how many cables there are, but how they are arranged.
+      A country with several cables landing in different places can lose one and keep talking
+      to the world. A country served by only one or two is far more exposed. Keep that idea in
+      mind; we will come back to it.
+    claims: []
+    visual:
+      kind: diagram
+      ref: route_diversity
+      steps: 0-1
+      camera: wide
+- id: light
+  heading: Light in glass
+  paragraphs:
+  - text: >-
+      Inside the cable, data travels as light. Each optical fibre is a strand of glass about as
+      thick as a human hair, made of a core surrounded by a cladding with a slightly lower refractive
+      index. When light meets that boundary at a shallow enough angle, it reflects back into the
+      core instead of escaping. This is total internal reflection, and it keeps the signal trapped
+      inside the glass.
+    claims:
+    - C3
+    visual:
+      kind: diagram
+      ref: fiber_tir
+  - text: >-
+      A single fibre does not carry just one stream of light. Modern systems send many wavelengths,
+      effectively different colours, down the same strand at the same time, and each one carries
+      its own channel of data. This is called wavelength division multiplexing. It is also why
+      the capacity of a cable can grow during its life: the glass stays on the sea floor, and
+      the equipment at each end is upgraded.
+    claims:
+    - C15
+    visual:
+      kind: diagram
+      ref: wdm_colors
+  - text: >-
+      Then there is the problem of distance. Even very pure glass absorbs and scatters a little
+      of the light, so the signal fades as it travels. Across an entire ocean, it would fade away
+      completely without help along the way.
+    claims:
+    - C18
+    visual:
+      kind: diagram
+      ref: repeater_chain
+      steps: 0-1
+- id: repeaters
+  heading: Keeping the light alive
+  paragraphs:
+  - text: >-
+      That help comes from repeaters: pressure-resistant housings spliced into the cable at regular
+      intervals, in many long-haul designs roughly every fifty kilometres, and in some systems
+      more than a hundred kilometres apart. Inside, optical amplifiers boost the light directly,
+      without first turning it back into an electrical signal.
+    claims:
+    - C4
+    visual:
+      kind: diagram
+      ref: repeater_chain
+      steps: '2'
+      camera: focus:180,150,1560,780|120,40,1180,664
+  - text: >-
+      A widely used design is the erbium-doped fibre amplifier. A short length of fibre is doped
+      with the element erbium and energised by a pump laser. As the weakened signal passes through,
+      the excited erbium releases energy into it and the signal comes out stronger, still as light.
+    claims:
+    - C19
+    visual:
+      kind: diagram
+      ref: edfa_inside
+      steps: 0-2
+  - text: >-
+      Amplifiers need power, and there is no socket on the sea floor. So the cable carries electricity
+      as well. A conductor inside the cable carries direct current from power feed equipment on
+      shore, feeding every repeater along the route.
+    claims:
+    - C5
+    visual:
+      kind: diagram
+      ref: repeater_chain
+      steps: '4'
+  - text: >-
+      Now open the cable itself. At the centre are the fibres, protected inside a tube. Around
+      them are strength wires made of steel, a copper or aluminium power conductor, and layers
+      of polyethylene insulation. In the deep ocean, where little can disturb it, the cable is
+      surprisingly slim, often compared to a garden hose. Near the shore, where anchors and fishing
+      gear are a real threat, extra layers of steel armour are added.
+    claims:
+    - C6
+    visual:
+      kind: diagram
+      ref: cable_cross_section
+- id: laying
+  heading: Laying a cable
+  paragraphs:
+  - text: >-
+      Laying a cable is a slow, carefully planned operation. Before any cable goes into the water,
+      survey teams study the sea floor along the proposed route, so that hazards such as steep
+      slopes, rough rock and unstable ground can be avoided where possible.
+    claims:
+    - C20
+    visual:
+      kind: diagram
+      ref: cable_laying
+      steps: '0'
+  - text: >-
+      Then a specialised cable ship takes over. The cable is carried in the ship's holds and fed
+      out over sheaves at the bow or stern as the ship moves along the route. Laying is deliberately
+      slow and steady, so that the cable settles properly on the bottom.
+    claims:
+    - C7
+    visual:
+      kind: diagram
+      ref: cable_laying
+      steps: '1'
+  - text: >-
+      In shallower water, the cable is often buried in the sea bed by a plough towed behind the
+      ship, which protects it from anchors and trawling. In the deep ocean, it is usually laid
+      directly on the bottom.
+    claims:
+    - C7
+    visual:
+      kind: diagram
+      ref: cable_laying
+      steps: '2'
+- id: repair
+  heading: Fixing a cable on the sea floor
+  paragraphs:
+  - text: >-
+      Cables do break. When one fails, engineers can locate the fault from the shore by sending
+      test signals into the cable and measuring what comes back. A repair ship then sails to the
+      area and, in deeper water, lowers a grapnel, a hook dragged across the sea floor, to catch
+      the cable and lift it to the surface.
+    claims:
+    - C8
+    visual:
+      kind: diagram
+      ref: cable_repair
+      steps: 0-1
+  - text: >-
+      The crew brings the damaged cable up to the surface and splices in a new section on board.
+      Then the repaired cable, now slightly longer than before, is lowered back to the sea floor.
+    claims:
+    - C8
+    visual:
+      kind: diagram
+      ref: cable_repair
+      steps: 2-3
+- id: failures
+  heading: What breaks them
+  paragraphs:
+  - text: >-
+      So what breaks them? According to TeleGeography, most damage comes from human activity,
+      above all fishing and ship anchors. Dramatic explanations make better headlines, but ordinary
+      maritime activity is the everyday risk.
+    claims:
+    - C9
+    visual:
+      kind: diagram
+      ref: failure_modes
+      steps: '0'
+      camera: focus:100,170,880,660
+  - text: >-
+      Natural hazards are rarer, but they can be severe because they can hit several cables at
+      once. In December 2006, earthquakes off southern Taiwan triggered undersea landslides and
+      sediment flows that broke a series of cables and disrupted internet and phone services in
+      many parts of Asia, with repairs expected to take until the end of January.
+    claims:
+    - C10
+    visual:
+      kind: diagram
+      ref: quake_landslide
+      steps: 0-2
+  - text: >-
+      This is where the map comes back. Most companies spread their capacity across several cables,
+      so when one breaks, traffic keeps flowing over the others while it is repaired. Diversity
+      of routes, not the strength of any single cable, is what keeps a region connected.
+    claims:
+    - C21
+    visual:
+      kind: diagram
+      ref: route_schematic
+      steps: 2,4
+- id: satellites
+  heading: Why not satellites?
+  paragraphs:
+  - text: >-
+      If cables are this exposed, why not use satellites instead? Part of the answer is physics.
+      A traditional geostationary satellite sits about thirty-six thousand kilometres above the
+      equator. A request and its reply each have to go up and come back down, which adds a round
+      trip delay of around half a second or more.
+    claims:
+    - C12
+    visual:
+      kind: diagram
+      ref: fiber_vs_satellite
+      steps: '0'
+  - text: >-
+      Newer constellations in low Earth orbit fly much lower and cut that delay dramatically.
+      But the bigger difference is capacity. Each fibre carries many wavelengths, and cables can
+      carry far more data between continents than satellite systems do.
+    claims:
+    - C14
+    - C13
+    - C15
+    visual:
+      kind: diagram
+      ref: fiber_vs_satellite
+      steps: 1-2
+  - text: >-
+      Satellites are excellent for reaching places that are not yet wired with fibre, and for
+      sending the same content from one source to many locations. For the bulk of intercontinental
+      traffic, though, glass on the sea floor is still the workhorse.
+    claims:
+    - C13
+    visual:
+      kind: diagram
+      ref: satellite_roles
+      steps: 0-1
+- id: recap
+  heading: Recap
+  paragraphs:
+  - text: >-
+      So, three things to remember. First, most of the data that crosses oceans travels as light
+      in glass on the sea floor. Second, it survives the journey because powered repeaters amplify
+      that light along the way. Third, these cables are tough but not invulnerable, so the network
+      relies on many routes and on a small fleet of ships ready to repair them.
+    claims:
+    - C1
+    - C4
+    - C8
+    visual:
+      kind: diagram
+      ref: recap
+  - text: >-
+      Every source used in this video is listed in the description, with a note on what each one
+      supports. If a diagram or a number looks wrong to you, tell us, and we will check it. Thanks
+      for watching Engineering Explained.
+    claims: []
+    visual:
+      kind: card
+      ref: Sources and corrections in the description

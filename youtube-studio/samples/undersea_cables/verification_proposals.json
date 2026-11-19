@@ -1,0 +1,358 @@
+{
+  "episode_id": "ee-0001",
+  "created_at": "2026-11-18T00:00:00+00:00",
+  "method": "Each source page fetched and read; snippets copied verbatim and machine-checked against the fetched text; second independent re-fetch by the studio operator assistant. No claim marked verified.",
+  "proposals": [
+    {
+      "claim_id": "C1",
+      "claim_text": "Submarine cables carry the large majority of intercontinental internet traffic (figures around 99% are commonly cited).",
+      "verdict": "supported",
+      "source_url": "https://en.wikipedia.org/wiki/Submarine_communications_cable",
+      "source_title": "Submarine communications cable - Wikipedia",
+      "accessed": "2026-11-18",
+      "snippet": "are an essential infrastructure in the digital era , carrying 99% of the data traffic across the oceans.",
+      "proposed_text": "Submarine cables carry the vast majority of data that crosses the oceans - about 99%, by a commonly cited estimate.",
+      "notes": "Wikipedia is a fallback; its 99% figure cites Newsweek ('Undersea Cables Transport 99 Percent of International Data'), not a primary dataset - reviewer should trace to a primary source if possible. The article currently carries a maintenance banner saying it may contain LLM-generated text (Aug 2025). Corroborating primary source (TeleGeography FAQ, fetched): 'Statistics released by U.S. Federal Communications Commission indicate that satellites account for just 0.37% of all U.S. international capacity.' and 'It's challenging to determine precisely how much of all international traffic is still carried via satellite, but it's a very small percentage.' TeleGeography does not itself state 99%. Narrate as an approximate/commonly cited figure.",
+      "other_urls_checked": [
+        "https://www2.telegeography.com/submarine-cable-faqs-frequently-asked-questions"
+      ],
+      "recheck": "MATCH (verbatim, whitespace-normalised) on independent re-fetch 2026-11-18",
+      "checked_by": "assistant (automated fetch; not a human verification)"
+    },
+    {
+      "claim_id": "C2",
+      "claim_text": "TeleGeography's submarine cable map tracks several hundred active and planned cable systems.",
+      "verdict": "supported",
+      "source_url": "https://www2.telegeography.com/submarine-cable-faqs-frequently-asked-questions",
+      "source_title": "Submarine Cable FAQs - TeleGeography",
+      "accessed": "2026-11-18",
+      "snippet": "As of 2026, we track more than 600 active and planned submarine cables. The total number of active cables is constantly changing as new cables enter service and older cables are decommissioned.",
+      "proposed_text": "As of 2026, TeleGeography tracks more than 600 active and planned submarine cables.",
+      "notes": "Date-sensitive: count changes yearly; the figure includes planned cables, so do not narrate it as 'active cables'. submarinecablemap.com was fetched but is a JS app whose HTML has no readable text (only the title), so it could not be used as a source.",
+      "other_urls_checked": [
+        "https://www.submarinecablemap.com/"
+      ],
+      "recheck": "MATCH (verbatim, whitespace-normalised) on independent re-fetch 2026-11-18",
+      "checked_by": "assistant (automated fetch; not a human verification)"
+    },
+    {
+      "claim_id": "C3",
+      "claim_text": "Optical fibres guide light by total internal reflection in a glass core surrounded by cladding with a lower refractive index; a fibre is roughly as thick as a human hair.",
+      "verdict": "supported",
+      "source_url": "https://en.wikipedia.org/wiki/Optical_fiber",
+      "source_title": "Optical fiber - Wikipedia",
+      "accessed": "2026-11-18",
+      "snippet": "Optical fibers typically include a core surrounded by a transparent cladding material with a lower index of refraction . Light is kept in the core by the phenomenon of total internal reflection which causes the fiber to act as a waveguide .",
+      "proposed_text": "An optical fibre has a core surrounded by cladding with a lower refractive index, so light is trapped in the core by total internal reflection. The light-carrying fibres are roughly the diameter of a human hair.",
+      "notes": "Hair-thickness part is supported by the TeleGeography FAQ (fetched): 'The filaments that carry light signals are extremely thin — roughly the diameter of a human hair.' Wikipedia Optical fiber also: 'The coatings protect the very delicate strands of glass fiber—about the size of a human hair'. Note fibres can be glass or plastic generally; submarine fibre is glass. Wikipedia is a fallback source for the TIR physics (textbook-level fact). Total_internal_reflection page also mentions use in optical fibres.",
+      "other_urls_checked": [
+        "https://www2.telegeography.com/submarine-cable-faqs-frequently-asked-questions",
+        "https://en.wikipedia.org/wiki/Total_internal_reflection"
+      ],
+      "recheck": "MATCH (verbatim, whitespace-normalised) on independent re-fetch 2026-11-18",
+      "checked_by": "assistant (automated fetch; not a human verification)"
+    },
+    {
+      "claim_id": "C4",
+      "claim_text": "Long-haul submarine cables have repeaters at intervals often described as roughly 50-100 km.",
+      "verdict": "partially_supported",
+      "source_url": "https://arxiv.org/abs/1806.01945",
+      "source_title": "Spectrally and Power Efficient Optical Communication Systems (Stanford PhD dissertation, arXiv:1806.01945)",
+      "accessed": "2026-11-18",
+      "snippet": "To compensate for the optical fiber attenuation of roughly 0.16 dB/km for state-of-the-art SMFs, optical repeaters are periodically positioned every ∼ 50 km.",
+      "proposed_text": "Along the route, repeaters re-amplify the light at regular intervals - in many long-haul designs roughly every 50 kilometres, and in some systems more than 100 kilometres apart.",
+      "notes": "No fetched source states the exact '50-100 km' range. Dissertation (fetched as PDF from https://arxiv.org/pdf/1806.01945) gives ~50 km. Wikipedia Submarine communications cable: 'permitting runs of more than 100 kilometres (62 mi) between repeaters' (text contains non-breaking space; check before quoting). arXiv:2401.16997 (fetched) discusses 50 km spacing as baseline and studies 80-150 km, citing an analytical optimum of 90 km for SDM cables. Spacing is design-specific; avoid a single precise number. Wikipedia Optical_amplifier page had no spacing figure.",
+      "other_urls_checked": [
+        "https://en.wikipedia.org/wiki/Submarine_communications_cable",
+        "https://en.wikipedia.org/wiki/Optical_amplifier",
+        "https://arxiv.org/pdf/2401.16997"
+      ],
+      "recheck": "MATCH in PDF full text on independent re-fetch 2026-11-18 (PDF uses the \"ﬁ\" ligature)",
+      "snippet_location": "PDF full text https://arxiv.org/pdf/1806.01945 (section on submarine cables), not the abstract page",
+      "checked_by": "assistant (automated fetch; not a human verification)"
+    },
+    {
+      "claim_id": "C5",
+      "claim_text": "Repeaters are powered by direct current fed from landing-station power equipment through a copper conductor in the cable.",
+      "verdict": "partially_supported",
+      "source_url": "https://en.wikipedia.org/wiki/Submarine_communications_cable",
+      "source_title": "Submarine communications cable - Wikipedia",
+      "accessed": "2026-11-18",
+      "snippet": "Repeaters are powered by a constant direct current passed down the conductor near the centre of the cable, so all repeaters in a cable are in series. Power feed equipment (PFE) is installed at the terminal stations.",
+      "proposed_text": "Repeaters are powered by direct current sent down a conductor in the cable from power feed equipment at the terminal stations on shore.",
+      "notes": "The snippet does not say 'copper'. The same page's cross-section caption lists 'Copper or aluminium tube', so 'copper' is not universally supported - say 'a metal conductor' or 'conductor'. Same page also says voltage is often 3000 to 15,000 VDC (not quoted). Dissertation arXiv:1806.01945 (fetched): 'These repeaters are powered from the shores, where the dielectric constant of cables limits the feed voltages to 12–15 kV.' Wikipedia is a fallback; no vendor page fetched.",
+      "other_urls_checked": [
+        "https://arxiv.org/abs/1806.01945"
+      ],
+      "recheck": "MATCH (verbatim, whitespace-normalised) on independent re-fetch 2026-11-18",
+      "checked_by": "assistant (automated fetch; not a human verification)"
+    },
+    {
+      "claim_id": "C6",
+      "claim_text": "Deep-sea cable is slim (often compared to a garden hose), while cable near shore gets additional steel armour; layers include fibres in a tube, steel strength wires, copper conductor and polyethylene insulation.",
+      "verdict": "partially_supported",
+      "source_url": "https://www2.telegeography.com/submarine-cable-faqs-frequently-asked-questions",
+      "source_title": "Submarine Cable FAQs - TeleGeography",
+      "accessed": "2026-11-18",
+      "snippet": "For most of its journey across the ocean, a cable is typically as wide as a garden hose. The filaments that carry light signals are extremely thin — roughly the diameter of a human hair. These fibers are sheathed in a few layers of insulation and protection. Cables laid nearer to shore use extra layers of armoring for enhanced protection.",
+      "proposed_text": "For most of its journey across the ocean, a cable is about as wide as a garden hose; cables nearer shore get extra layers of armouring. Inside, the hair-thin fibres are wrapped in layers of protection - for example polyethylene, steel wires and a copper or aluminium tube.",
+      "notes": "Garden hose + shore armour fully supported by TeleGeography (does not specify 'steel' armour; elsewhere says fibers 'wrapped in layers of plastic (and sometimes steel wire)'). Layer list only partially supported: Wikipedia Submarine communications cable caption of a SHORE-END cross section lists '1 – Polyethylene 2 – Mylar tape 3 – Stranded steel wires 4 – Aluminium water barrier 5 – Polycarbonate 6 – Copper or aluminium tube 7 – Petroleum jelly 8 – Optical fibers' (caption text has non-breaking spaces). Conductor is 'copper or aluminium', and the caption is for shore-end cable, so diagram labels should follow it. Wikipedia also: 'Modern cables are typically about 25 mm (1 in) in diameter'.",
+      "other_urls_checked": [
+        "https://en.wikipedia.org/wiki/Submarine_communications_cable"
+      ],
+      "recheck": "MATCH (verbatim, whitespace-normalised) on independent re-fetch 2026-11-18",
+      "checked_by": "assistant (automated fetch; not a human verification)"
+    },
+    {
+      "claim_id": "C7",
+      "claim_text": "Specialised cable ships carry cable in tanks and pay it out over the stern while controlling payout against ship speed; in shallow water cable is often buried with a sea plough, in deep water laid on the sea bed.",
+      "verdict": "partially_supported",
+      "source_url": "https://en.wikipedia.org/wiki/Cable_layer",
+      "source_title": "Cable layer - Wikipedia",
+      "accessed": "2026-11-18",
+      "snippet": "Cable ships also use “plows” that are suspended under the vessel. These plows use jets of high-pressure water to bury cable three feet (0.91",
+      "proposed_text": "Specialised cable ships carry the cable in their holds and feed it over sheaves at the bow or stern, laying slowly so it settles properly on the sea floor. Near shore, the cable is buried under the seabed - often with a plough - while in the deep sea it is laid directly on the ocean floor.",
+      "notes": "Snippet truncated before a non-breaking space ('0.91 m) under the sea floor'). Shore burial vs deep-sea laying supported by TeleGeography FAQ (fetched): 'Nearer to the shore cables are buried under the seabed for protection, which explains why you don't see cables when you go to the beach, but in the deep sea they are laid directly on the ocean floor.' Cable layer page: 'Cable ships are distinguished by large cable sheaves [ 1 ] for guiding cable over bow or stern or both'; 'cable can be loaded into the ship's hold'; 'Ships are limited to a speed of eight knots' while laying (not 'tanks'). Payout vs ship speed: Makai Ocean Engineering MakaiLay page (vendor, fetched https://www.makai.com/cable-software/makailay/) mentions 'ship navigation and payout measurements' and 'The ship speed often varies, cable payout is not always steady' - indirect support only. 'Cable tanks' wording not found in any fetched page (Royal IHC page returned 403). ICPC homepage fetched but has no technical content on laying. Wikipedia plough description (water-jet plough, 3 ft) is one design; burial depth varies.",
+      "other_urls_checked": [
+        "https://www2.telegeography.com/submarine-cable-faqs-frequently-asked-questions",
+        "https://www.iscpc.org/",
+        "https://www.makai.com/cable-software/makailay/",
+        "https://www.royalihc.com/en/products/offshore-wind/cablelay/fibre-optic-cablelay-vessel (403, not read)"
+      ],
+      "recheck": "MATCH (verbatim, whitespace-normalised) on independent re-fetch 2026-11-18",
+      "checked_by": "assistant (automated fetch; not a human verification)"
+    },
+    {
+      "claim_id": "C8",
+      "claim_text": "Faults are located from shore with test signals; repair ships recover the cable with grapnels, splice in a new section on board, test it, and return it to the sea bed.",
+      "verdict": "partially_supported",
+      "source_url": "https://en.wikipedia.org/wiki/Submarine_communications_cable",
+      "source_title": "Submarine communications cable - Wikipedia",
+      "accessed": "2026-11-18",
+      "snippet": "Shore stations can locate a break in a cable by electrical measurements, such as through spread-spectrum time-domain reflectometry (SSTDR), a type of time-domain reflectometry that can be used in live environments very quickly.",
+      "proposed_text": "Shore stations can locate a break by sending signals down the cable and measuring the reflections. A repair ship then goes to the site, uses grapples to catch the cable on the sea bed and bring it to the surface, splices in a new section, and lays the repaired cable, which is now longer, back on the seabed.",
+      "notes": "Same Wikipedia section also says a repair ship drops a marker buoy, uses grapples, splices in a new section, and lays the excess cable in a U shape on the seabed (see extra snippets in this note). The section does not explicitly say the splice is tested on board before the cable goes back down. A history passage on the same page says AT&T repair ships had labs 'for splicing cable and testing its electrical properties', but that is historical context, not a general description. Wikipedia is a fallback source; the ICPC homepage (iscpc.org) has no repair-procedure text. The section names SSTDR as an example; for modern fibre cables, C-OTDR is also mentioned on the page. Extra verbatim snippets from the same page: [1] 'A cable repair ship will be sent to the location to drop a marker buoy near the break. Several types of grapples are used depending on the situation.' [2] 'only one length of cable is brought to the surface at a time, whereupon a new section is spliced in. The repaired cable is longer than the original, so the excess is deliberately laid in a \"U\" shape on the seabed.'",
+      "other_urls_checked": [
+        "https://www.iscpc.org/",
+        "https://en.wikipedia.org/wiki/Cable_layer"
+      ],
+      "recheck": "MATCH (verbatim, whitespace-normalised) on independent re-fetch 2026-11-18",
+      "checked_by": "assistant (automated fetch; not a human verification)"
+    },
+    {
+      "claim_id": "C9",
+      "claim_text": "The majority of submarine cable faults are caused by human activities, mainly fishing and ship anchors.",
+      "verdict": "supported",
+      "source_url": "https://www2.telegeography.com/submarine-cable-faqs-frequently-asked-questions",
+      "source_title": "Submarine Cable Frequently Asked Questions - TeleGeography",
+      "accessed": "2026-11-18",
+      "snippet": "The majority of damage to submarine cables is caused by human activities, primarily fishing and anchoring, rather than sharks.",
+      "proposed_text": "Most submarine cable damage is caused by human activity, mainly fishing and ship anchors. Accidents like these account for about two-thirds of all cable faults.",
+      "notes": "The same TeleGeography FAQ also says: 'Accidents like fishing vessels and ships dragging anchors account for two-thirds of all cable faults.' and 'On average, there are roughly 200 faults each year, according to data from the International Cable Protection Committee.' TeleGeography is citing ICPC data, but the ICPC homepage I fetched has no fault statistics. The underlying ICPC dataset was not checked directly. The figures may change over time.",
+      "other_urls_checked": [
+        "https://www.iscpc.org/"
+      ],
+      "recheck": "MATCH (verbatim, whitespace-normalised) on independent re-fetch 2026-11-18",
+      "checked_by": "assistant (automated fetch; not a human verification)"
+    },
+    {
+      "claim_id": "C10",
+      "claim_text": "In December 2006 an earthquake off southern Taiwan triggered submarine landslides that damaged several cables and disrupted communications in parts of East Asia for weeks.",
+      "verdict": "partially_supported",
+      "source_url": "https://tecdc.earth.sinica.edu.tw/data/EQ2006Pingtung/abstract/PT022/abstractP22.htm",
+      "source_title": "Hsu et al. 2008, Turbidity currents, submarine landslides and the 2006 Pingtung earthquake off SW Taiwan, TAO 19(6):767-772 (abstract)",
+      "accessed": "2026-11-18",
+      "snippet": "In this study, we report that eleven submarine cables across the Kaoping canyon and Manila trench were broken in sequence from 1500 to 4000 m deep, as a consequence of submarine landslides and turbidity currents associated with the 2006 Pingtung earthquakes offshore SW Taiwan.",
+      "proposed_text": "On 26 December 2006, a pair of earthquakes off southwest Taiwan triggered submarine landslides and turbidity currents that broke a series of undersea cables, disrupting internet and telephone services in many parts of Asia. Repairs to most of the cables were expected to take until the end of January 2007.",
+      "notes": "The peer-reviewed abstract supports the landslide and turbidity-current mechanism and the cable breaks. It describes a doublet of two earthquakes, not a single quake, located off SW Taiwan. It does not cover the extent or length of the disruption. Wikipedia (2006 Hengchun earthquakes) gives the date as December 26 and says: 'several submarine communications cables were cut, disrupting telecommunication services in various parts of Asia.' It also says 'repair of most of the cables is expected to be completed progressively by the end of January 2007.' That supports 'for weeks' only indirectly: the repair timeline is stated, not the outage length. Wikipedia says 'Asia'; the claim says 'East Asia', and the affected countries listed include Southeast Asia (Malaysia, Thailand, Singapore, Brunei). The sources disagree on the number of breaks: Hsu et al. report eleven cables broken, while Carter et al. 2014 (Oceanography) say the flows resulted in '22 cable breaks'. Avoid giving a single number in narration unless it is reconciled. The event is also called the Pingtung earthquake.",
+      "other_urls_checked": [
+        "https://en.wikipedia.org/wiki/2006_Hengchun_earthquakes",
+        "https://tos.org/oceanography/article/insights-into-submarine-geohazards-from-breaks-in-subsea-telecommunicationc"
+      ],
+      "recheck": "MATCH (verbatim, whitespace-normalised) on independent re-fetch 2026-11-18",
+      "checked_by": "assistant (automated fetch; not a human verification)"
+    },
+    {
+      "claim_id": "C11",
+      "claim_text": "The first transatlantic telegraph cable was completed in 1858 and failed after a few weeks of operation.",
+      "verdict": "supported",
+      "source_url": "https://en.wikipedia.org/wiki/Transatlantic_telegraph_cable",
+      "source_title": "Transatlantic telegraph cable - Wikipedia",
+      "accessed": "2026-11-18",
+      "snippet": "The cable was destroyed after three weeks when Wildman Whitehouse applied excessive voltage to it while trying to achieve faster operation.",
+      "proposed_text": "The first transatlantic telegraph cable began carrying messages in August 1858, but it failed after about three weeks.",
+      "notes": "Wikipedia is a fallback source. The primary-history page (atlantic-cable.com) was behind a Cloudflare challenge and could not be read. The same Wikipedia page also says: 'The first communications occurred on August 16, 1858, but the line speed was poor.' and 'In September 1858, after several days of progressive deterioration of the insulation, the cable failed altogether.' It also says the middle splice was finished on 29 July 1858. Optional detail from the page: the failure is attributed to excessive voltage applied by Whitehouse, and possibly to faulty manufacture.",
+      "other_urls_checked": [
+        "https://atlantic-cable.com/Cables/1858Atlantic/index.htm"
+      ],
+      "recheck": "MATCH (verbatim, whitespace-normalised) on independent re-fetch 2026-11-18",
+      "checked_by": "assistant (automated fetch; not a human verification)"
+    },
+    {
+      "claim_id": "C12",
+      "claim_text": "Geostationary satellites orbit at about 35,786 km above the equator; a request and reply via GEO incurs a round-trip delay of around half a second or more.",
+      "verdict": "supported",
+      "source_url": "https://en.wikipedia.org/wiki/Satellite_Internet_access",
+      "source_title": "Satellite Internet access - Wikipedia",
+      "accessed": "2026-11-18",
+      "snippet": "Typically, during perfect conditions, the physics involved in satellite communications account for approximately 550 milliseconds of latency round-trip time.",
+      "proposed_text": "Geostationary satellites orbit about 35,786 km above the equator. Even under perfect conditions, sending a request and getting a reply through one takes roughly half a second.",
+      "notes": "The same Wikipedia page describes GEO satellites as 'positioned 35,786 kilometres (22,236 mi) above the equator'. It also gives a typical real-world round-trip time of '1,000 to 1,400 ms' once other network delays are included, so 'half a second or more' is conservative. ESA (Types of orbits) independently confirms the altitude: 'they travel at about 3 km per second at an altitude of 35 786 km, much farther than most satellites.' Wikipedia's Geostationary orbit article gives '35,786 km (22,236 mi) in altitude above Earth's equator'. Latency figures come from Wikipedia, which is a fallback source; no primary latency source was fetched.",
+      "other_urls_checked": [
+        "https://www.esa.int/Enabling_Support/Space_Transportation/Types_of_orbits",
+        "https://en.wikipedia.org/wiki/Geostationary_orbit"
+      ],
+      "recheck": "MATCH (verbatim, whitespace-normalised) on independent re-fetch 2026-11-18",
+      "checked_by": "assistant (automated fetch; not a human verification)"
+    },
+    {
+      "claim_id": "C13",
+      "claim_text": "Submarine cables provide far greater intercontinental capacity than satellite systems; satellites serve remote areas, ships, aircraft and backup roles.",
+      "verdict": "partially_supported",
+      "source_url": "https://www2.telegeography.com/submarine-cable-faqs-frequently-asked-questions",
+      "source_title": "Submarine Cable Frequently Asked Questions - TeleGeography",
+      "accessed": "2026-11-18",
+      "snippet": "Satellites do an excellent job of reaching areas that aren’t yet wired with fiber. They are also helpful for distributing content from one source to multiple locations.",
+      "proposed_text": "Cables can carry far more data than satellites, at a fraction of the cost. Satellites are best at reaching places not yet wired with fibre and at broadcasting content from one source to many locations. Today they carry only a very small share of international traffic.",
+      "notes": "Same TeleGeography FAQ: 'Cables can carry far more data at a fraction of the cost of satellites.' and 'Statistics released by U.S. Federal Communications Commission indicate that satellites account for just 0.37% of all U.S. international capacity.' Neither source checked mentions ships or aircraft, so that part is unverified. The 'backup roles' part is contradicted at scale: Wikipedia (Submarine communications cable) says 'it was not possible to completely back up a cable system with satellite capacity'. Drop 'backup' or qualify it heavily. The 0.37% FCC figure is date-sensitive and its year is not given.",
+      "other_urls_checked": [
+        "https://en.wikipedia.org/wiki/Submarine_communications_cable"
+      ],
+      "recheck": "MATCH (verbatim, whitespace-normalised) on independent re-fetch 2026-11-18",
+      "checked_by": "assistant (automated fetch; not a human verification)"
+    },
+    {
+      "claim_id": "C14",
+      "claim_text": "Low-Earth-orbit satellite constellations orbit much lower than GEO and have substantially lower latency.",
+      "verdict": "supported",
+      "source_url": "https://en.wikipedia.org/wiki/Satellite_Internet_access",
+      "source_title": "Satellite Internet access - Wikipedia",
+      "accessed": "2026-11-18",
+      "snippet": "Consumers experienced performance increases in the 2020s, largely based on the decision of services like Starlink to deploy satellites at the low earth orbit level, which allowed for much lower latency than internet satellites deployed at the geostationary level, as they traditionally were.",
+      "proposed_text": "Low-Earth-orbit constellations such as Starlink fly below 2,000 km, far lower than geostationary satellites at about 35,786 km, which gives them much lower latency.",
+      "notes": "ESA (Types of orbits) supports the altitude comparison: 'LEO is considered to be under altitudes of 2000 km', compared with 35 786 km for GEO on the same page. The latency statement comes from Wikipedia, which is a fallback source. Naming Starlink is optional. No specific LEO latency figure was verified, so avoid quoting one.",
+      "other_urls_checked": [
+        "https://www.esa.int/Enabling_Support/Space_Transportation/Types_of_orbits",
+        "https://en.wikipedia.org/wiki/Low_Earth_orbit"
+      ],
+      "recheck": "MATCH (verbatim, whitespace-normalised) on independent re-fetch 2026-11-18",
+      "checked_by": "assistant (automated fetch; not a human verification)"
+    },
+    {
+      "claim_id": "C15",
+      "claim_text": "Wavelength-division multiplexing sends multiple wavelengths through one fibre; capacity of an existing cable can be raised by upgrading terminal equipment at landing stations.",
+      "verdict": "supported",
+      "source_url": "https://en.wikipedia.org/wiki/Wavelength-division_multiplexing",
+      "source_title": "Wavelength-division multiplexing - Wikipedia",
+      "accessed": "2026-11-18",
+      "snippet": "WDM systems are popular with telecommunications companies because they allow them to expand the capacity of the network without laying more fiber. By using WDM and optical amplifiers, they can accommodate several generations of technology development in their optical infrastructure without having to overhaul the backbone network. The capacity of a given link can be expanded simply by upgrading the multiplexers and demultiplexers at each end.",
+      "proposed_text": "Wavelength-division multiplexing sends many signals down a single fibre, each on its own wavelength of laser light. That means an existing cable's capacity can often be raised without laying new fibre, by upgrading the equipment at each end.",
+      "notes": "Wikipedia is a fallback source and is generic (not submarine-specific). First-sentence support for the multiple-wavelengths part (verbatim, same article): 'wavelength-division multiplexing (WDM) is a technology which multiplexes a number of optical carrier signals onto a single optical fiber by using different wavelengths (i.e., colors) of laser light.' Submarine-specific corroboration from TeleGeography FAQ (verbatim): 'Potential capacity is the total amount of capacity that would be possible if the cable’s owner installed all available equipment at the ends of the cable.' and 'Because this equipment is expensive, owners instead prefer to upgrade their cable gradually, as customer demand dictates.' Neither source uses the words 'landing station' for upgrades, so the proposed text says 'equipment at each end'. Upgrades are bounded by the cable's design (potential capacity), so avoid implying unlimited upgrades.",
+      "other_urls_checked": [
+        "https://www2.telegeography.com/submarine-cable-faqs-frequently-asked-questions"
+      ],
+      "recheck": "MATCH (verbatim, whitespace-normalised) on independent re-fetch 2026-11-18",
+      "checked_by": "assistant (automated fetch; not a human verification)"
+    },
+    {
+      "claim_id": "C16",
+      "claim_text": "Large content and cloud providers have become major investors in new submarine cable systems.",
+      "verdict": "supported",
+      "source_url": "https://www2.telegeography.com/submarine-cable-faqs-frequently-asked-questions",
+      "source_title": "Submarine Cable FAQs (TeleGeography)",
+      "accessed": "2026-11-18",
+      "snippet": "Content providers such as Google, Meta, Microsoft, and Amazon are major investors in new cable. The amount of capacity deployed by private network operators, like these content providers, has outpaced internet backbone operators in recent years.",
+      "proposed_text": "Content providers such as Google, Meta, Microsoft and Amazon are now major investors in new submarine cables.",
+      "notes": "'Content providers' is a hyperlink on the page; the snippet joins the link text and following text with a single space as rendered. The page says 'content providers', not 'cloud providers'; the proposed text keeps TeleGeography's wording. Date-sensitive: the FAQ was current as of 2026 (it says 'As of 2026'). The TeleGeography blog was not fetched.",
+      "other_urls_checked": [],
+      "recheck": "MATCH (verbatim, whitespace-normalised) on independent re-fetch 2026-11-18",
+      "checked_by": "assistant (automated fetch; not a human verification)"
+    },
+    {
+      "claim_id": "C17",
+      "claim_text": "Cable routes concentrate in chokepoints such as the Red Sea / Egypt corridor and the Strait of Malacca.",
+      "verdict": "supported",
+      "source_url": "https://techcentral.co.za/the-internet-has-a-strait-of-hormuz-problem/283782/",
+      "source_title": "The internet has a Strait of Hormuz problem - TechCentral",
+      "accessed": "2026-11-18",
+      "snippet": "Global internet traffic is “often subject to geographical concentration in a limited number of chokepoint corridors”, the report found, naming the Luzon Strait, the Strait of Malacca and the Red Sea corridor among them.",
+      "proposed_text": "A report by an international advisory body set up by the ITU and the International Cable Protection Committee names the Red Sea corridor, the Strait of Malacca and the Luzon Strait among a limited number of chokepoint corridors where cable routes concentrate.",
+      "notes": "This is a news article reporting on the International Advisory Body on Submarine Cable Resilience (IAB) report, convened by the ITU and the ICPC. The primary IAB report was NOT fetched. A human should locate and cite it directly. The Wikipedia submarine cable article was checked and does not name the Red Sea or Malacca as chokepoints (it mentions only the 2013 Egypt cable-cutting incident and the Korea Strait). Red Sea corroboration from the Istituto Affari Internazionali (verbatim): 'the Strait of Bab al-Mandeb represents a key crossroads for global maritime traffic, but also a strategic digital chokepoint, through which approximately 90 per cent of communications between Europe and Asia and 17 per cent of global data traffic pass every day.' Avoid using the traffic-share percentages in narration unless they are verified at a primary source; figures vary between sources. The CSIS Egypt case study and the DataCenterDynamics page returned no readable content (likely blocked or rendered by JavaScript).",
+      "other_urls_checked": [
+        "https://en.wikipedia.org/wiki/Submarine_communications_cable",
+        "https://www.iai.it/en/node/21206",
+        "https://www.csis.org/analysis/strategic-future-subsea-cables-egypt-case-study",
+        "https://datacenterdynamics.com/en/analysis/egypts-submarine-cable-stranglehold"
+      ],
+      "recheck": "MATCH (verbatim, whitespace-normalised) on independent re-fetch 2026-11-18",
+      "checked_by": "assistant (automated fetch; not a human verification)"
+    },
+    {
+      "claim_id": "C18",
+      "claim_text": "Light in fibre attenuates with distance through absorption and scattering, so long routes need amplification.",
+      "verdict": "supported",
+      "source_url": "https://en.wikipedia.org/wiki/Optical_fiber",
+      "source_title": "Optical fiber - Wikipedia",
+      "accessed": "2026-11-18",
+      "snippet": "Attenuation in optical fiber is caused primarily by both scattering and absorption.",
+      "proposed_text": "As light travels along a fibre it gradually weakens, mainly through scattering and absorption in the glass, so long routes need repeaters to boost the signal.",
+      "notes": "Wikipedia is a fallback source. Further verbatim support from the same article: 'Attenuation is an important factor limiting the transmission of a digital signal across large distances.' and 'Attenuation in modern optical cables is far less than in electrical copper cables, leading to long-haul fiber connections with repeater distances of 70–150 kilometers (43–93 mi).' The same article says that in silica fibre at telecom wavelengths, Rayleigh scattering is the dominant loss mechanism.",
+      "other_urls_checked": [
+        "https://en.wikipedia.org/wiki/Optical_amplifier"
+      ],
+      "recheck": "MATCH (verbatim, whitespace-normalised) on independent re-fetch 2026-11-18",
+      "checked_by": "assistant (automated fetch; not a human verification)"
+    },
+    {
+      "claim_id": "C19",
+      "claim_text": "Erbium-doped fibre amplifiers, pumped by a laser, amplify the optical signal directly without electrical conversion.",
+      "verdict": "supported",
+      "source_url": "https://en.wikipedia.org/wiki/Optical_amplifier",
+      "source_title": "Optical amplifier - Wikipedia",
+      "accessed": "2026-11-18",
+      "snippet": "An optical amplifier is a device that amplifies an optical signal directly, without the need to first convert it to an electrical signal.",
+      "proposed_text": "Erbium-doped fibre amplifiers are pumped by a laser and boost the light signal directly, without first converting it into an electrical signal.",
+      "notes": "Wikipedia is a fallback source. The snippet covers optical amplifiers in general. EDFA-specific verbatim support from the same article: 'The core of a silica fiber is doped with trivalent erbium ions (Er3+) and can be efficiently pumped with a laser at or near wavelengths of 980 nm and 1480 nm, and gain is exhibited in the 1550 nm region.' Corroboration from the Optical fiber article (verbatim): the EDFA 'reduced the cost of long-distance fiber systems by reducing or eliminating optical-electrical-optical repeaters'.",
+      "other_urls_checked": [
+        "https://en.wikipedia.org/wiki/Optical_fiber",
+        "https://en.wikipedia.org/wiki/Wavelength-division_multiplexing"
+      ],
+      "recheck": "MATCH (verbatim, whitespace-normalised) on independent re-fetch 2026-11-18",
+      "checked_by": "assistant (automated fetch; not a human verification)"
+    },
+    {
+      "claim_id": "C20",
+      "claim_text": "Cable routes are surveyed before installation to avoid sea-floor hazards where possible.",
+      "verdict": "supported",
+      "source_url": "https://www2.telegeography.com/submarine-cable-faqs-frequently-asked-questions",
+      "source_title": "Submarine Cable FAQs (TeleGeography)",
+      "accessed": "2026-11-18",
+      "snippet": "These paths are chosen via comprehensive marine surveys, which select routes that avoid hazardous conditions that could potentially damage a cable.",
+      "proposed_text": "Before a cable is laid, its route is chosen through detailed marine surveys designed to avoid hazards that could damage it.",
+      "notes": "Further verbatim support from the same page: 'Of course, considerable care is taken to ensure cables follow the safest path to avoid fault zones, fishing zones, anchoring areas, and other dangers.' The ICPC homepage (iscpc.org) and the Wikipedia Cable layer article were fetched; neither contained route-survey text when searched for 'survey'.",
+      "other_urls_checked": [
+        "https://www.iscpc.org/",
+        "https://en.wikipedia.org/wiki/Cable_layer",
+        "https://en.wikipedia.org/wiki/Submarine_communications_cable"
+      ],
+      "recheck": "MATCH (verbatim, whitespace-normalised) on independent re-fetch 2026-11-18",
+      "checked_by": "assistant (automated fetch; not a human verification)"
+    },
+    {
+      "claim_id": "C21",
+      "claim_text": "Operators reroute traffic over other cables and paths when one cable fails.",
+      "verdict": "supported",
+      "source_url": "https://www2.telegeography.com/submarine-cable-faqs-frequently-asked-questions",
+      "source_title": "Submarine Cable FAQs (TeleGeography)",
+      "accessed": "2026-11-18",
+      "snippet": "You rarely hear about these cable faults because most companies that use cables follow a “safety in numbers” approach to usage, spreading their networks' capacity across multiple cables so that if one breaks, their network will continue to run smoothly over the other cables while service is restored on the damaged one.",
+      "proposed_text": "Most companies spread their capacity across several cables, so when one breaks, traffic keeps flowing over the others while the damaged cable is repaired.",
+      "notes": "TeleGeography describes spreading capacity across several cables, which is not quite the same as operators actively rerouting traffic after a failure. The proposed text follows the source. Mechanism corroboration from the Wikipedia Submarine communications cable article (verbatim): 'A further redundant-path development over and above the self-healing rings approach is the mesh network whereby fast switching equipment is used to transfer services between network paths with little to no effect on higher-level protocols if a path becomes inoperable.' Not every user is protected: the same FAQ says countries need multiple cables for reliable connectivity, so places with only one cable can still lose service.",
+      "other_urls_checked": [
+        "https://en.wikipedia.org/wiki/Submarine_communications_cable"
+      ],
+      "recheck": "MATCH (verbatim, whitespace-normalised) on independent re-fetch 2026-11-18",
+      "checked_by": "assistant (automated fetch; not a human verification)"
+    }
+  ]
+}

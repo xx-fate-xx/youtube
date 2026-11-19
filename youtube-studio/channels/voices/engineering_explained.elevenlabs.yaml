@@ -1,0 +1,32 @@
+# ElevenLabs voice candidates for Engineering Explained (Release Candidate ee-0001).
+# Source of IDs: ElevenLabs "What are Default voices?" replacement table, fetched 2026-11-18:
+#   https://elevenlabs.io/docs/help-center/product/voices/my-voices/what-are-default-voices
+# Old Default voices expire on 2026-12-31 and are unavailable to accounts created after
+# March 2026, so only the official replacements are proposed.
+# Accent / age / gender are NOT published on public pages (Voice Library is login-gated):
+# confirm with `studio voices check` (free GET, no generation) and audition the preview.
+# voice_settings follow the official guidance: stability ~0.5, similarity ~0.75, style 0
+# ("we recommend keeping this setting at 0 at all times"), speed range 0.7-1.2.
+model_id: eleven_multilingual_v2
+candidates:
+  - key: caleb
+    voice_id: AaOhDHYJ1XLZk74lXhdE
+    name: Caleb - Trusted Guide
+    replaces_default: Chris (iP95p4xoKVk53GoZ742B)
+    intended_style: calm, trustworthy explainer; clear and even
+    settings: {stability: 0.55, similarity_boost: 0.75, style: 0.0, use_speaker_boost: true, speed: 1.0}
+  - key: wyatt
+    voice_id: FrS6cKLB1wg4WYgPa9GW
+    name: Wyatt - Seasoned Mentor
+    replaces_default: Bill (pqHfZKP75CvOlQylNhV4; Bill was labelled male, American)
+    intended_style: older, measured documentary narrator
+    settings: {stability: 0.6, similarity_boost: 0.75, style: 0.0, use_speaker_boost: true, speed: 0.95}
+  - key: darian
+    voice_id: gOupLcAkjEnguROwi4oS
+    name: Darian - Warm Grounded Storyteller
+    replaces_default: Roger (CwhRBWXzGAHq8TQ4Fs17)
+    intended_style: warm storyteller for the cold open and recap
+    settings: {stability: 0.5, similarity_boost: 0.78, style: 0.0, use_speaker_boost: true, speed: 0.97}
+alternates:
+  - {voice_id: ktkP7Nsj67dw2zcplQYt, name: Lawrence - Bright and Informative, replaces_default: "Liam (male, American)"}
+  - {voice_id: l7kNoIfnJKPg7779LI2t, name: Eddie - Natural and Helpful, replaces_default: Eric}

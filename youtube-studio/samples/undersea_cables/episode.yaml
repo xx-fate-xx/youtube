@@ -1,0 +1,23 @@
+# Sample episode metadata for the first pilot.
+channel: engineering_explained
+topic: How undersea internet cables work
+working_title: How Undersea Internet Cables Actually Work
+target_minutes: 9
+status_notes:
+  - All 21 claims ship unverified; human verification with snippets is required.
+  - Narration must be replaced with the operator's own recording or a licensed TTS.
+  - Font licence for rendered text must be confirmed (or switch STUDIO_FONT to an OFL font).
+outline:
+  - Hook - the 1858 transatlantic telegraph cable
+  - The map - cable systems, landing stations, chokepoints
+  - Light in glass - total internal reflection, WDM, attenuation
+  - Keeping the light alive - repeaters, EDFA, DC power feed, cable anatomy
+  - Laying a cable - survey, cable ship, plough burial
+  - Repair - fault location, grapnel, splice
+  - What breaks them - fishing/anchors, 2006 Taiwan earthquake, route diversity
+  - Why not satellites - GEO latency, LEO, capacity
+  - Recap
+shorts:
+  - short-1-glass (diagram_center, fiber_tir)
+  - short-2-repair (diagram_top, cable_repair)
+  - short-3-satellites (hook_card, fiber_vs_satellite)

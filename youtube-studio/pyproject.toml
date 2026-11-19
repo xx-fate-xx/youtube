@@ -1,0 +1,44 @@
+[project]
+name = "youtube-studio"
+version = "0.1.0"
+description = "Local-first production assistant for original documentary/explainer YouTube channels"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "typer>=0.12",
+    "pydantic>=2.7",
+    "sqlmodel>=0.0.21",
+    "pyyaml>=6.0",
+    "pillow>=10.3",
+    "imageio-ffmpeg>=0.5",
+]
+
+[project.optional-dependencies]
+youtube = [
+    "google-api-python-client>=2.130",
+    "google-auth-oauthlib>=1.2",
+]
+
+[project.scripts]
+studio = "studio.cli:app"
+
+[dependency-groups]
+dev = ["pytest>=8.2", "ruff>=0.5"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["studio"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM"]
+ignore = ["B008", "UP047", "SIM905"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

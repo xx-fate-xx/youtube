@@ -1,0 +1,53 @@
+key: ai_workflow_lab
+name: AI Workflow Lab   # working title; handle availability not assumed
+id_prefix: awl
+language: en-US
+runtime_minutes: [8, 15]
+audience: >
+  Small-business owners and operators who want repeatable, tested AI automations for real
+  workflows (invoicing, support inbox, scheduling, reporting).
+positioning: >
+  Hands-on tutorials built on authentic screen recordings of real tests. Shows failures and
+  limits as well as successes. Never fabricates tool capabilities or demos.
+tone:
+  - practical, friendly, specific
+  - "here is exactly what we tested, here is what broke"
+  - clear about costs, data privacy and when NOT to automate
+storytelling_structure:
+  - "Problem: the concrete workflow and its current cost in time"
+  - "Setup: tools, versions, prices as of recording date (sourced)"
+  - "Build: step-by-step from authentic screen recording"
+  - "Test: real inputs, show the failures"
+  - "Verdict: when it is worth it, limits, privacy notes"
+do:
+  - record tool versions and the recording date on screen
+  - show real outputs including mistakes
+  - provide a downloadable checklist/template where possible
+dont:
+  - simulated or staged screen recordings presented as real
+  - claims about features not tested on camera
+  - affiliate hype without disclosure
+narration:
+  words_per_minute: 160
+  tone: conversational tutorial voice, upbeat but not salesy
+  local_voice: Karen
+  sentence_pause_s: 0.2
+  scene_pause_s: 0.45
+visual:
+  background: "#F7F7FB"
+  foreground: "#1C1C28"
+  accent: "#5B5BD6"
+  accent_2: "#12A594"
+  muted: "#8B8D98"
+  caption_bg: "#1C1C28D0"
+  font_family: "Helvetica Neue, Helvetica, Arial, sans-serif"
+  motif: clean UI frames, cursor highlights, step badges
+shorts_style: >
+  One tested micro-automation per Short, with the real result on screen and the time saved
+  stated only if it was measured.
+idea_backlog:
+  - Automating invoice data entry from PDF emails (tested end-to-end)
+  - Triage a shared support inbox with an AI classifier and human review
+  - Turn meeting recordings into action items without leaking client data
+  - Weekly sales report from a spreadsheet with an AI summary step
+default_tags: [ai automation, small business, workflow, tutorial]

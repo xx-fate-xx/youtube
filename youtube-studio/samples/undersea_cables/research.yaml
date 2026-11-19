@@ -1,0 +1,134 @@
+# Sample research pack for the Engineering Explained pilot.
+#
+# IMPORTANT: every claim ships as `unverified` with an empty supporting snippet.
+# The URLs point to real, stable reference pages, but nobody has yet confirmed that each
+# page supports each claim as worded. The editor must open each source, paste the exact
+# supporting snippet, and run `studio claim verify ...`. Wikipedia entries are secondary
+# sources: prefer tracing the claim to the primary reference they cite.
+title: How Undersea Internet Cables Actually Work
+topic_aliases:
+  - how undersea internet cables actually work
+  - how undersea internet cables work
+  - undersea internet cables
+  - submarine cables
+sources:
+  - id: S1
+    url: https://www.submarinecablemap.com/
+    title: Submarine Cable Map
+    publisher: TeleGeography
+  - id: S2
+    url: https://www2.telegeography.com/submarine-cable-faqs-frequently-asked-questions
+    title: Submarine Cable Frequently Asked Questions
+    publisher: TeleGeography
+  - id: S3
+    url: https://en.wikipedia.org/wiki/Submarine_communications_cable
+    title: Submarine communications cable
+    publisher: Wikipedia (secondary - trace to primary references)
+  - id: S4
+    url: https://www.iscpc.org/
+    title: International Cable Protection Committee
+    publisher: ICPC
+  - id: S5
+    url: https://en.wikipedia.org/wiki/Optical_amplifier
+    title: Optical amplifier
+    publisher: Wikipedia (secondary)
+  - id: S6
+    url: https://en.wikipedia.org/wiki/Total_internal_reflection
+    title: Total internal reflection
+    publisher: Wikipedia (secondary)
+  - id: S7
+    url: https://en.wikipedia.org/wiki/2006_Hengchun_earthquakes
+    title: 2006 Hengchun earthquakes
+    publisher: Wikipedia (secondary)
+  - id: S8
+    url: https://en.wikipedia.org/wiki/Transatlantic_telegraph_cable
+    title: Transatlantic telegraph cable
+    publisher: Wikipedia (secondary)
+  - id: S9
+    url: https://en.wikipedia.org/wiki/Geostationary_orbit
+    title: Geostationary orbit
+    publisher: Wikipedia (secondary)
+  - id: S10
+    url: https://en.wikipedia.org/wiki/Cable_layer
+    title: Cable layer
+    publisher: Wikipedia (secondary)
+  - id: S11
+    url: https://en.wikipedia.org/wiki/Wavelength-division_multiplexing
+    title: Wavelength-division multiplexing
+    publisher: Wikipedia (secondary)
+claims:
+  - id: C1
+    text: Submarine cables carry the large majority of intercontinental internet traffic (figures around 99% are commonly cited).
+    sources: [S2, S3]
+    numeric: true
+  - id: C2
+    text: TeleGeography's submarine cable map tracks several hundred active and planned cable systems.
+    sources: [S1, S2]
+    numeric: true
+  - id: C3
+    text: Optical fibres guide light by total internal reflection in a glass core surrounded by cladding with a lower refractive index; a fibre is roughly as thick as a human hair.
+    sources: [S6, S3]
+    numeric: false
+  - id: C4
+    text: Long-haul submarine cables have repeaters at intervals often described as roughly 50-100 km.
+    sources: [S3, S5]
+    numeric: true
+  - id: C5
+    text: Repeaters are powered by direct current fed from landing-station power equipment through a copper conductor in the cable.
+    sources: [S3]
+  - id: C6
+    text: Deep-sea cable is slim (often compared to a garden hose), while cable near shore gets additional steel armour; layers include fibres in a tube, steel strength wires, copper conductor and polyethylene insulation.
+    sources: [S3, S2]
+  - id: C7
+    text: Specialised cable ships carry cable in tanks and pay it out over the stern while controlling payout against ship speed; in shallow water cable is often buried with a sea plough, in deep water laid on the sea bed.
+    sources: [S10, S3]
+  - id: C8
+    text: Faults are located from shore with test signals; repair ships recover the cable with grapnels, splice in a new section on board, test it, and return it to the sea bed.
+    sources: [S3, S4]
+  - id: C9
+    text: The majority of submarine cable faults are caused by human activities, mainly fishing and ship anchors.
+    sources: [S4, S2]
+    numeric: true
+  - id: C10
+    text: In December 2006 an earthquake off southern Taiwan triggered submarine landslides that damaged several cables and disrupted communications in parts of East Asia for weeks.
+    sources: [S7]
+    numeric: true
+  - id: C11
+    text: The first transatlantic telegraph cable was completed in 1858 and failed after a few weeks of operation.
+    sources: [S8]
+    numeric: true
+  - id: C12
+    text: Geostationary satellites orbit at about 35,786 km above the equator; a request and reply via GEO incurs a round-trip delay of around half a second or more.
+    sources: [S9]
+    numeric: true
+  - id: C13
+    text: Submarine cables provide far greater intercontinental capacity than satellite systems; satellites serve remote areas, ships, aircraft and backup roles.
+    sources: [S2]
+  - id: C14
+    text: Low-Earth-orbit satellite constellations orbit much lower than GEO and have substantially lower latency.
+    sources: [S9]
+  - id: C15
+    text: Wavelength-division multiplexing sends multiple wavelengths through one fibre; capacity of an existing cable can be raised by upgrading terminal equipment at landing stations.
+    sources: [S11, S3]
+  - id: C16
+    text: Large content and cloud providers have become major investors in new submarine cable systems.
+    sources: [S2]
+  - id: C17
+    text: Cable routes concentrate in chokepoints such as the Red Sea / Egypt corridor and the Strait of Malacca.
+    sources: [S1, S3]
+  - id: C18
+    text: Light in fibre attenuates with distance through absorption and scattering, so long routes need amplification.
+    sources: [S5, S3]
+  - id: C19
+    text: Erbium-doped fibre amplifiers, pumped by a laser, amplify the optical signal directly without electrical conversion.
+    sources: [S5]
+  - id: C20
+    text: Cable routes are surveyed before installation to avoid sea-floor hazards where possible.
+    sources: [S3, S2]
+  - id: C21
+    text: Operators reroute traffic over other cables and paths when one cable fails.
+    sources: [S2, S3]
+open_questions:
+  - Find a primary source (ICPC or academic) for the share of faults caused by fishing/anchors.
+  - Confirm the 1858 cable's dates and duration of service from a primary historical source.
+  - Replace Wikipedia citations with primary references where possible before approval.
