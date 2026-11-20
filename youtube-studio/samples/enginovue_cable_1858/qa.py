@@ -300,11 +300,13 @@ def _heads_from_skin(a: np.ndarray, L: np.ndarray, skin: np.ndarray, headlike: n
         for x in cols:
             y, gap = y0 - 1, 0
             while y > limit:
-                side = np.concatenate([a[y, lx], a[y, rx]])
-                if len(side) == 0:
+                # background beside the head, each side on its own (a window on one side and a wall
+                # on the other must not average into a colour that matches neither)
+                sides = [a[y, sl] for sl in (lx, rx) if sl.stop > sl.start]
+                if not sides:
                     break
-                bg = np.median(side, axis=0)
-                if headlike[y, x] and np.linalg.norm(a[y, x] - bg) > 35:
+                d_bg = min(np.linalg.norm(a[y, x] - np.median(sd, axis=0)) for sd in sides)
+                if headlike[y, x] and d_bg > 35:
                     gap = 0
                 else:
                     gap += 1

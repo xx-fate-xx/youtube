@@ -20,6 +20,13 @@ Rules: no paid call without explicit approval per batch; no automatic regenerati
 2. `py build.py` regenerates `prompts.jsonl`, `prompts.md`, `storyboard.md`, `edit_timeline.csv`, `voiceover_elevenlabs.txt`, `characters_historical.md`, `overlays/*_gfx.svg|png`.
 3. Never hand-edit the derived files. Timecodes (152 frames, 8:19) must stay unchanged.
 
+## Batches and bookkeeping (`production.py`)
+- `py production.py plan` — frames still to generate (accepted pilot/production frames are skipped via the manifests), batches of 10, budget with a 15% re-generation reserve.
+- `py production.py next` — the next batch with exact prompts, params and reference media ids.
+- `py production.py record N JOB_ID URL` — saves a new version (`_v2`, `_v3`… never overwrites), writes JSON, runs QA.
+- `py production.py decide N accept|accept_fixed|reject` — records the editorial decision; accepted frames drop out of later batches.
+- State lives in `projects/enginovue_cable_1858/production/` (git-ignored: account-specific media ids, images).
+
 ## Per-frame flow (after approval)
 1. Generate through Higgsfield MCP with the exact `prompt`, `params` and references from `prompts.jsonl`.
 2. Save the original PNG and a JSON with job id, parameters, reference media ids and prompt.

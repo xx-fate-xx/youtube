@@ -122,5 +122,22 @@
 - **Позднейшие линии и сегодня:** Бомбей в 1870 году, Дарвин в ноябре 1871 года; TAT-8 в 1988 году; «более 99% межконтинентального трафика» (ITU, 2025).
 - **Нью-Йорк 1858 года:** празднование, пожар купола ратуши от фейерверка, сувениры Tiffany.
 
+## Открытые пункты: разбор (2026-11-20, не внесено)
+| Кадр | Сейчас | Предложение | Источник | Уверенность | Нужно ли | Влияние |
+|---|---|---|---|---|---|---|
+| #2 | …it runs to 98 words. | It's addressed to President Buchanan, and it runs to about a hundred words. | Wikipedia/BBC (98); Hunt (99); подсчёт текста в журнале 1861 (99) | высокая: источники расходятся | желательно: точное число спорно | титр «98 words» → «~100 words» |
+| #3 | Pushing it through the cable takes the operators about sixteen hours. | With stops and repeats, getting it through takes about sixteen hours. | отчёт 1861, Q2550; Hunt; Lindley (67 мин) | высокая | желательно: 16 ч включают остановку и повторы | нет |
+| #4 | That works out to roughly one word every ten minutes. | On average, that's roughly one word every ten minutes. | отчёт 1861 (Varley, Q2935) | высокая | желательно: связка с #134 | можно титр «avg ≈ 10 min/word» |
+| #29 | He raised money on both sides of the Atlantic, | He raised most of the money in Britain, | Hunt 2021 | средняя | по желанию: формально верно | сцена: мешки денег в основном с британской стороны |
+| #66 | About 380 miles out, over water two miles deep, | After 380 miles of cable, over water two miles deep, | Bright (380); письмо Филда (335); PBS (~400) | средняя | желательно: «out» читается как расстояние от берега | титр → «~380 mi of cable · ~2 mi deep» |
+| #84 | Seven days later, on August 5, both ships reached land. | Seven days later, on August 5, both ends came ashore. | Hunt; Munro; Field | высокая | по желанию: «Ниагара» пришла 4-го | нет |
+| #87 | The problem Thomson had predicted showed up right away. | Trouble showed up within days of the landing. | Hunt, с. 85–90 | средняя/высокая | желательно: слабость сигнала — дефект изоляции и реле, а не только закон квадратов | сцена с параболой остаётся уместной, но менее нужной |
+| #97 | Left meant a dot, right meant a dash. | One swing meant a dot, the other a dash. | Munro; Hunt, с. 86 (направление не указано) | высокая (утверждение не подтверждено) | **нужно**: неподтверждённое утверждение блокирует финальное одобрение | титр → «one swing = dot · other = dash»; сцена: зоны без фиксированного «точка слева» |
+| #112 | Thomson's ideas won, including testing every length of copper for purity. | Thomson's approach won out, including testing all the copper for conductivity. | Hunt, с. 76–77, 80 | высокая | желательно: проверяли проводимость; с 1857, не из отчёта 1861 | нет |
+| #115 | …a new cable and a new ship. | …a new cable and a giant ship. | Russell 1865; Wikipedia: SS Great Eastern | высокая | по желанию: судно спущено в 1858 | нет |
+| #149 | and the old receiving instruments still sit on the desks. | and much of its old cable equipment is still in place. | Canada's Historic Places; Wikipedia | высокая (утверждение не подтверждено) | **нужно**: в виде как сейчас не подтверждено | сцена: аппаратура начала XX века |
+
+Все предложения укладываются в текущие кадры по темпу (не выше 5,25 слога в секунду).
+
 ## Влияние на изображения
 Принятые кадры пилота (#12, #25, #41, #44, #47, #57) обновлённым фактам не противоречат. #44 по-прежнему требует перегенерации, но из-за запаса сверху, а не из-за фактов. Тестовый кадр #1 из model_test (королева в аппаратной) устарел и использоваться не будет.
