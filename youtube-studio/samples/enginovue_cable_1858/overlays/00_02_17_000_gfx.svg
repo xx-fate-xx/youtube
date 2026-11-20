@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+<rect x="700" y="90" width="1060" height="770" rx="28" fill="#FFFFFF" fill-opacity="0.95" stroke="#0C5274" stroke-width="4"/>
+<text x="750" y="160" fill="#071B35" font-family="Inter, sans-serif" font-size="40" font-weight="bold" text-anchor="start" dominant-baseline="alphabetic">Signal delay</text>
+<text x="750" y="202" fill="#51657A" font-family="Inter, sans-serif" font-size="24" font-weight="normal" text-anchor="start" dominant-baseline="alphabetic">bar heights to exact scale</text>
+<polyline points="770.0,740.0 1690.0,740.0" fill="none" stroke="#071B35" stroke-opacity="1.0" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="910" y="735.1" width="180" height="4.9" rx="0" fill="#FFA51F" fill-opacity="1.0"/>
+<text x="1000" y="717.1" fill="#071B35" font-family="Inter, sans-serif" font-size="40" font-weight="bold" text-anchor="middle" dominant-baseline="alphabetic">1×</text>
+<text x="1000" y="790" fill="#51657A" font-family="Inter, sans-serif" font-size="28" font-weight="normal" text-anchor="middle" dominant-baseline="alphabetic">length L</text>
+<rect x="1350" y="250.0" width="180" height="490.0" rx="0" fill="#0C5274" fill-opacity="1.0"/>
+<text x="1440" y="232.0" fill="#071B35" font-family="Inter, sans-serif" font-size="40" font-weight="bold" text-anchor="middle" dominant-baseline="alphabetic">100×</text>
+<text x="1440" y="790" fill="#51657A" font-family="Inter, sans-serif" font-size="28" font-weight="normal" text-anchor="middle" dominant-baseline="alphabetic">length 10 L</text>
+</svg>

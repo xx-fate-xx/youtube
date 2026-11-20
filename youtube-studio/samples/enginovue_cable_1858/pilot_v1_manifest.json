@@ -1,0 +1,160 @@
+{
+ "pipeline": "Enginovue Visual Pipeline v1.0",
+ "standard": {
+  "provider": "Higgsfield MCP",
+  "model": "gpt_image_2_6",
+  "quality": "low",
+  "resolution": "2k",
+  "aspect_ratio": "16:9",
+  "credits_per_frame": 0.5
+ },
+ "pilot_date": "2026-11-20",
+ "credits_spent": 3.0,
+ "balance_after": 5,
+ "reference_images": {
+  "refs/bit_robot.png": "8edf02fc562fcabe60b3884f9be5cd8913cb72f611bc37ca6a79270904321f1f",
+  "refs/lynx_analyst.png": "c4f7e0b7efc5b8740f1e9f793e48eae2898de8e5680c2f2ff27d55f8ac9c6d59",
+  "refs/octopus_engineer.png": "4f037c2413c15f67bb9db3ad02bdbe586c415d8c4d9980034f2c6d0d678311f3"
+ },
+ "overlays": {
+  "00_02_12_000_gfx.png": "fb51dc09e73783c1b6de6724cbc8b86b783ac3d7006f5c051db6044576929f7d"
+ },
+ "frames": [
+  {
+   "frame": 12,
+   "timecode": "0:40",
+   "file": "00_00_40_000.png",
+   "sha256": "8f805f0bef99f4283a12af6949494c1dc1bb6c30314883e4f7432633121d19d3",
+   "job_id": "69c63e69-cd21-4125-bd4a-a85affc3905e",
+   "model": "gpt_image_2_6",
+   "params": {
+    "aspect_ratio": "16:9",
+    "quality": "low",
+    "resolution": "2k"
+   },
+   "image_references": {
+    "refs/bit_robot.png": "8edf02fc562fcabe60b3884f9be5cd8913cb72f611bc37ca6a79270904321f1f"
+   },
+   "prompt_sha256": "d8a6020ec2702846374cd76c4f078acd7ba9ed765a294855606e3ea8ecb99a45",
+   "prompt_file": "00_00_40_000.json",
+   "qa_status": "WARNING",
+   "qa_fixed_status": null,
+   "decision": "accepted",
+   "accepted_file": "00_00_40_000.png",
+   "accepted_sha256": "8f805f0bef99f4283a12af6949494c1dc1bb6c30314883e4f7432633121d19d3",
+   "note": "Intact cable, fading pulses, Bit on-model. QA warnings are scenery at the edges."
+  },
+  {
+   "frame": 25,
+   "timecode": "1:19",
+   "file": "00_01_19_000.png",
+   "sha256": "3ce5155d9effe357ae3ee87ee809a3482d14716ffb11cf6a7314858a53bd584b",
+   "job_id": "2f472f8c-7e8c-451d-b4fd-74c1c0c55294",
+   "model": "gpt_image_2_6",
+   "params": {
+    "aspect_ratio": "16:9",
+    "quality": "low",
+    "resolution": "2k"
+   },
+   "image_references": {},
+   "prompt_sha256": "b3d2674b3c1dfdfc423b53e3a7bace94474e2127670a5c41f26fd82fd9b5260b",
+   "prompt_file": "00_01_19_000.json",
+   "qa_status": "WARNING",
+   "qa_fixed_status": null,
+   "decision": "accepted_with_note",
+   "accepted_file": "00_01_19_000.png",
+   "accepted_sha256": "3ce5155d9effe357ae3ee87ee809a3482d14716ffb11cf6a7314858a53bd584b",
+   "note": "Field matches the identity spec. Tight headroom (~3.7%): no upward camera push-in."
+  },
+  {
+   "frame": 41,
+   "timecode": "2:12",
+   "file": "00_02_12_000.png",
+   "sha256": "192024eed4a586e465110ad7b14e9c02780bd6e228d482b46c7b35427425378d",
+   "job_id": "f2721cfe-4729-4a64-b570-a758e91b1d6b",
+   "model": "gpt_image_2_6",
+   "params": {
+    "aspect_ratio": "16:9",
+    "quality": "low",
+    "resolution": "2k"
+   },
+   "image_references": {
+    "refs/lynx_analyst.png": "c4f7e0b7efc5b8740f1e9f793e48eae2898de8e5680c2f2ff27d55f8ac9c6d59"
+   },
+   "prompt_sha256": "77e955757e44a59efa516a3d397671b9e2f9a8bc514958f9cdd8d16c98355b6d",
+   "prompt_file": "00_02_12_000.json",
+   "qa_status": "NEEDS_FIX",
+   "qa_fixed_status": "PASS",
+   "decision": "accepted_fixed",
+   "accepted_file": "qa/00_02_12_000_fixed.png",
+   "accepted_sha256": "6ad60daed1f74e667cbd9635d26bd932649b1197b81b5f836991e49bc9db0563",
+   "note": "Auto-fixed copy (scale 0.94, shift down 2.2%) passes QA; overlay 00_02_12_000_gfx.png composited in editing."
+  },
+  {
+   "frame": 44,
+   "timecode": "2:20",
+   "file": "00_02_20_000.png",
+   "sha256": "f193aae319142fd833aa094964f0ff451b23a7396a807d686bd2e81df196ade0",
+   "job_id": "aabbf7e1-f0ce-448b-8ddb-b3f5026c4bd2",
+   "model": "gpt_image_2_6",
+   "params": {
+    "aspect_ratio": "16:9",
+    "quality": "low",
+    "resolution": "2k"
+   },
+   "image_references": {},
+   "prompt_sha256": "0308b57933ff3d0c2dfe42192dfdb0261f5c370596a4e7e0aea9ac0076ffc0a7",
+   "prompt_file": "00_02_20_000.json",
+   "qa_status": "NEEDS_FIX",
+   "qa_fixed_status": null,
+   "decision": "needs_fix",
+   "accepted_file": null,
+   "accepted_sha256": null,
+   "note": "Top hat touches the top edge (0.7%); bag reaches the subtitle band. Scene prompt revised after the pilot; regeneration needs approval."
+  },
+  {
+   "frame": 47,
+   "timecode": "2:30",
+   "file": "00_02_30_000.png",
+   "sha256": "750c247182e138336d824c18ee14e29b5ee76324328b312cfdb18ee3b2a63ee3",
+   "job_id": "f3f8fc14-3ae5-45d4-a3e5-2c817b96e85c",
+   "model": "gpt_image_2_6",
+   "params": {
+    "aspect_ratio": "16:9",
+    "quality": "low",
+    "resolution": "2k"
+   },
+   "image_references": {},
+   "prompt_sha256": "ad3b33b31390bcbcdb712c99ef69435060324ed80aa90000242ebd9b3f7610df",
+   "prompt_file": "00_02_30_000.json",
+   "qa_status": "WARNING",
+   "qa_fixed_status": null,
+   "decision": "accepted_with_note",
+   "accepted_file": "00_02_30_000.png",
+   "accepted_sha256": "750c247182e138336d824c18ee14e29b5ee76324328b312cfdb18ee3b2a63ee3",
+   "note": "Whitehouse consistent with #44. Tight headroom (~3.7%): no upward push-in."
+  },
+  {
+   "frame": 57,
+   "timecode": "3:01",
+   "file": "00_03_01_000.png",
+   "sha256": "af969f6c0c73969eb764ad7145bb9feee607db448a355cda603d4ae23c52aa0e",
+   "job_id": "0725a974-832b-405c-9d42-32be80a41b19",
+   "model": "gpt_image_2_6",
+   "params": {
+    "aspect_ratio": "16:9",
+    "quality": "low",
+    "resolution": "2k"
+   },
+   "image_references": {},
+   "prompt_sha256": "e2f04c3fccbafc3f4330aeb38cd0e16a30d5d7ad80cf6a1790d652f3db351fdc",
+   "prompt_file": "00_03_01_000.json",
+   "qa_status": "WARNING",
+   "qa_fixed_status": null,
+   "decision": "accepted",
+   "accepted_file": "00_03_01_000.png",
+   "accepted_sha256": "af969f6c0c73969eb764ad7145bb9feee607db448a355cda603d4ae23c52aa0e",
+   "note": "Wide factory scene; edge contacts are scenery."
+  }
+ ]
+}

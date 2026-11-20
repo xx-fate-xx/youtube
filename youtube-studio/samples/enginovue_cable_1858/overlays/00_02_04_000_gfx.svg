@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+<rect x="300" y="100" width="1320" height="560" rx="28" fill="#FFFFFF" fill-opacity="0.95" stroke="#0C5274" stroke-width="4"/>
+<text x="350" y="170" fill="#071B35" font-family="Inter, sans-serif" font-size="40" font-weight="bold" text-anchor="start" dominant-baseline="alphabetic">Sent from Ireland</text>
+<text x="350" y="212" fill="#51657A" font-family="Inter, sans-serif" font-size="26" font-weight="normal" text-anchor="start" dominant-baseline="alphabetic">A crisp, square telegraph pulse</text>
+<polyline points="537.8,250.0 537.8,580.0" fill="none" stroke="#D5E3EC" stroke-opacity="1.0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="665.6,250.0 665.6,580.0" fill="none" stroke="#D5E3EC" stroke-opacity="1.0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="793.3,250.0 793.3,580.0" fill="none" stroke="#D5E3EC" stroke-opacity="1.0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="921.1,250.0 921.1,580.0" fill="none" stroke="#D5E3EC" stroke-opacity="1.0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="1048.9,250.0 1048.9,580.0" fill="none" stroke="#D5E3EC" stroke-opacity="1.0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="1176.7,250.0 1176.7,580.0" fill="none" stroke="#D5E3EC" stroke-opacity="1.0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="1304.4,250.0 1304.4,580.0" fill="none" stroke="#D5E3EC" stroke-opacity="1.0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="1432.2,250.0 1432.2,580.0" fill="none" stroke="#D5E3EC" stroke-opacity="1.0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="410.0,332.5 1560.0,332.5" fill="none" stroke="#D5E3EC" stroke-opacity="1.0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="410.0,415.0 1560.0,415.0" fill="none" stroke="#D5E3EC" stroke-opacity="1.0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="410.0,497.5 1560.0,497.5" fill="none" stroke="#D5E3EC" stroke-opacity="1.0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="410.0,580.0 1570.0,580.0" fill="none" stroke="#071B35" stroke-opacity="1.0" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="410.0,580.0 410.0,240.0" fill="none" stroke="#071B35" stroke-opacity="1.0" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="1560" y="624" fill="#51657A" font-family="Inter, sans-serif" font-size="26" font-weight="normal" text-anchor="end" dominant-baseline="alphabetic">time</text>
+<text x="340" y="415.0" fill="#51657A" font-family="Inter, sans-serif" font-size="30" font-weight="bold" text-anchor="middle" dominant-baseline="central">V</text>
+<polyline points="410.0,580.0 486.7,580.0 486.7,280.0 614.4,280.0 614.4,580.0 1560.0,580.0" fill="none" stroke="#0C5274" stroke-opacity="1.0" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

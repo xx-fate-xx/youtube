@@ -1,0 +1,153 @@
+n,timecode,start_s,duration_s,image,anim_clip,gfx_overlay,overlay,voiceover
+1,0:00,0,4,00_00_00_000.png,00_00_00_000.mp4,,16 Aug 1858,"On August 16, 1858, Queen Victoria sends a message across the Atlantic."
+2,0:04,4,4,00_00_04_000.png,,,98 words,"It's addressed to President James Buchanan, and it runs to 98 words."
+3,0:08,8,4,00_00_08_000.png,,,~16 hours,Pushing it through the cable takes the operators about sixteen hours.
+4,0:12,12,4,00_00_12_000.png,,,1 word ≈ 10 min,That works out to roughly one word every ten minutes.
+5,0:16,16,2,00_00_16_000.png,00_00_16_000.mp4,,,"And still, New York goes wild."
+6,0:18,18,4,00_00_18_000.png,,,,"The city celebrates for days with parades, church bells and fireworks."
+7,0:22,22,4,00_00_22_000.png,00_00_22_000.mp4,,,The fireworks even set the roof of City Hall on fire.
+8,0:26,26,4,00_00_26_000.png,,,,Tiffany & Co. buys leftover cable and sells short pieces as souvenirs.
+9,0:30,30,4,00_00_30_000.png,,,,Then the signals coming out of the cable start to fade.
+10,0:34,34,3,00_00_34_000.png,00_00_34_000.mp4,,early Sep 1858,"By early September, the line is effectively dead."
+11,0:37,37,3,00_00_37_000.png,,,1857 · 1858,Two summers of work went into laying that line.
+12,0:40,40,3,00_00_40_000.png,,,,So why did it fail within a month?
+13,0:43,43,3,00_00_43_000.png,,,,And why did anyone agree to try again?
+14,0:46,46,4,00_00_46_000.png,,,London → New York,"In the 1850s, news from London reached New York by steamship."
+15,0:50,50,2,00_00_50_000.png,00_00_50_000.mp4,,~10 days,The crossing took around ten days.
+16,0:52,52,3,00_00_52_000.png,,,,A trader in New York priced his cotton
+17,0:55,55,3,00_00_55_000.png,,,,on news that was already ten days old.
+18,0:58,58,2,00_00_58_000.png,,,,Governments sent instructions to their ambassadors
+19,1:00,60,3,00_01_00_000.png,,,,knowing events could change completely before the ship arrived.
+20,1:03,63,3,00_01_03_000.png,00_01_03_000.mp4,,,"On land, the problem had already been solved."
+21,1:06,66,3,00_01_06_000.png,,,,"By the 1850s, telegraph wires linked most big cities"
+22,1:09,69,3,00_01_09_000.png,,,,in Britain and in the United States.
+23,1:12,72,3,00_01_12_000.png,,,,"Nobody had managed to wire across the ocean,"
+24,1:15,75,4,00_01_15_000.png,,,"~2,000 miles","close to 2,000 miles of water between Ireland and Newfoundland."
+25,1:19,79,4,00_01_19_000.png,00_01_19_000.mp4,,Cyrus Field,In 1854 a wealthy New York paper merchant named Cyrus Field
+26,1:23,83,4,00_01_23_000.png,,,,got pulled into a plan to run a telegraph line across Newfoundland.
+27,1:27,87,4,00_01_27_000.png,,,,"Looking at a globe in his study, he asked a bigger question."
+28,1:31,91,4,00_01_31_000.png,,,,"If the wire could reach Newfoundland, why stop at the coast?"
+29,1:35,95,3,00_01_35_000.png,,,,"He raised money on both sides of the Atlantic,"
+30,1:38,98,4,00_01_38_000.png,00_01_38_000.mp4,,Atlantic Telegraph Company · 1856,and in 1856 the Atlantic Telegraph Company was founded in London.
+31,1:42,102,4,00_01_42_000.png,,,,One of its directors was a 32-year-old physics professor
+32,1:46,106,2,00_01_46_000.png,,,William Thomson · Glasgow,from Glasgow named William Thomson.
+33,1:48,108,4,00_01_48_000.png,,,,"Thomson had done the math on long cables, and it worried him."
+34,1:52,112,3,00_01_52_000.png,,,,"Copper wire, wrapped in insulation and lying in seawater,"
+35,1:55,115,3,00_01_55_000.png,00_01_55_000.mp4,,,soaks up electric charge along its whole length.
+36,1:58,118,3,00_01_58_000.png,,,,Every pulse you send has to fill that line
+37,2:01,121,3,00_02_01_000.png,,,,before anything shows up at the far end.
+38,2:04,124,2,00_02_04_000.png,,overlays/00_02_04_000_gfx.png,,A crisp dot leaves Ireland
+39,2:06,126,3,00_02_06_000.png,,overlays/00_02_06_000_gfx.png,,"and reaches Newfoundland as a slow, smeared bump."
+40,2:09,129,3,00_02_09_000.png,00_02_09_000.mp4,,delay ∝ L²,In 1855 Thomson calculated that this delay grows
+41,2:12,132,3,00_02_12_000.png,,overlays/00_02_12_000_gfx.png,,with the square of the cable's length.
+42,2:15,135,2,00_02_15_000.png,,overlays/00_02_15_000_gfx.png,×10,Make a cable ten times longer
+43,2:17,137,3,00_02_17_000.png,,overlays/00_02_17_000_gfx.png,×100,and the delay gets roughly a hundred times worse.
+44,2:20,140,3,00_02_20_000.png,,,Wildman Whitehouse,"The company's chief electrician was Wildman Whitehouse,"
+45,2:23,143,4,00_02_23_000.png,00_02_23_000.mp4,,,a surgeon by training who argued in public that Thomson was wrong.
+46,2:27,147,3,00_02_27_000.png,,,,Whitehouse believed a weak signal could be cured
+47,2:30,150,3,00_02_30_000.png,,,,by pushing more voltage into the line.
+48,2:33,153,3,00_02_33_000.png,,,1857,"The directors wanted the cable laid in 1857,"
+49,2:36,156,3,00_02_36_000.png,,,,so they rushed a thin cable that Whitehouse backed.
+50,2:39,159,4,00_02_39_000.png,00_02_39_000.mp4,,,The cable they ordered was only about as thick as your finger.
+51,2:43,163,3,00_02_43_000.png,,,,At its center ran seven copper wires twisted together.
+52,2:46,166,3,00_02_46_000.png,,,,"Around them went three coats of gutta-percha,"
+53,2:49,169,4,00_02_49_000.png,,,,"a hard, rubbery gum taken from trees in Southeast Asia."
+54,2:53,173,2,00_02_53_000.png,,,,"Then came tarred hemp,"
+55,2:55,175,3,00_02_55_000.png,00_02_55_000.mp4,,18 iron strands,"and on the outside, 18 strands of twisted iron wire."
+56,2:58,178,3,00_02_58_000.png,,,1 mile ≈ 1 ton,Each mile of it weighed about a ton.
+57,3:01,181,3,00_03_01_000.png,,,"~2,500 miles","Two English firms armored about 2,500 miles of it,"
+58,3:04,184,3,00_03_04_000.png,,,Greenwich · Birkenhead,one in Greenwich and one in Birkenhead.
+59,3:07,187,4,00_03_07_000.png,,,,Later someone noticed the two halves had their iron armor
+60,3:11,191,2,00_03_11_000.png,00_03_11_000.mp4,,,twisted in opposite directions.
+61,3:13,193,3,00_03_13_000.png,,,,Joining them took a specially made splice.
+62,3:16,196,3,00_03_16_000.png,,,,"The cable was divided between two warships,"
+63,3:19,199,4,00_03_19_000.png,,,HMS Agamemnon · USS Niagara,HMS Agamemnon from Britain and USS Niagara from the United States.
+64,3:23,203,4,00_03_23_000.png,,,Valentia Bay · Aug 1857,"In August 1857 the Niagara set out from Valentia Bay,"
+65,3:27,207,3,00_03_27_000.png,00_03_27_000.mp4,,,paying cable over its stern as it steamed west.
+66,3:30,210,4,00_03_30_000.png,,,~380 mi · ~2 mi deep,"About 380 miles out, over water two miles deep,"
+67,3:34,214,4,00_03_34_000.png,,,,the brake on the paying-out gear was applied too hard
+68,3:38,218,2,00_03_38_000.png,00_03_38_000.mp4,,,and the cable snapped and sank.
+69,3:40,220,2,00_03_40_000.png,,,,"That ended the 1857 attempt,"
+70,3:42,222,3,00_03_42_000.png,00_03_42_000.mp4,,,and the ships sailed home to wait for summer.
+71,3:45,225,3,00_03_45_000.png,,,,For 1858 the engineers changed the plan.
+72,3:48,228,2,00_03_48_000.png,,,,"Both ships would meet in mid-Atlantic,"
+73,3:50,230,2,00_03_50_000.png,,,,"splice their two halves together,"
+74,3:52,232,4,00_03_52_000.png,,,,and then steam away from each other toward opposite coasts.
+75,3:56,236,4,00_03_56_000.png,00_03_56_000.mp4,,June 1858,In June 1858 a storm hit the fleet on the way out.
+76,4:00,240,3,00_04_00_000.png,,,,"The Agamemnon, top-heavy with cable, rolled so hard"
+77,4:03,243,4,00_04_03_000.png,00_04_03_000.mp4,,,that coils broke loose and her crew feared she would capsize.
+78,4:07,247,3,00_04_07_000.png,,,×3,"Once the weather cleared, the cable broke three times"
+79,4:10,250,2,00_04_10_000.png,,,,and the ships returned to Ireland.
+80,4:12,252,4,00_04_12_000.png,00_04_12_000.mp4,,,Some directors wanted to quit and sell what was left.
+81,4:16,256,4,00_04_16_000.png,,,,Field talked them into one more try that same summer.
+82,4:20,260,4,00_04_20_000.png,,,29 Jul 1858,"On July 29, 1858, back in mid-ocean, the two ships"
+83,4:24,264,3,00_04_24_000.png,,,,spliced the cable for the last time.
+84,4:27,267,4,00_04_27_000.png,,,5 Aug 1858,"Seven days later, on August 5, both ships reached land."
+85,4:31,271,3,00_04_31_000.png,00_04_31_000.mp4,,Valentia,"Agamemnon brought her end ashore at Valentia,"
+86,4:34,274,3,00_04_34_000.png,,,Trinity Bay,"Niagara brought hers ashore at Trinity Bay, Newfoundland."
+87,4:37,277,4,00_04_37_000.png,,,,The problem Thomson had predicted showed up right away.
+88,4:41,281,4,00_04_41_000.png,,,,The pulses arriving at the far end were so weak
+89,4:45,285,3,00_04_45_000.png,,,,that Whitehouse's relay receivers barely worked.
+90,4:48,288,4,00_04_48_000.png,00_04_48_000.mp4,,Mirror galvanometer,"What worked was a device Thomson had designed, the mirror galvanometer."
+91,4:52,292,3,00_04_52_000.png,,,,A tiny magnet with a mirror on its back
+92,4:55,295,2,00_04_55_000.png,,,,hung from a single silk thread.
+93,4:57,297,2,00_04_57_000.png,,,,A lamp shone onto that mirror
+94,4:59,299,4,00_04_59_000.png,00_04_59_000.mp4,,,and bounced a spot of light onto a paper scale.
+95,5:03,303,3,00_05_03_000.png,00_05_03_000.mp4,,,"The faintest current twisted the magnet a little,"
+96,5:06,306,3,00_05_06_000.png,00_05_06_000.mp4,,,and the light spot jumped left or right.
+97,5:09,309,3,00_05_09_000.png,,,left = dot · right = dash,"Left meant a dot, right meant a dash."
+98,5:12,312,4,00_05_12_000.png,,,,"With it, operators could read messages one slow letter at a time."
+99,5:16,316,3,00_05_16_000.png,,,,"At first, Whitehouse had used his own equipment,"
+100,5:19,319,4,00_05_19_000.png,00_05_19_000.mp4,,"1,000s of volts",with huge induction coils that hit the line with thousands of volts.
+101,5:23,323,4,00_05_23_000.png,,,,"Somewhere under the Atlantic, the already-flawed insulation gave way."
+102,5:27,327,2,00_05_27_000.png,,,,"Seawater reached the copper,"
+103,5:29,329,4,00_05_29_000.png,00_05_29_000.mp4,,,"current leaked into the ocean, and the signal faded day after day."
+104,5:33,333,3,00_05_33_000.png,,,,"By early September, no readable message got through."
+105,5:36,336,3,00_05_36_000.png,00_05_36_000.mp4,,,"Whitehouse, dismissed back in August, took the blame."
+106,5:39,339,4,00_05_39_000.png,,,HOAX?,Some newspapers even suggested the whole thing had been a hoax.
+107,5:43,343,4,00_05_43_000.png,,,,In 1859 the British Board of Trade and the company
+108,5:47,347,4,00_05_47_000.png,,,,set up a joint committee to find out why cables failed.
+109,5:51,351,4,00_05_51_000.png,,,,"It spent about two years testing cables and taking evidence,"
+110,5:55,355,3,00_05_55_000.png,00_05_55_000.mp4,,Report · 1861,and in 1861 it published a long report
+111,5:58,358,3,00_05_58_000.png,,,,"on how to build, test and lay them."
+112,6:01,361,4,00_06_01_000.png,,,,"Thomson's ideas won, including testing every length of copper for purity."
+113,6:05,365,3,00_06_05_000.png,,,1861,"Then the American Civil War began in 1861,"
+114,6:08,368,3,00_06_08_000.png,,,,and the project stalled for years.
+115,6:11,371,4,00_06_11_000.png,00_06_11_000.mp4,,1865,By 1865 the company had a new cable and a new ship.
+116,6:15,375,3,00_06_15_000.png,,,Isambard Kingdom Brunel,"The Great Eastern, designed by Isambard Kingdom Brunel,"
+117,6:18,378,3,00_06_18_000.png,,,,was the largest ship afloat at the time.
+118,6:21,381,4,00_06_21_000.png,,,,"She could hold the whole Atlantic cable in one trip,"
+119,6:25,385,3,00_06_25_000.png,,,,so there was no need for a mid-ocean splice.
+120,6:28,388,2,00_06_28_000.png,00_06_28_000.mp4,,July 1865,"In July 1865 she left Ireland,"
+121,6:30,390,3,00_06_30_000.png,00_06_30_000.mp4,,"1,000+ miles","and after more than 1,000 miles the cable snapped"
+122,6:33,393,3,00_06_33_000.png,,,2+ miles deep,and dropped into water over two miles deep.
+123,6:36,396,4,00_06_36_000.png,,,,The crew dragged the seabed with grappling hooks for days
+124,6:40,400,4,00_06_40_000.png,00_06_40_000.mp4,,×3,"and raised the cable three times, but each time the line broke."
+125,6:44,404,4,00_06_44_000.png,00_06_44_000.mp4,,1866,In 1866 the Great Eastern sailed again with fresh cable.
+126,6:48,408,4,00_06_48_000.png,,,Heart's Content · 27 Jul 1866,"On July 27 she landed it at Heart's Content, Newfoundland."
+127,6:52,412,2,00_06_52_000.png,,,,This time the line held.
+128,6:54,414,3,00_06_54_000.png,,,,Then the crew went back to the spot
+129,6:57,417,3,00_06_57_000.png,,,,where the 1865 cable lay on the bottom.
+130,7:00,420,4,00_07_00_000.png,00_07_00_000.mp4,,,"They hooked it, hauled it up from more than two miles down,"
+131,7:04,424,4,00_07_04_000.png,,,,spliced on fresh cable and finished the line to Newfoundland.
+132,7:08,428,4,00_07_08_000.png,,,Sept 1866,By September 1866 there were two working cables across the Atlantic.
+133,7:12,432,3,00_07_12_000.png,,,8 wpm,The new line moved about eight words a minute.
+134,7:15,435,4,00_07_15_000.png,,,1–2 wpm,"At its best, the 1858 cable managed a word or two a minute."
+135,7:19,439,3,00_07_19_000.png,00_07_19_000.mp4,,,News that once spent ten days on a steamship
+136,7:22,442,3,00_07_22_000.png,00_07_22_000.mp4,,,could now reach the other side in minutes.
+137,7:25,445,4,00_07_25_000.png,,,,William Thomson was knighted for his part in the work.
+138,7:29,449,2,00_07_29_000.png,,,Lord Kelvin,"Years later he became Lord Kelvin,"
+139,7:31,451,4,00_07_31_000.png,,,K,"and the kelvin, the scientific unit of temperature, carries his name."
+140,7:35,455,4,00_07_35_000.png,00_07_35_000.mp4,,1870 · Bombay,By 1870 a chain of cables ran from Britain to Bombay.
+141,7:39,459,4,00_07_39_000.png,,,1871 · Darwin,"In 1871 another line came ashore at Darwin, in northern Australia."
+142,7:43,463,4,00_07_43_000.png,,,,Modern cables on the seabed carry pulses of light through glass fibers.
+143,7:47,467,3,00_07_47_000.png,,,TAT-8,"The first transatlantic fiber cable, TAT-8,"
+144,7:50,470,2,00_07_50_000.png,,,1988,went into service in 1988.
+145,7:52,472,4,00_07_52_000.png,00_07_52_000.mp4,,,Estimates commonly put the share of data crossing between continents
+146,7:56,476,3,00_07_56_000.png,,,~99%,through undersea cables at around 99 percent.
+147,7:59,479,4,00_07_59_000.png,,,1866–1965,The station at Heart's Content stayed in use until 1965.
+148,8:03,483,2,00_08_03_000.png,,,,"The building is now a museum,"
+149,8:05,485,4,00_08_05_000.png,,,,and the old receiving instruments still sit on the desks.
+150,8:09,489,3,00_08_09_000.png,00_08_09_000.mp4,,,"When you load a page hosted on another continent,"
+151,8:12,492,3,00_08_12_000.png,,,,"the data most likely crosses the ocean floor,"
+152,8:15,495,4,00_08_15_000.png,00_08_15_000.mp4,,,along the kind of route those ships first proved could work in 1866.
