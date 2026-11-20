@@ -27,6 +27,15 @@ Rules: no paid call without explicit approval per batch; no automatic regenerati
 - `py production.py decide N accept|accept_fixed|reject` — records the editorial decision; accepted frames drop out of later batches.
 - State lives in `projects/enginovue_cable_1858/production/` (git-ignored: account-specific media ids, images).
 
+## Running one batch (only after explicit approval of that batch)
+1. `py production.py plan` and `py production.py next` → `next_batch.json` (frames, timecodes, files) and `next_batch_mcp.json` (exact requests).
+2. Check the Higgsfield balance ≥ batch cost and note it (`before`).
+3. Higgsfield MCP `generate_image_batch` with the requests from `next_batch_mcp.json` (index = frame number); wait until all jobs are terminal. Failed jobs are not retried automatically.
+4. For every completed job: `py production.py record N JOB_ID URL` → PNG + JSON in `production/frames/` (read-only), QA report and previews in `production/frames/qa/`.
+5. Check the balance again (`after`): `py production.py report --batch K --before B --after A` → `production/batch_KK_report.md` and the credit ledger in `state.json`.
+6. Show the batch (gallery + QA) to the editor; record decisions with `py production.py decide N accept|accept_fixed|reject`. Re-generations need separate approval.
+7. Stop. The next batch is never started automatically.
+
 ## Per-frame flow (after approval)
 1. Generate through Higgsfield MCP with the exact `prompt`, `params` and references from `prompts.jsonl`.
 2. Save the original PNG and a JSON with job id, parameters, reference media ids and prompt.
