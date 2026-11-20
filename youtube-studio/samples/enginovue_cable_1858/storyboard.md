@@ -6,8 +6,8 @@
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | 0:00 | On August 16, 1858, Queen Victoria sends a message across the Atlantic. | Телеграфист в Валентии передаёт послание королевы | — | Dark Cinematic Tech | medium | да | 16 Aug 1858 | — | 00_00_00_000.png |
 | 2 | 0:04 | It's addressed to President James Buchanan, and it runs to 98 words. | Свиток телеграммы летит к президенту Бьюкенену | — | Light Explainer | medium | — | 98 words | — | 00_00_04_000.png |
-| 3 | 0:08 | Pushing it through the cable takes the operators about sixteen hours. | Уставший телеграфист, часы отсчитывают много часов | — | Light Explainer | medium | — | ~16 hours | — | 00_00_08_000.png |
-| 4 | 0:12 | That works out to roughly one word every ten minutes. | Песочные часы и одно слово, ползущее по проводу; Бит засыпает | Бит | Light Explainer | infographic | — | 1 word ≈ 10 min | — | 00_00_12_000.png |
+| 3 | 0:08 | With stops and repeats, getting it through takes about sixteen hours. | Уставший телеграфист, часы отсчитывают много часов | — | Light Explainer | medium | — | ~16 hours | — | 00_00_08_000.png |
+| 4 | 0:12 | On average, that's roughly one word every ten minutes. | Песочные часы и одно слово, ползущее по проводу; Бит засыпает | Бит | Light Explainer | infographic | — | avg ≈ 10 min / word | — | 00_00_12_000.png |
 | 5 | 0:16 | And still, New York goes wild. | Толпа в Нью-Йорке ликует, шляпы в воздухе | — | Dark Cinematic Tech | wide | да | — | — | 00_00_16_000.png |
 | 6 | 0:18 | The city celebrates for days with parades, church bells and fireworks. | Парад, колокола, салют над крышами | — | Dark Cinematic Tech | wide | — | — | — | 00_00_18_000.png |
 | 7 | 0:22 | The fireworks even set the roof of City Hall on fire. | Фейерверк поджигает купол мэрии, пожарные с вёдрами | — | Dark Cinematic Tech | dynamic | да | — | — | 00_00_22_000.png |
@@ -47,7 +47,7 @@
 | 41 | 2:12 | with the square of the cable's length. | Линкс проецирует график t ∝ L² (точное наложение в монтаже) | Линкс | Light Explainer | infographic | — | — | 00_02_12_000_gfx.png | 00_02_12_000.png |
 | 42 | 2:15 | Make a cable ten times longer | Бит сканирует; кабели L и 10 L — точное наложение в монтаже | Бит | Light Explainer | infographic | — | ×10 | 00_02_15_000_gfx.png | 00_02_15_000.png |
 | 43 | 2:17 | and the delay gets roughly a hundred times worse. | Бит поражён; столбики 1× и 100× — точное наложение в монтаже | Бит | Light Explainer | infographic | — | ×100 | 00_02_17_000_gfx.png | 00_02_17_000.png |
-| 44 | 2:20 | The company's chief electrician was Wildman Whitehouse, | Уайтхаус с докторским саквояжем, из которого торчат провода | Уайтхаус | Light Explainer | medium | — | Wildman Whitehouse | — | 00_02_20_000.png |
+| 44 | 2:20 | The company's chief electrician was Wildman Whitehouse, | Уайтхаус с докторским саквояжем, из которого торчат провода | Уайтхаус | Light Explainer | wide | — | Wildman Whitehouse | — | 00_02_20_000.png |
 | 45 | 2:23 | a surgeon by training who argued in public that Thomson was wrong. | Уайтхаус спорит с Томсоном перед залом; Томсон отвечает письмом | Уайтхаус, Томсон | Light Explainer | wide | да | — | — | 00_02_23_000.png |
 | 46 | 2:27 | Whitehouse believed a weak signal could be cured | Уайтхаус слушает кабель стетоскопом | Уайтхаус | Light Explainer | medium | — | — | — | 00_02_27_000.png |
 | 47 | 2:30 | by pushing more voltage into the line. | Уайтхаус у огромной искрящей катушки | Уайтхаус | Dark Cinematic Tech | medium | — | — | — | 00_02_30_000.png |
@@ -69,7 +69,7 @@
 | 63 | 3:19 | HMS Agamemnon from Britain and USS Niagara from the United States. | Агамемнон и Ниагара бок о бок | — | Dark Cinematic Tech | wide | — | HMS Agamemnon · USS Niagara | — | 00_03_19_000.png |
 | 64 | 3:23 | In August 1857 the Niagara set out from Valentia Bay, | Корабль отходит от берега бухты Валентия | — | Light Explainer | wide | — | Valentia Bay · Aug 1857 | — | 00_03_23_000.png |
 | 65 | 3:27 | paying cable over its stern as it steamed west. | Кабель сходит с кормы в воду | — | Light Explainer | medium | да | — | — | 00_03_27_000.png |
-| 66 | 3:30 | About 380 miles out, over water two miles deep, | Карта и разрез глубины; Бит показывает лучом | Бит | Light Explainer | infographic | — | ~380 mi · ~2 mi deep | — | 00_03_30_000.png |
+| 66 | 3:30 | After hundreds of miles of cable, over water two miles deep, | Карта и разрез глубины; Бит показывает лучом | Бит | Light Explainer | infographic | — | ~2 mi deep | — | 00_03_30_000.png |
 | 67 | 3:34 | the brake on the paying-out gear was applied too hard | Матрос изо всех сил тянет рычаг тормоза | — | Dark Cinematic Tech | medium | — | — | — | 00_03_34_000.png |
 | 68 | 3:38 | and the cable snapped and sank. | Кабель лопается и уходит в тёмную воду | — | Dark Cinematic Tech | dynamic | да | — | — | 00_03_38_000.png |
 | 69 | 3:40 | That ended the 1857 attempt, | Матросы сняли шапки и смотрят в воду | — | Light Explainer | medium | — | — | — | 00_03_40_000.png |
@@ -90,7 +90,7 @@
 | 84 | 4:27 | Seven days later, on August 5, both ships reached land. | Два берега на разделённом экране | — | Light Explainer | infographic | — | 5 Aug 1858 | — | 00_04_27_000.png |
 | 85 | 4:31 | Agamemnon brought her end ashore at Valentia, | Шлюпка вытягивает кабель на берег Валентии | — | Light Explainer | wide | да | Valentia | — | 00_04_31_000.png |
 | 86 | 4:34 | Niagara brought hers ashore at Trinity Bay, Newfoundland. | Кабель выводят на берег Ньюфаундленда среди елей | — | Light Explainer | wide | — | Trinity Bay | — | 00_04_34_000.png |
-| 87 | 4:37 | The problem Thomson had predicted showed up right away. | Линкс мрачно смотрит на ту самую параболу | Линкс | Light Explainer | medium | — | — | — | 00_04_37_000.png |
+| 87 | 4:37 | Trouble showed up within days of the landing. | Линкс встревоженно смотрит на угасающий сигнал | Линкс | Light Explainer | medium | — | — | — | 00_04_37_000.png |
 | 88 | 4:41 | The pulses arriving at the far end were so weak | Из кабеля выползает крошечный слабый импульс | — | Light Explainer | infographic | — | — | — | 00_04_41_000.png |
 | 89 | 4:45 | that Whitehouse's relay receivers barely worked. | Перо регистратора Морзе неподвижно над пустой лентой | — | Light Explainer | close | — | — | — | 00_04_45_000.png |
 | 90 | 4:48 | What worked was a device Thomson had designed, the mirror galvanometer. | Зеркальный гальванометр, героический крупный план | — | Dark Cinematic Tech | close | да | Mirror galvanometer | — | 00_04_48_000.png |
@@ -100,7 +100,7 @@
 | 94 | 4:59 | and bounced a spot of light onto a paper scale. | Отражённый луч даёт светлое пятно на шкале | — | Dark Cinematic Tech | infographic | да | — | — | 00_04_59_000.png |
 | 95 | 5:03 | The faintest current twisted the magnet a little, | Слабый ток чуть поворачивает магнит | — | Light Explainer | macro | да | — | — | 00_05_03_000.png |
 | 96 | 5:06 | and the light spot jumped left or right. | Пятно прыгает влево-вправо, Бит следит глазами | Бит | Dark Cinematic Tech | infographic | да | — | — | 00_05_06_000.png |
-| 97 | 5:09 | Left meant a dot, right meant a dash. | Слева точка, справа тире | — | Light Explainer | infographic | — | left = dot · right = dash | — | 00_05_09_000.png |
+| 97 | 5:09 | One swing meant a dot, the other a dash. | Отклонение в одну сторону — точка, в другую — тире | — | Light Explainer | infographic | — | one swing = dot · other = dash | — | 00_05_09_000.png |
 | 98 | 5:12 | With it, operators could read messages one slow letter at a time. | Ночью двое операторов: один следит за пятном, другой записывает | — | Dark Cinematic Tech | medium | — | — | — | 00_05_12_000.png |
 | 99 | 5:16 | At first, Whitehouse had used his own equipment, | Уайтхаус бьётся со своим аппаратом | Уайтхаус | Light Explainer | medium | — | — | — | 00_05_16_000.png |
 | 100 | 5:19 | with huge induction coils that hit the line with thousands of volts. | Индукционные катушки мечут искры | Уайтхаус | Dark Cinematic Tech | dynamic | да | 1,000s of volts | — | 00_05_19_000.png |
@@ -115,7 +115,7 @@
 | 109 | 5:51 | It spent about two years testing cables and taking evidence, | Лаборатория: образцы в баках, приборы, журналы | — | Light Explainer | wide | — | — | — | 00_05_51_000.png |
 | 110 | 5:55 | and in 1861 it published a long report | Толстый том отчёта падает на стол | — | Light Explainer | close | да | Report · 1861 | — | 00_05_55_000.png |
 | 111 | 5:58 | on how to build, test and lay them. | Линкс листает отчёт со схемами кабеля | Линкс | Light Explainer | close | — | — | — | 00_05_58_000.png |
-| 112 | 6:01 | Thomson's ideas won, including testing every length of copper for purity. | Томсон проверяет катушку меди | Томсон | Light Explainer | medium | — | — | — | 00_06_01_000.png |
+| 112 | 6:01 | Thomson's approach won out, including testing all the copper for conductivity. | Томсон проверяет катушку меди | Томсон | Light Explainer | medium | — | — | — | 00_06_01_000.png |
 | 113 | 6:05 | Then the American Civil War began in 1861, | Силуэты солдат Гражданской войны и пушка | — | Dark Cinematic Tech | wide | — | 1861 | — | 00_06_05_000.png |
 | 114 | 6:08 | and the project stalled for years. | Паутина на чертежах кабеля | — | Light Explainer | close | — | — | — | 00_06_08_000.png |
 | 115 | 6:11 | By 1865 the company had a new cable and a new ship. | Новый толстый кабель и в тумане силуэт гигантского корабля | — | Dark Cinematic Tech | wide | да | 1865 | — | 00_06_11_000.png |
@@ -152,7 +152,7 @@
 | 146 | 7:56 | through undersea cables at around 99 percent. | Круговая диаграмма почти полностью закрашена | — | Light Explainer | infographic | — | ~99% | — | 00_07_56_000.png |
 | 147 | 7:59 | The station at Heart's Content stayed in use until 1965. | Историческое здание кабельной станции на берегу | — | Light Explainer | wide | — | 1866–1965 | — | 00_07_59_000.png |
 | 148 | 8:03 | The building is now a museum, | Современные посетители входят в музей | — | Light Explainer | wide | — | — | — | 00_08_03_000.png |
-| 149 | 8:05 | and the old receiving instruments still sit on the desks. | Старые аппараты на длинных деревянных столах | — | Light Explainer | medium | — | — | — | 00_08_05_000.png |
+| 149 | 8:05 | and much of its old cable equipment is still in place. | Старое кабельное оборудование в музее станции | — | Light Explainer | medium | — | — | — | 00_08_05_000.png |
 | 150 | 8:09 | When you load a page hosted on another continent, | Человек за ноутбуком нажимает на ссылку | — | Light Explainer | medium | да | — | — | 00_08_09_000.png |
 | 151 | 8:12 | the data most likely crosses the ocean floor, | Свет бежит по кабелю по дну океана | — | Dark Cinematic Tech | wide | — | — | — | 00_08_12_000.png |
 | 152 | 8:15 | along the kind of route those ships first proved could work in 1866. | Призрак Great Eastern над современным кабелем, три героя смотрят | Осьминог, Линкс, Бит | Dark Cinematic Tech | wide | да | — | — | 00_08_15_000.png |

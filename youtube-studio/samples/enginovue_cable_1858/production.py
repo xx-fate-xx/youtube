@@ -34,6 +34,7 @@ STATE = PROD / "state.json"
 PILOT_MANIFEST = HERE / "pilot_v1_manifest.json"
 PRICE = 0.5                      # credits per frame, gpt_image_2_6 low/2k (Higgsfield quote 2026-11-20)
 ACCEPTED = {"accepted", "accepted_with_note", "accepted_fixed"}
+SKIP = ACCEPTED | {"candidate"}  # candidate: generated, awaiting an editorial decision; not re-generated
 
 
 def prompts() -> dict[int, dict]:
@@ -58,7 +59,8 @@ def decisions(state: dict) -> dict[int, dict]:
     out: dict[int, dict] = {}
     if PILOT_MANIFEST.is_file():
         for f in json.loads(PILOT_MANIFEST.read_text(encoding="utf-8"))["frames"]:
-            out[f["frame"]] = {"decision": f["decision"], "file": f["accepted_file"], "source": "pilot"}
+            acc = f"pilot_low_2k/{f['accepted_file']}" if f["accepted_file"] else None
+            out[f["frame"]] = {"decision": f["decision"], "file": acc, "source": "pilot"}
     for n, f in state["frames"].items():
         if f.get("decision"):
             out[int(n)] = {"decision": f["decision"], "file": f.get("accepted_file"), "source": "production"}
@@ -67,7 +69,7 @@ def decisions(state: dict) -> dict[int, dict]:
 
 def todo(state: dict) -> list[int]:
     dec = decisions(state)
-    return [n for n in sorted(prompts()) if dec.get(n, {}).get("decision") not in ACCEPTED]
+    return [n for n in sorted(prompts()) if dec.get(n, {}).get("decision") not in SKIP]
 
 
 def cmd_plan(a) -> None:
@@ -80,13 +82,14 @@ def cmd_plan(a) -> None:
     plan = {"created": datetime.now(timezone.utc).isoformat(timespec="seconds"),
             "price_per_frame": PRICE, "frames_total": len(prompts()),
             "accepted": sorted(n for n, d in dec.items() if d["decision"] in ACCEPTED),
+            "awaiting_decision": sorted(n for n, d in dec.items() if d["decision"] == "candidate"),
             "to_generate": len(left), "base_credits": base, "reserve_share": a.reserve,
             "reserve_credits": reserve, "total_credits": base + reserve,
             "batches": [{"batch": i + 1, "frames": b, "credits": len(b) * PRICE} for i, b in enumerate(batches)]}
     PROD.mkdir(parents=True, exist_ok=True)
     (PROD / "plan.json").write_text(json.dumps(plan, indent=1), encoding="utf-8")
     print(f"frames {plan['frames_total']}, accepted {len(plan['accepted'])} {plan['accepted']}, "
-          f"to generate {len(left)}")
+          f"awaiting decision {plan['awaiting_decision']}, to generate {len(left)}")
     print(f"base {base:g} cr + reserve {a.reserve:.0%} ≈ {reserve:g} cr = {base + reserve:g} credits")
     for b in plan["batches"]:
         print(f"  batch {b['batch']:>2}: {len(b['frames']):>2} frames {b['frames'][0]}–{b['frames'][-1]} "
@@ -151,10 +154,17 @@ def cmd_decide(a) -> None:
         if not f["attempts"] and not a.file:
             raise SystemExit("no recorded attempt; pass --file")
         last = f["attempts"][-1] if f["attempts"] else {}
-        name = a.file or (last.get("qa_fixed_file") if a.decision == "accept_fixed" else last.get("file"))
-        sub = "qa/" if a.decision == "accept_fixed" and not a.file else ""
-        f.update(decision="accepted_fixed" if a.decision == "accept_fixed" else "accepted",
-                 accepted_file=f"{sub}{name}")
+        if a.file:
+            rel = a.file.replace("\\", "/")            # relative to projects/enginovue_cable_1858/
+        else:
+            name = last.get("qa_fixed_file") if a.decision == "accept_fixed" else last.get("file")
+            rel = f"production/frames/{'qa/' if a.decision == 'accept_fixed' else ''}{name}"
+        path = PROJECT / rel
+        if not path.is_file():
+            raise SystemExit(f"{path} not found")
+        state_name = {"accept": "accepted", "accept_fixed": "accepted_fixed", "candidate": "candidate"}
+        f.update(decision=state_name[a.decision], accepted_file=rel,
+                 accepted_sha256=hashlib.sha256(path.read_bytes()).hexdigest())
     f["note"] = a.note
     f["decided"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
     save_state(state)
@@ -183,7 +193,7 @@ def main() -> None:
     p = sp.add_parser("record"); p.add_argument("n", type=int); p.add_argument("job"); p.add_argument("url")
     p.set_defaults(fn=cmd_record)
     p = sp.add_parser("decide"); p.add_argument("n", type=int)
-    p.add_argument("decision", choices=["accept", "accept_fixed", "reject"])
+    p.add_argument("decision", choices=["accept", "accept_fixed", "candidate", "reject"])
     p.add_argument("--file"); p.add_argument("--note", default="")
     p.set_defaults(fn=cmd_decide)
     p = sp.add_parser("status"); p.add_argument("-v", "--verbose", action="store_true"); p.set_defaults(fn=cmd_status)

@@ -1,8 +1,8 @@
 n,timecode,start_s,duration_s,image,anim_clip,gfx_overlay,overlay,voiceover
 1,0:00,0,4,00_00_00_000.png,00_00_00_000.mp4,,16 Aug 1858,"On August 16, 1858, Queen Victoria sends a message across the Atlantic."
 2,0:04,4,4,00_00_04_000.png,,,98 words,"It's addressed to President James Buchanan, and it runs to 98 words."
-3,0:08,8,4,00_00_08_000.png,,,~16 hours,Pushing it through the cable takes the operators about sixteen hours.
-4,0:12,12,4,00_00_12_000.png,,,1 word ≈ 10 min,That works out to roughly one word every ten minutes.
+3,0:08,8,4,00_00_08_000.png,,,~16 hours,"With stops and repeats, getting it through takes about sixteen hours."
+4,0:12,12,4,00_00_12_000.png,,,avg ≈ 10 min / word,"On average, that's roughly one word every ten minutes."
 5,0:16,16,2,00_00_16_000.png,00_00_16_000.mp4,,,"And still, New York goes wild."
 6,0:18,18,4,00_00_18_000.png,,,,"The city celebrates for days with parades, church bells and fireworks."
 7,0:22,22,4,00_00_22_000.png,00_00_22_000.mp4,,,The fireworks even set the roof of City Hall on fire.
@@ -64,7 +64,7 @@ n,timecode,start_s,duration_s,image,anim_clip,gfx_overlay,overlay,voiceover
 63,3:19,199,4,00_03_19_000.png,,,HMS Agamemnon · USS Niagara,HMS Agamemnon from Britain and USS Niagara from the United States.
 64,3:23,203,4,00_03_23_000.png,,,Valentia Bay · Aug 1857,"In August 1857 the Niagara set out from Valentia Bay,"
 65,3:27,207,3,00_03_27_000.png,00_03_27_000.mp4,,,paying cable over its stern as it steamed west.
-66,3:30,210,4,00_03_30_000.png,,,~380 mi · ~2 mi deep,"About 380 miles out, over water two miles deep,"
+66,3:30,210,4,00_03_30_000.png,,,~2 mi deep,"After hundreds of miles of cable, over water two miles deep,"
 67,3:34,214,4,00_03_34_000.png,,,,the brake on the paying-out gear was applied too hard
 68,3:38,218,2,00_03_38_000.png,00_03_38_000.mp4,,,and the cable snapped and sank.
 69,3:40,220,2,00_03_40_000.png,,,,"That ended the 1857 attempt,"
@@ -85,7 +85,7 @@ n,timecode,start_s,duration_s,image,anim_clip,gfx_overlay,overlay,voiceover
 84,4:27,267,4,00_04_27_000.png,,,5 Aug 1858,"Seven days later, on August 5, both ships reached land."
 85,4:31,271,3,00_04_31_000.png,00_04_31_000.mp4,,Valentia,"Agamemnon brought her end ashore at Valentia,"
 86,4:34,274,3,00_04_34_000.png,,,Trinity Bay,"Niagara brought hers ashore at Trinity Bay, Newfoundland."
-87,4:37,277,4,00_04_37_000.png,,,,The problem Thomson had predicted showed up right away.
+87,4:37,277,4,00_04_37_000.png,,,,Trouble showed up within days of the landing.
 88,4:41,281,4,00_04_41_000.png,,,,The pulses arriving at the far end were so weak
 89,4:45,285,3,00_04_45_000.png,,,,that Whitehouse's relay receivers barely worked.
 90,4:48,288,4,00_04_48_000.png,00_04_48_000.mp4,,Mirror galvanometer,"What worked was a device Thomson had designed, the mirror galvanometer."
@@ -95,7 +95,7 @@ n,timecode,start_s,duration_s,image,anim_clip,gfx_overlay,overlay,voiceover
 94,4:59,299,4,00_04_59_000.png,00_04_59_000.mp4,,,and bounced a spot of light onto a paper scale.
 95,5:03,303,3,00_05_03_000.png,00_05_03_000.mp4,,,"The faintest current twisted the magnet a little,"
 96,5:06,306,3,00_05_06_000.png,00_05_06_000.mp4,,,and the light spot jumped left or right.
-97,5:09,309,3,00_05_09_000.png,,,left = dot · right = dash,"Left meant a dot, right meant a dash."
+97,5:09,309,3,00_05_09_000.png,,,one swing = dot · other = dash,"One swing meant a dot, the other a dash."
 98,5:12,312,4,00_05_12_000.png,,,,"With it, operators could read messages one slow letter at a time."
 99,5:16,316,3,00_05_16_000.png,,,,"At first, Whitehouse had used his own equipment,"
 100,5:19,319,4,00_05_19_000.png,00_05_19_000.mp4,,"1,000s of volts",with huge induction coils that hit the line with thousands of volts.
@@ -110,7 +110,7 @@ n,timecode,start_s,duration_s,image,anim_clip,gfx_overlay,overlay,voiceover
 109,5:51,351,4,00_05_51_000.png,,,,"It spent about two years testing cables and taking evidence,"
 110,5:55,355,3,00_05_55_000.png,00_05_55_000.mp4,,Report · 1861,and in 1861 it published a long report
 111,5:58,358,3,00_05_58_000.png,,,,"on how to build, test and lay them."
-112,6:01,361,4,00_06_01_000.png,,,,"Thomson's ideas won, including testing every length of copper for purity."
+112,6:01,361,4,00_06_01_000.png,,,,"Thomson's approach won out, including testing all the copper for conductivity."
 113,6:05,365,3,00_06_05_000.png,,,1861,"Then the American Civil War began in 1861,"
 114,6:08,368,3,00_06_08_000.png,,,,and the project stalled for years.
 115,6:11,371,4,00_06_11_000.png,00_06_11_000.mp4,,1865,By 1865 the company had a new cable and a new ship.
@@ -147,7 +147,7 @@ n,timecode,start_s,duration_s,image,anim_clip,gfx_overlay,overlay,voiceover
 146,7:56,476,3,00_07_56_000.png,,,~99%,through undersea cables at around 99 percent.
 147,7:59,479,4,00_07_59_000.png,,,1866–1965,The station at Heart's Content stayed in use until 1965.
 148,8:03,483,2,00_08_03_000.png,,,,"The building is now a museum,"
-149,8:05,485,4,00_08_05_000.png,,,,and the old receiving instruments still sit on the desks.
+149,8:05,485,4,00_08_05_000.png,,,,and much of its old cable equipment is still in place.
 150,8:09,489,3,00_08_09_000.png,00_08_09_000.mp4,,,"When you load a page hosted on another continent,"
 151,8:12,492,3,00_08_12_000.png,,,,"the data most likely crosses the ocean floor,"
 152,8:15,495,4,00_08_15_000.png,00_08_15_000.mp4,,,along the kind of route those ships first proved could work in 1866.

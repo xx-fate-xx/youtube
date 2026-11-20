@@ -19,12 +19,12 @@ SCENE: On the left, a long cream telegram scroll unrolls toward the right, cover
 
 #3 | 0:08 | A | medium | - | h | ~16 hours
 RU: Уставший телеграфист, часы отсчитывают много часов
-VO: Pushing it through the cable takes the operators about sixteen hours.
+VO: With stops and repeats, getting it through takes about sixteen hours.
 SCENE: A tired, sweating 1850s telegraph operator in shirtsleeves and waistcoat hunches over a brass Morse key at a wooden desk. A large wall clock dominates the upper right, its hands drawn with faint motion arcs to suggest many hours passing. Stacks of used paper slips and a cold teacup show a long night shift.
 
-#4 | 0:12 | A | infographic | bit | - | 1 word ≈ 10 min
+#4 | 0:12 | A | infographic | bit | - | avg ≈ 10 min / word
 RU: Песочные часы и одно слово, ползущее по проводу; Бит засыпает
-VO: That works out to roughly one word every ten minutes.
+VO: On average, that's roughly one word every ten minutes.
 SCENE: Clean infographic. A large brass hourglass on the left with sand trickling. A thin telegraph wire stretches across the frame, and a single small blank paper card crawls along it like a slow traveler, tiny dust puffs behind it. Bit the robot hovers above, its screen showing sleepy half-closed arc eyes as it watches the slow progress.
 
 #5 | 0:16 | B | wide | - | h | -
@@ -236,10 +236,10 @@ VO: and the delay gets roughly a hundred times worse.
 SCENE: Bit the robot hovers in the left third of the frame, looking up and to the right with wide surprised eyes on its screen. The right two thirds of the frame stay clean, empty light background: the bar chart is composited there in editing.
 GFX: delay_x100
 
-#44 | 2:20 | A | medium | whitehouse | h | Wildman Whitehouse
+#44 | 2:20 | A | wide | whitehouse | h | Wildman Whitehouse
 RU: Уайтхаус с докторским саквояжем, из которого торчат провода
 VO: The company's chief electrician was Wildman Whitehouse,
-SCENE: A stylized cartoon Wildman Whitehouse in a top hat and frock coat stands in a simple, uncluttered Victorian electrical workshop, seen from the knees up and placed on the left third of the frame, drawn slightly smaller than a portrait so there is breathing room on every side. His whole top hat is visible, with clear empty wall space above it of at least a tenth of the frame height. He confidently holds a doctor's leather bag at chest height, coils of wire and a small induction coil poking out of it; the bag stays well above the bottom subtitle area.
+SCENE: Wide shot with the camera well back in a simple, uncluttered Victorian electrical workshop. A stylized cartoon Wildman Whitehouse in a top hat and frock coat stands on the left third of the frame as a complete full figure, from his shoes to the top of his top hat, small in the frame: the whole figure takes up only about half of the frame height. A wide band of plain empty wall fills the space above his top hat, at least a fifth of the frame height. He confidently holds a doctor's leather bag at chest height, coils of wire and a small induction coil poking out of it; the bag stays well above the bottom subtitle area.
 
 #45 | 2:23 | A | wide | whitehouse,thomson | h | -
 RU: Уайтхаус спорит с Томсоном перед залом; Томсон отвечает письмом
@@ -351,9 +351,9 @@ VO: paying cable over its stern as it steamed west.
 SCENE: Stern of the ship seen from behind: the cable runs over a large wooden sheave wheel at the stern and slides down into the water, the ship's wake trailing behind.
 ANIM: the cable slides steadily over the stern wheel into the water, the wake ripples || camera follows slightly behind the ship || ship structure stays rigid
 
-#66 | 3:30 | A | infographic | bit | - | ~380 mi · ~2 mi deep
+#66 | 3:30 | A | infographic | bit | - | ~2 mi deep
 RU: Карта и разрез глубины; Бит показывает лучом
-VO: About 380 miles out, over water two miles deep,
+VO: After hundreds of miles of cable, over water two miles deep,
 SCENE: Split infographic: on the left a map of the Atlantic with a short line from Ireland ending about a fifth of the way across; on the right a vertical ocean-depth cross-section with the cable sinking far down. Bit hovers between them pointing with a glowing beam.
 
 #67 | 3:34 | B | medium | - | h | -
@@ -463,9 +463,9 @@ VO: Niagara brought hers ashore at Trinity Bay, Newfoundland.
 SCENE: Trinity Bay, Newfoundland: sailors pull the cable ashore on a rocky beach surrounded by dark spruce trees, a small wooden telegraph hut waiting.
 
 #87 | 4:37 | A | medium | lynx | - | -
-RU: Линкс мрачно смотрит на ту самую параболу
-VO: The problem Thomson had predicted showed up right away.
-SCENE: The Lynx Analyst stands beside a hologram of the same steeply rising parabola graph, looking at it with a knowing, slightly grim expression, tablet in hand.
+RU: Линкс встревоженно смотрит на угасающий сигнал
+VO: Trouble showed up within days of the landing.
+SCENE: The Lynx Analyst studies her tablet with a worried frown; above it a soft turquoise hologram shows a faint signal pulse flickering and fading out, with no axes, labels or numbers.
 
 #88 | 4:41 | A | infographic | - | - | -
 RU: Из кабеля выползает крошечный слабый импульс
@@ -516,10 +516,10 @@ VO: and the light spot jumped left or right.
 SCENE: Bit the robot watches the scale as the light spot jumps to the left and to the right, faint motion trails showing both positions, Bit's screen eyes following.
 ANIM: the light spot jumps left, back to center, then right, Bit's eyes track it || static camera || scale and Bit's design stay unchanged
 
-#97 | 5:09 | A | infographic | - | - | left = dot · right = dash
-RU: Слева точка, справа тире
-VO: Left meant a dot, right meant a dash.
-SCENE: The scale with two marked zones: on the left side a large dot symbol, on the right side a large dash symbol, the light spot resting on the left zone.
+#97 | 5:09 | A | infographic | - | - | one swing = dot · other = dash
+RU: Отклонение в одну сторону — точка, в другую — тире
+VO: One swing meant a dot, the other a dash.
+SCENE: The paper scale with a centre mark and two zones, a large dot symbol in one zone and a large dash symbol in the other, the light spot resting in the dot zone; the drawing does not suggest that either side is a fixed standard.
 
 #98 | 5:12 | B | medium | - | h | -
 RU: Ночью двое операторов: один следит за пятном, другой записывает
@@ -597,7 +597,7 @@ SCENE: The Lynx Analyst flips through the open report, pages showing cable cross
 
 #112 | 6:01 | A | medium | thomson | h | -
 RU: Томсон проверяет катушку меди
-VO: Thomson's ideas won, including testing every length of copper for purity.
+VO: Thomson's approach won out, including testing all the copper for conductivity.
 SCENE: Thomson tests a spool of copper wire with a measuring instrument on a lab bench, satisfied, a soft green check glow above the spool.
 
 #113 | 6:05 | B | wide | - | h | 1861
@@ -791,9 +791,9 @@ VO: The building is now a museum,
 SCENE: Present-day visitors drawn as stylized cartoon people walk into the station building through its front door.
 
 #149 | 8:05 | A | medium | - | m | -
-RU: Старые аппараты на длинных деревянных столах
-VO: and the old receiving instruments still sit on the desks.
-SCENE: Museum interior: old brass telegraph receiving instruments on long wooden desks, some under glass display cases, warm lighting.
+RU: Старое кабельное оборудование в музее станции
+VO: and much of its old cable equipment is still in place.
+SCENE: Museum interior: the station's operating room with rows of early-20th-century cable instruments and equipment on long wooden benches, some smaller pieces under glass, warm lighting.
 
 #150 | 8:09 | A | medium | - | m | -
 RU: Человек за ноутбуком нажимает на ссылку
