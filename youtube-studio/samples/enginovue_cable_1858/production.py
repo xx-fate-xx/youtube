@@ -169,14 +169,17 @@ def cmd_record(a) -> None:
             "model": row["model"], "params": row["params"], "image_references": row["image_references"],
             "reference_media_ids": [state["reference_media_ids"].get(x) for x in row["image_references"]],
             "prompt_sha256": hashlib.sha256(row["prompt"].encode()).hexdigest(), "prompt": row["prompt"],
-            "gfx_file": row["gfx_file"], "credits_estimate": PRICE,
+            "gfx_file": row["gfx_file"], "via": a.via,
+            "billing": "unlimited_trial" if a.unlim else "credits",
+            "credits_used": a.credits if a.credits is not None else (0.0 if a.unlim else PRICE),
             "saved": datetime.now(timezone.utc).isoformat(timespec="seconds")}
     png.with_suffix(".json").write_text(json.dumps(meta, ensure_ascii=False, indent=1), encoding="utf-8")
     png.chmod(stat.S_IREAD | stat.S_IRGRP | stat.S_IROTH)   # originals are read-only from now on
     r = qa.run([png], FRAMES / "qa", base=FRAMES)[0]
     f = state["frames"].setdefault(str(a.n), {"attempts": []})
     f["attempts"].append({"file": png.name, "sha256": hashlib.sha256(png.read_bytes()).hexdigest(),
-                          "job_id": a.job, "qa_status": r.status, "qa_fixed_status": r.fixed_status or None,
+                          "job_id": a.job, "billing": meta["billing"], "credits_used": meta["credits_used"],
+                          "qa_status": r.status, "qa_fixed_status": r.fixed_status or None,
                           "qa_fixed_file": Path(r.fixed_file).name if r.fixed_file else None})
     save_state(state)
     issue = next((i.message for i in sorted(r.issues, key=lambda i: -qa.RANK[i.status]) if i.status != "PASS"), "")
@@ -230,6 +233,9 @@ def main() -> None:
     p.set_defaults(fn=cmd_plan)
     p = sp.add_parser("next"); p.add_argument("--batch", type=int, default=10); p.set_defaults(fn=cmd_next)
     p = sp.add_parser("record"); p.add_argument("n", type=int); p.add_argument("job"); p.add_argument("url")
+    p.add_argument("--via", default="higgsfield-mcp", help="where the job was run, e.g. claude.ai")
+    p.add_argument("--unlim", action="store_true", help="generated with the free Unlimited trial")
+    p.add_argument("--credits", type=float, help="actual credits used (verified from the balance)")
     p.set_defaults(fn=cmd_record)
     p = sp.add_parser("decide"); p.add_argument("n", type=int)
     p.add_argument("decision", choices=["accept", "accept_fixed", "candidate", "reject"])
