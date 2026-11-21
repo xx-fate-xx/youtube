@@ -10,7 +10,8 @@ chosen per frame and stored in episodes/<slug>/title_layout.json:
 `studio pipe titles propose`        -> calmest candidate area of every titled frame (edge density); manual
                                        entries are kept
 `studio pipe titles sheet [a-b]`     -> contact sheets for visual review (projects/<slug>/review/titles)
-`studio pipe titles set N POS [dx dy]` -> manual placement (source=manual)
+`studio pipe titles set N POS [--dx X --dy Y]` -> manual placement (source=manual)
+Shorts use their own anchors (POS_V) inside the Shorts safe area.
 Never cover the subject of a frame (faces, the object the narration talks about).
 """
 
@@ -33,6 +34,14 @@ POS = {
     "top_center": (0.50, 0.165), "top_left": (0.24, 0.165), "top_right": (0.76, 0.165),
     "mid_left": (0.22, 0.50), "mid_right": (0.78, 0.50),
 }
+# Shorts (1080x1920): YouTube covers the top ~8 %, the bottom ~30 % (title, channel, music) and a column of
+# buttons on the right; burned-in captions sit at ~64 % height. Titles stay in the upper middle.
+POS_V = {
+    "top_center": (0.45, 0.16), "top_left": (0.30, 0.16), "top_right": (0.58, 0.16),
+    "upper_center": (0.45, 0.30), "mid_center": (0.45, 0.46),
+}
+SAFE = (0.08, 0.92, 0.08, 0.85)       # x0, x1, y0, y1 fractions the whole block must stay inside
+SAFE_V = (0.06, 0.84, 0.09, 0.56)
 NO_TITLE_WITH_CHART = True          # charts already carry the number (#42, #43, #146)
 
 
@@ -98,18 +107,31 @@ def block_size(main: str, sub: str | None) -> tuple[int, int]:
     return int(w), int(h)
 
 
+def geom() -> tuple[int, int, dict, tuple]:
+    """Frame width, height, placement anchors and safe area for the selected episode's format."""
+    if ep().vertical:
+        return 1080, 1920, POS_V, SAFE_V
+    return W, H, POS, SAFE
+
+
+def positions() -> dict:
+    return geom()[2]
+
+
 def centre(spec: dict) -> tuple[float, float]:
-    """Block centre, clamped so the whole block stays inside the 8 % safe area."""
-    fx, fy = POS[spec["pos"]]
+    """Block centre, clamped so the whole block stays inside the safe area (and above the caption band)."""
+    w, h, pos, (x0, x1, y0, y1) = geom()
+    fx, fy = pos[spec["pos"]]
     bw, bh = block_size(spec["main"], spec.get("sub"))
-    cx, cy = fx * W + spec.get("dx", 0), fy * H + spec.get("dy", 0)
-    cx = min(max(cx, 0.08 * W + bw / 2), 0.92 * W - bw / 2)
-    cy = min(max(cy, 0.08 * H + bh / 2), 0.85 * H - bh / 2)
+    cx, cy = fx * w + spec.get("dx", 0), fy * h + spec.get("dy", 0)
+    cx = min(max(cx, x0 * w + bw / 2), x1 * w - bw / 2)
+    cy = min(max(cy, y0 * h + bh / 2), y1 * h - bh / 2)
     return cx, cy
 
 
 def draw(spec: dict) -> Image.Image:
-    """Transparent 1920x1080 layer with the title block at its placement."""
+    """Transparent frame-size layer with the title block at its placement."""
+    W, H = geom()[:2]
     main, sub = spec["main"], spec.get("sub")
     bw, bh = block_size(main, sub)
     cx, cy = centre(spec)
@@ -165,7 +187,7 @@ def specs() -> dict[int, dict]:
     for f in titled_frames():
         main, sub = split(f)
         pl = layout.get(f["n"], {})
-        out[f["n"]] = {"main": main, "sub": sub, "pos": pl.get("pos", "bottom_center"), "dx": pl.get("dx", 0),
+        out[f["n"]] = {"main": main, "sub": sub, "pos": pl.get("pos", next(iter(positions()))), "dx": pl.get("dx", 0),
                        "dy": pl.get("dy", 0), "source": pl.get("source", "default")}
     return out
 
@@ -173,11 +195,12 @@ def specs() -> dict[int, dict]:
 def frame_image(n: int) -> Image.Image:
     from . import production, qa
     d = production.decisions(production.load_state())[n]
-    return qa.to_169(Image.open(ep().work / d["file"]).convert("RGB"))[0].resize((W, H))
+    return qa.to_frame(Image.open(ep().work / d["file"]).convert("RGB"))[0].resize(geom()[:2])
 
 
 def busyness(img: Image.Image, spec: dict) -> float:
     """Mean edge strength under the block (+margin); lower = calmer place for text."""
+    W, H = geom()[:2]
     bw, bh = block_size(spec["main"], spec.get("sub"))
     cx, cy = centre(spec)
     box = [int(cx - bw / 2 - 40), int(cy - bh / 2 - 30), int(cx + bw / 2 + 40), int(cy + bh / 2 + 30)]
@@ -198,9 +221,10 @@ def propose() -> None:
         main, sub = split(f)
         img = frame_image(n)
         best = None
-        for pos in POS:
+        first = next(iter(positions()))
+        for pos in positions():
             spec = {"main": main, "sub": sub, "pos": pos}
-            score = busyness(img, spec) + (0 if pos == "bottom_center" else 1.5)   # mild prior for bottom centre
+            score = busyness(img, spec) + (0 if pos == first else 1.5)   # mild prior for the default spot
             if best is None or score < best[0]:
                 best = (score, pos)
         layout[n] = {"main": main, "sub": sub, "pos": best[1], "dx": 0, "dy": 0, "source": "auto"}
@@ -210,8 +234,8 @@ def propose() -> None:
 
 
 def set_manual(n: int, pos: str, dx: int = 0, dy: int = 0) -> dict:
-    if pos not in POS:
-        raise SystemExit(f"unknown position {pos}; use one of {', '.join(POS)}")
+    if pos not in positions():
+        raise SystemExit(f"unknown position {pos}; use one of {', '.join(positions())}")
     layout = load()
     f = next((x for x in titled_frames() if x["n"] == n), None)
     if f is None:
@@ -231,7 +255,7 @@ def sheet(out: Path | None = None, rng: str | None = None) -> list[Path]:
     if rng:
         lo, hi = (int(x) for x in rng.split("-"))
         ns = [n for n in ns if lo <= n <= hi]
-    cols, tw, th = 3, 640, 360
+    cols, tw, th = (6, 270, 480) if ep().vertical else (3, 640, 360)
     for page in range(0, len(ns), 12):
         chunk = ns[page:page + 12]
         rows_n = (len(chunk) + cols - 1) // cols

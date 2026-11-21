@@ -1,0 +1,4 @@
+# Uses the sound library of enginovue_paris_air_clocks (sound_library in episode.yaml); add Short-only sounds here.
+spots: {}
+ambience: {}
+music: {}

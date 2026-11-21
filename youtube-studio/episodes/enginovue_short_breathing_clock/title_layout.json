@@ -1,0 +1,26 @@
+{
+ "6": {
+  "main": "60 teeth",
+  "sub": null,
+  "pos": "upper_center",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "8": {
+  "main": "1 puff = 1 minute",
+  "sub": null,
+  "pos": "top_right",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "11": {
+  "main": "4,000+ clocks · late 1881",
+  "sub": null,
+  "pos": "top_right",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ }
+}

@@ -1,0 +1,13 @@
+n,timecode,start_s,duration_s,image,anim_clip,gfx_overlay,overlay,voiceover
+1,0:00,0,5,00_00_00_000.png,,,,"In 1880s Paris, thousands of clocks could not keep time on their own."
+2,0:05,5,2,00_00_05_000.png,,,,"Once a minute, they breathed."
+3,0:07,7,5,00_00_07_000.png,,,,A puff of compressed air came up a thin lead pipe.
+4,0:12,12,3,00_00_12_000.png,,,,It inflated a small rubber bellows.
+5,0:15,15,2,00_00_15_000.png,00_00_15_000.mp4,,,The bellows lifted a lever.
+6,0:17,17,6,00_00_17_000.png,,,60 teeth,A hooked pawl on the lever nudged a sixty-tooth wheel ahead by one tooth.
+7,0:23,23,4,00_00_23_000.png,,,,"Stops limited its swing: one puff, exactly one minute."
+8,0:27,27,4,00_00_27_000.png,,,1 puff = 1 minute,"Sixty puffs, one turn of the minute hand."
+9,0:31,31,5,00_00_31_000.png,,,,"Then the air was let out, and the lever dropped back to wait."
+10,0:36,36,5,00_00_36_000.png,00_00_36_000.mp4,,,"Every breath came from one central station, through iron mains in the sewers."
+11,0:41,41,6,00_00_41_000.png,,,"4,000+ clocks · late 1881","By late 1881, more than four thousand clocks in central Paris ran on air."
+12,0:47,47,7,00_00_47_000.png,,,,"Until one night in 1910, when a flood stopped them all. That story is on our channel."

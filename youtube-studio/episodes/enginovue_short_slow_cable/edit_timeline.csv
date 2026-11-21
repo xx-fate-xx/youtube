@@ -1,0 +1,13 @@
+n,timecode,start_s,duration_s,image,anim_clip,gfx_overlay,overlay,voiceover
+1,0:00,0,6,00_00_00_000.png,,,Aug 1858,"August 1858. With stops and repeats, Queen Victoria's message to America takes about sixteen hours."
+2,0:06,6,3,00_00_06_000.png,,,~100 words · ~16 hours,It's only about a hundred words.
+3,0:09,9,5,00_00_09_000.png,,,,"The cable is a copper core in insulation, lying in salt water."
+4,0:14,14,5,00_00_14_000.png,,,,"It soaks up charge, like a tank that must fill first."
+5,0:19,19,5,00_00_19_000.png,00_00_19_000.mp4,,,So a crisp tap from Ireland reaches Newfoundland as a blurred swell.
+6,0:24,24,6,00_00_24_000.png,,,1855,"In 1855, William Thomson showed the delay grows with the square of the length."
+7,0:30,30,3,00_00_30_000.png,,,2× length → 4× delay,"Double the cable, four times the delay."
+8,0:33,33,6,00_00_33_000.png,,,,His answer to faint signals: a tiny magnet and mirror on a silk thread.
+9,0:39,39,7,00_00_39_000.png,00_00_39_000.mp4,,,"The faintest current swung a spot of light: one way a dot, the other a dash."
+10,0:46,46,6,00_00_46_000.png,00_00_46_000.mp4,,,"But its insulation was already flawed, and huge high-voltage induction coils likely made it worse."
+11,0:52,52,3,00_00_52_000.png,,,early Sep 1858,"Within a month, nothing readable got through."
+12,0:55,55,4,00_00_55_000.png,,,,How they fixed it: full story on the channel.

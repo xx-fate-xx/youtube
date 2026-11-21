@@ -1,0 +1,72 @@
+# YouTube Short (1080x1920) linked to enginovue_paris_air_clocks; media go to projects/enginovue_short_flood_1910/ (git-ignored).
+slug: enginovue_short_flood_1910
+title: The Night the Air Clocks of Paris Stopped
+brand: Enginovue
+channel: engineering_explained
+format: short
+parent: enginovue_paris_air_clocks
+sound_library: enginovue_paris_air_clocks
+language: en-US
+style: enginovue_cartoon
+storyboard_end: "0:55"
+eras:
+  h: 'Historical setting in Paris or Vienna between 1875 and 1930, drawn in the same cartoon style; people are stylized cartoon
+    humans in accurate period clothing (frock coats, bowler and top hats, long dresses), streets have gas lamps, horse carriages
+    and Haussmann stone buildings, machines are period-accurate (steam engines, brass gauges, cast-iron pipes). Show nothing
+    that did not exist yet at that time: no modern cars, plastic, neon or glass towers, and no Eiffel Tower before 1889. Show
+    every person''s whole head, including any hat, with clear space above it; no head or hat cut by the frame edge.'
+  m: Present-day or late 20th-century setting drawn in the same cartoon style; people are stylized cartoon humans.
+image:
+  model: gpt_image_2_6
+  params:
+    aspect_ratio: '9:16'
+    quality: low
+    resolution: 2k
+  price_credits: 1.25
+animation:
+  model: grok_video_v15_lite
+  resolution: 720p
+  duration: 4
+  price_credits: 4.0
+  max_clips: 1
+budget:
+  higgsfield_credits: 20
+  elevenlabs_credits: 1500
+  retry_reserve: 0.1
+narration:
+  voice_id: GQQpeRnV5mCWTgxKhGo5
+  voice_name: Ryan - American Documentary Narrator
+  model: eleven_v4
+  intro_s: 0.2
+  gap_s: 0.0
+  outro_s: 0.8
+  lead_s: 0.12
+release:
+  hook: On the night of 21 January 1910 the flooded Seine reached the compressed-air plant on the quai de la Gare, and the
+    air-driven clocks of central Paris stopped between 10:48 and 10:53 pm.
+  title_options:
+  - The Night the Air Clocks of Paris Stopped
+  - 'Paris, 1910: The Flood That Stopped the Clocks'
+  - When the Seine Stopped the Clocks of Paris
+  tags:
+  - paris flood 1910
+  - great flood of paris
+  - pneumatic clocks
+  - compressed air
+  - paris history
+  - shorts
+  hashtags:
+  - '#history'
+  - '#paris'
+  - '#engineering'
+  long_video: The Air-Powered Clocks of Paris (link after upload)
+  sources:
+  - SUDAC, Histoire de la SUDAC (1877–1996) — https://www.sudac.fr/sites/g/files/dvc4171/files/document/2021/03/Livre%20-%20Histoire%20de%20la%20Sudac%20%281877%20-%201996%29.pdf
+  - Le Petit Parisien, 23 Jan 1910, as quoted by Histoires de Paris — https://www.histoires-de-paris.fr/inondation-usine-air-comprime-janvier-1910/
+  - DRIEAT Île-de-France, 1910 flood bulletin for 21 Jan 1910 — https://www.drieat.ile-de-france.developpement-durable.gouv.fr/IMG/pdf/bulletin_21-01-1910_cle06a199.pdf
+  - DRIEAT Île-de-France, 1910 flood summary — https://www.drieat.ile-de-france.developpement-durable.gouv.fr/IMG/pdf/bilan_1910_cle7c8919.pdf
+  - Archives de Paris, chronology of the 1910 flood (Wayback copy) — http://web.archive.org/web/20250613085621/https://archives.paris.fr/_depot_ad75/_depot_arko/articles/643/crue-1910_doc.pdf
+  notes:
+  - Illustrations are AI-generated in an original cartoon style; they are interpretations, not historical photographs. The
+    narration voice, sound effects and music are AI-generated.
+  known_items: []

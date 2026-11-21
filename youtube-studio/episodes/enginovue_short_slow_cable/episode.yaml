@@ -1,0 +1,72 @@
+# YouTube Short (1080x1920) linked to enginovue_cable_1858; media go to projects/enginovue_short_slow_cable/ (git-ignored).
+slug: enginovue_short_slow_cable
+title: Why the First Atlantic Cable Was So Slow
+brand: Enginovue
+channel: engineering_explained
+format: short
+parent: enginovue_cable_1858
+sound_library: enginovue_cable_1858
+language: en-US
+style: enginovue_cartoon
+storyboard_end: "0:59"
+eras:
+  h: 'Historical setting, 1850s-1860s, drawn in the same cartoon style; people are stylized cartoon humans in accurate period
+    clothing, ships and machines are period-accurate. Show nothing that did not exist yet at that time: no later bridges,
+    buildings, landmarks or machines (for example no Brooklyn Bridge, which opened in 1883). Show every person''s whole head,
+    including any hat, with clear space above it; no head or hat cut by the frame edge.'
+image:
+  model: gpt_image_2_6
+  params:
+    aspect_ratio: '9:16'
+    quality: low
+    resolution: 2k
+  price_credits: 1.25
+animation:
+  model: grok_video_v15_lite
+  resolution: 720p
+  duration: 4
+  price_credits: 4.0
+  max_clips: 1
+budget:
+  higgsfield_credits: 20
+  elevenlabs_credits: 1500
+  retry_reserve: 0.1
+narration:
+  voice_id: GQQpeRnV5mCWTgxKhGo5
+  voice_name: Ryan - American Documentary Narrator
+  model: eleven_v4
+  intro_s: 0.2
+  gap_s: 0.0
+  outro_s: 0.8
+  lead_s: 0.12
+release:
+  hook: In 1858 a royal message of about a hundred words took around sixteen hours to cross the first Atlantic cable. Why
+    long undersea cables were so slow, and how Thomson's mirror galvanometer read the faint signals.
+  title_options:
+  - Why the First Atlantic Cable Was So Slow
+  - '100 Words, 16 Hours: The 1858 Atlantic Cable'
+  - The Physics That Slowed the 1858 Atlantic Cable
+  tags:
+  - transatlantic cable
+  - '1858'
+  - william thomson
+  - lord kelvin
+  - mirror galvanometer
+  - telegraph history
+  - shorts
+  hashtags:
+  - '#engineering'
+  - '#history'
+  - '#telegraph'
+  long_video: 'The Cable That Changed the World: The First Transatlantic Telegraph (link after upload)'
+  sources:
+  - Charles Bright, The Story of the Atlantic Cable (1903) — https://www.gutenberg.org/ebooks/34765
+  - Silvanus P. Thompson, The Life of William Thomson, Baron Kelvin of Largs (1910) — https://archive.org/details/lifeofwilliamtho01thomuoft
+  - Bruce J. Hunt, "Wildman Whitehouse, William Thomson and the First Atlantic Cable", in Imperial Science (Cambridge University
+    Press, 2021) — https://www.cambridge.org/core/product/28CC0EE56CCC49F8170F92A364BBBEF9/core-reader
+  - 'Science Museum Group: Thomson''s mirror galvanometer, 1858 — https://collection.sciencemuseumgroup.org.uk/objects/co32961/thomsons-mirror-galvanometer-1858'
+  - 'IET Archives: The first transatlantic telegraph cable, 1858 — https://www.theiet.org/membership/library-and-archives/the-iet-archives/archives-highlights/the-first-transatlantic-telegraph-cable-1858'
+  notes:
+  - Illustrations are AI-generated in an original cartoon style; they are interpretations, not historical photographs. The
+    narration voice, sound effects and music are AI-generated.
+  known_items: []

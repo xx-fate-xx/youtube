@@ -50,3 +50,12 @@ hist_rule: Draw these real people as stylized cartoon humans, recognisable by th
 anim_tail: Smooth 2D animation of this exact frame. Keep the Enginovue cartoon drawing style, outlines, colors and
   every character design unchanged. No morphing, no new objects, no scene change.
 no_mascot_line: No mascot characters in this frame.
+tech_short: '9:16 vertical frame for a YouTube Short, viewed on a phone. Composition rules: one large, simple focal subject
+  placed in the middle of the frame, between 18% and 58% of the frame height and horizontally centred slightly left
+  of centre; keep the right 15% of the frame free of key details (app buttons cover it). The top 10% is calm sky,
+  ceiling or plain background. The bottom 40% is a calm, uncluttered, low-detail area (floor, ground, water, table
+  top or plain background) because captions and the app interface cover it: no faces, hands or key details there.
+  No character, face, hand, tool or key machine part touches or is cut by the frame edges. Bold silhouettes, strong
+  contrast and a few large shapes that read on a small phone screen. No text, letters, numbers, captions, logos or
+  watermarks in the image. Clean separable shapes suited to 2D animation: clearly readable limbs, no extra limbs,
+  no tangled overlaps, no distorted machinery.'

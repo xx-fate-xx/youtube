@@ -45,13 +45,12 @@ def duration(p: Path) -> float:
 
 # ---------------------------------------------------------------- captions
 
-def captions(timing: dict) -> str:
-    """Script words get the times of the recognised words they match (interpolated otherwise), then are grouped
-    into cues of <= 42 characters / <= 5.5 s, broken preferably at sentence ends and commas."""
+def words(timing: dict) -> list[tuple[str, float, float]]:
+    """Script words with the times of the recognised words they match (interpolated otherwise)."""
     AUDIO = ep().audio
     chunks = json.loads((AUDIO / "narration_chunks.json").read_text(encoding="utf-8"))
     rec_all = json.loads((AUDIO / "narration_words.json").read_text(encoding="utf-8"))
-    t0, words = timing["intro_s"], []
+    t0, out = timing["intro_s"], []
     for c in chunks:
         script = c["text"].split()
         rec = rec_all[str(c["chunk"])]
@@ -68,10 +67,16 @@ def captions(timing: dict) -> str:
                 s = st[p][1] if p is not None else (st[q][0] if q is not None else 0.0)
                 e = st[q][0] if q is not None else s + 0.3
                 st[i] = (s + (e - s) * 0.1, e)
-            words.append((w, t0 + st[i][0], t0 + st[i][1]))
+            out.append((w, t0 + st[i][0], t0 + st[i][1]))
         t0 += duration(AUDIO / "narration" / f"ch{c['chunk']:02d}.mp3") + timing["gap_s"]
+    return out
+
+
+def captions(timing: dict) -> str:
+    """Word-timed script words grouped into cues of <= 42 characters / <= 5.5 s, broken preferably at sentence
+    ends and commas."""
     cues, cur = [], []
-    for w in words:
+    for w in words(timing):
         text = " ".join(x[0] for x in cur + [w])
         if cur and (len(text) > 42 or w[2] - cur[0][1] > 5.5):
             cues.append(cur)
@@ -96,7 +101,7 @@ def captions(timing: dict) -> str:
 
 def frame(n: int) -> Image.Image:
     d = production.decisions(production.load_state())[n]
-    return qa.to_169(Image.open(ep().work / d["file"]).convert("RGB"))[0].resize((1280, 720), Image.Resampling.LANCZOS)
+    return qa.to_frame(Image.open(ep().work / d["file"]).convert("RGB"))[0].resize((1280, 720), Image.Resampling.LANCZOS)
 
 
 def thumb(n: int, lines: list[tuple[str, int]], anchor: str, out: Path, darken: str) -> None:
@@ -150,6 +155,33 @@ production notes), `titles.txt` (title options + tags), thumbnails.
 """
 
 
+CHECKLIST_SHORT = """# Release checklist (Short) — {title}
+
+Package (this folder): `video.mp4` (1080x1920, captions burned in), `captions_en.srt` (same words, for the
+transcript), `description.txt` (hook + link line + sources), `titles.txt` (title options + tags).
+
+## Before upload (operator)
+- [ ] Watch the Short on a phone with sound: captions readable, nothing important under the app buttons.
+- [ ] The long video it points to ({parent}) is already uploaded; put its link into the description line
+      "Full story".
+- [ ] Check the image/video provider plan terms for commercial use of generated media.
+
+## Upload (YouTube Studio / app)
+- [ ] Upload `video.mp4` with visibility **Private** first — never public directly. Vertical and under
+      60 s, so YouTube files it as a Short.
+- [ ] Title from titles.txt; paste the description.
+- [ ] Related video: choose the long video ({parent}), so viewers can jump to it from the Short.
+- [ ] Captions are burned in: leave YouTube's automatic captions off, or upload `captions_en.srt` only as a
+      transcript if you want one.
+- [ ] Altered or synthetic content: decide per current YouTube rules (stylised cartoons and an AI narrator
+      alone usually do not need disclosure).
+- [ ] Check the private upload, then schedule or publish (max. 3 Shorts a week per the channel plan).
+
+## Known items
+{known}
+"""
+
+
 def build() -> Path:
     e = ep()
     rel = e.cfg.get("release") or {}
@@ -162,6 +194,23 @@ def build() -> Path:
         raise SystemExit(f"{video} not found: render the final mix first")
     shutil.copy2(video, out / "video.mp4")
     (out / "captions_en.srt").write_text(captions(timing), encoding="utf-8")
+    if e.vertical:     # a Short: no chapters, a line pointing to the long video, #Shorts
+        tags = list(dict.fromkeys([*rel.get("hashtags", []), "#Shorts"]))
+        desc = rel.get("hook", "").strip() + "\n\nFull story: " + (rel.get("long_video") or "(link to the long video)")
+        desc += "\n\nSources\n" + "\n".join(f"• {s}" for s in rel.get("sources", []))
+        if rel.get("notes"):
+            desc += "\n\nNotes\n" + "\n".join(f"• {s}" for s in rel["notes"])
+        (out / "description.txt").write_text(desc + "\n\n" + " ".join(tags) + "\n", encoding="utf-8")
+        opts = rel.get("title_options", [])
+        (out / "titles.txt").write_text(
+            "Title options (pick one, <= 60 characters):\n" + "".join(f"{i + 1}. {t}\n" for i, t in enumerate(opts))
+            + "\nTags: " + ", ".join(rel.get("tags", [])) + "\n", encoding="utf-8")
+        known = "\n".join(f"- {x}" for x in rel.get("known_items", [])) or "- none recorded"
+        (out / "RELEASE_CHECKLIST.md").write_text(CHECKLIST_SHORT.format(
+            title=e.cfg.get("title", e.slug), parent=e.cfg.get("parent") or "the long video", known=known),
+            encoding="utf-8")
+        print("\n".join(str(p) for p in sorted(out.iterdir())))
+        return out
     chs = frames_mod.chapters(frames_mod.parse())
     chapters = "\n".join(f"{'0:00' if n == 1 else mmss(start[n])} {name}" for n, name in chs)
     desc = rel.get("hook", "").strip() + "\n\nChapters\n" + chapters + "\n\nSources\n" + \
