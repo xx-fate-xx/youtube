@@ -63,11 +63,24 @@ Loop until `studio pipe images` shows all accepted:
 1. `studio pipe next --batch 8` → read `projects/<slug>/production/next_batch_mcp.json`.
 2. `mcp__higgsfield__balance` (before) → `mcp__higgsfield__generate_image_batch` with those requests
    (≤ 8 concurrent; 12 gives HTTP 429) → `mcp__higgsfield__jobs_wait` until terminal.
-3. For each job: `studio pipe record N JOB URL` (runs QA). Look at the images yourself (contact sheet of the
-   batch); accept with `studio pipe decide N accept` (or `accept_fixed`), regenerate bad ones only within
-   the reserve: anachronisms, cut heads/hats, text in the image, subject in the subtitle band, wrong count.
-   Fix the SCENE text first (and the era rules), rebuild, then regenerate.
-4. Balance (after) → `studio pipe report --batch K --before B --after A`.
+3. For each job: `studio pipe record N JOB URL --credits 1.25` (runs QA), then `studio pipe decide N candidate`
+   so the next batch moves on. Delegating 5 batches at a time to a background subagent (strictly sequential)
+   keeps the long prompts out of the main context.
+4. Balance (after) → `studio pipe report K BEFORE AFTER` (positional arguments).
+5. Review by eye: `studio pipe sheet a-b` (contact sheets in projects/<slug>/review/frames). The automatic QA
+   flags most frames on the left edge (buildings and streets legitimately run off the frame) — judge by eye.
+   Accept with `studio pipe decide N accept`; add `--note "headroom tight ..."` when a head is close to the top
+   (the render then never pushes toward that edge). Reject only real problems: wrong object (e.g. an engine
+   crank instead of a clock movement), extra people, cut heads, anachronisms, text in the image. Fix the SCENE
+   text, rebuild, park the frame with `decide N candidate --note "REDO: ..."` so later batches skip it, and
+   regenerate all REDO frames together at the end (`decide N reject`, then `pipe next`).
+6. GFX frames: composite each image with its chart PNG (`episodes/<slug>/overlays/<timecode>_gfx.png`) and check
+   the chart card does not hide the icon. If it does, do not pay for a new image: move the icon locally on the
+   plain background into the free corner, save it under `production/frames/edit/` (new file; the original is not
+   touched) and accept it with `decide N accept --file production/frames/edit/<name>.png --note "..."`. A small icon on a plain background
+   moves too little under the default chart camera (`breathe_in`) and `pipe check` reports a frozen picture —
+   give such shots `CAMERA="push_in"` or `"pull_out"` in the script (not `drift`: too weak; the render never
+   repeats a move back-to-back, so pick the one the previous shot does not use).
 
 ### 4. AI clips (≤ 2, paid)
 For `AI_CLIP` frames: upload the accepted PNG (`mcp__higgsfield__media_upload` + curl PUT with
@@ -91,12 +104,16 @@ role `start_image`, prompt = the frame's anim prompt (prompts.jsonl). Review fra
    `{duration_seconds: 20, prompt_influence: 0.4, loop: true}` → `creative_run_flow_nodes`. Music: node_type
    `music`, `eleven_music_v2_5`, `estimate_only` → update `{duration_seconds, lyrics_type: instrumental,
    instrumental: true}` → run. Save each: `studio pipe save-audio sfx|ambience|music ID URL --credits C`.
+   ElevenLabs' up-front estimates for ambiences and music are about twice the real charge (music ≈ 15 cr/s);
+   `studio pipe sounds` uses the real prices. Narration and sounds can run in parallel with the image batches
+   (a background subagent can generate the whole sound library).
 3. `studio pipe mix` — no frame may be reported under 8 dB voice-over-bed margin.
 
 ### 7. Titles
 `studio pipe titles propose` → `studio pipe titles sheet` → open every sheet image and check each title does
 not cover a face, the object the narration talks about or a chart; fix with
-`studio pipe titles set N POS [dx dy]` (positions: bottom/top center|left|right, mid_left/right); re-check.
+`studio pipe titles set N POS [--dx X --dy Y] -e <slug>` (positions: bottom/top center|left|right, mid_left/right); re-check. Titles are clamped to the safe
+area (nothing below 85 % of the height: that band belongs to subtitles), so a large `--dy` may not move them.
 
 ### 8. Render and QA
 `studio pipe render --only 1-20` (preview; look at sampled frames) → full `studio pipe render` in the

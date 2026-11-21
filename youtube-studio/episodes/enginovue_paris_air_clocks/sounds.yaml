@@ -1,0 +1,53 @@
+# Sound library (ElevenLabs: eleven_text_to_sound_v3 effects/ambiences, eleven_music_v2_5 music).
+# Files: projects/enginovue_paris_air_clocks/audio/{sfx,music}/<id>.mp3. Placement: frames.txt (AMB/SFX/MUSIC).
+duck_db: {music: 6, ambience: 4, sfx: 6}
+chapter_whoosh: {sfx: whoosh, at: -0.9, gain_db: -12}
+spots:
+  whoosh: {prompt: "Soft deep airy whoosh transition, smooth and subtle"}
+  clock_tick: {prompt: "Old mechanical wall clock ticking, crisp wooden tick-tock, quiet room"}
+  air_hiss: {prompt: "Short burst of compressed air hissing through a narrow metal pipe"}
+  steam_engine: {prompt: "Large 19th-century steam engine running, rhythmic chuffing pistons and a turning flywheel"}
+  water_rush: {prompt: "Muddy flood water rushing through a doorway into a large hall, heavy flowing water"}
+  boom: {prompt: "Deep low cinematic boom impact with a long dark reverb tail"}
+  lathe: {prompt: "Old belt-driven metal lathe turning, cutting tool scraping steel, workshop"}
+  data_whoosh: {prompt: "Soft rising shimmering whoosh, airy and bright"}
+  locomotive: {prompt: "Distant steam locomotive chugging along with a short whistle"}
+  horse_carriage: {prompt: "Horse-drawn carriage passing on cobblestones, hooves and wooden wheels"}
+  quill: {prompt: "Pen nib scratching on paper, close-mic, quiet study"}
+  crowd_murmur: {prompt: "Large indoor exhibition hall crowd murmuring, distant voices and footsteps"}
+  metal_clank: {prompt: "Iron pipe sections clanking against a stone wall, echo in a tunnel"}
+  shop_bell: {prompt: "Small brass shop door bell jingling as a door opens"}
+  coins: {prompt: "A few small bronze coins dropped onto a wooden counter"}
+  compressor: {prompt: "Old piston air compressor pumping rhythmically, mechanical thumping and hissing valves"}
+  metal_creak: {prompt: "Large riveted iron tank creaking under pressure, deep metallic groan"}
+  valve_clunk: {prompt: "Heavy brass slide valve snapping into place, solid mechanical clunk"}
+  bellows_puff: {prompt: "Small rubber bellows inflating with a soft puff of air, then a tiny mechanical click"}
+  alarm_bell: {prompt: "Old electric alarm bell ringing briefly on a wall"}
+  water_drip: {prompt: "Water dripping in a stone sewer tunnel, soft echo, slow trickle"}
+  ratchet_click: {prompt: "Single crisp ratchet click of a small brass gear advancing one tooth"}
+  clock_chime: {prompt: "Mantel clock striking a soft bell chime"}
+  sewing_machine: {prompt: "Old treadle sewing machine stitching rapidly"}
+  printing_press: {prompt: "Old rotary printing press running, rhythmic mechanical thumping and paper rustle"}
+  dynamo_hum: {prompt: "Small electric dynamo spinning up with a rising hum"}
+  ice_crack: {prompt: "Thin ice crackling and frosting over glass, delicate crisp cracks"}
+  fire_crackle: {prompt: "Small coke stove fire crackling, close-mic"}
+  rain: {prompt: "Heavy steady rain falling on a city street and on water"}
+  oars: {prompt: "Wooden oars dipping into calm water, small rowing boat gliding"}
+  radio_static: {prompt: "Old 1920s radio tuning through static, faint beeping time signal tones"}
+  paper_rustle: {prompt: "Stiff official paper document being unfolded and placed on a desk"}
+  lift_gate: {prompt: "Old wrought-iron lift cage gate sliding shut with a metallic clatter"}
+  jackhammer: {prompt: "Pneumatic jackhammer breaking pavement, short bursts, outdoor street"}
+ambience:
+  a_flood_night: {prompt: "Night city in heavy rain with rising flood water lapping against stone walls, distant rushing river", duration: 20, loop: true}
+  a_street_1880: {prompt: "19th-century city boulevard, horse carriages on cobblestones, distant footsteps and murmur, no cars", duration: 20, loop: true}
+  a_sewer: {prompt: "Underground stone sewer tunnel, flowing water channel, drips and soft echo", duration: 20, loop: true}
+  a_machine_room: {prompt: "Victorian machine room with steam engines and air compressors running steadily, rhythmic thumping", duration: 20, loop: true}
+  a_workshop: {prompt: "Small 1880s workshop with belt-driven machines and an air motor running, light tool noises", duration: 20, loop: true}
+  a_clock_room: {prompt: "Quiet room full of ticking clocks, soft overlapping ticks, calm", duration: 20, loop: true}
+  a_crowd: {prompt: "Large exhibition hall with a crowd murmuring, footsteps on wooden floors, distant voices", duration: 20, loop: true, gain_db: -2}
+  a_quiet_room: {prompt: "Quiet wood-panelled room tone, faint distant street outside, occasional paper rustle", duration: 20, loop: true}
+  a_modern_city: {prompt: "Modern city street ambience, light traffic, distant voices, calm", duration: 20, loop: true, gain_db: -3}
+music:
+  m1_night: {prompt: "Instrumental cinematic documentary opening: a quiet rainy night, soft ticking pulse, low strings and piano, mysterious and tense, ending in suspense. Sparse and unobtrusive, made to sit under voice-over. No vocals.", duration: 70, instrumental: true}
+  m2_invention: {prompt: "Instrumental documentary underscore about clever 19th-century engineering in Paris: a light mechanical ticking rhythm, pizzicato strings, piano and soft woodwinds, curious and inventive, building gradually with a confident industrial middle section and a hopeful lift at the end. Subdued enough to sit under voice-over. No vocals.", duration: 518, instrumental: true}
+  m3_flood: {prompt: "Instrumental documentary underscore: a dark flood night with slow tense strings and low pulses, then a calm return to daylight, then a reflective, nostalgic and warm ending with piano and strings. Made to sit under voice-over. No vocals.", duration: 201, instrumental: true}

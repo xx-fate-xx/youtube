@@ -1,0 +1,117 @@
+# Episode settings for the video pipeline (studio pipe ... -e enginovue_paris_air_clocks).
+# Media in projects/enginovue_paris_air_clocks/ (git-ignored). Script source: script_source.py -> frames.txt.
+slug: enginovue_paris_air_clocks
+title: "The Air-Powered Clocks of Paris"
+brand: Enginovue
+channel: engineering_explained
+language: en-US
+style: enginovue_cartoon
+storyboard_end: "11:22"
+eras:
+  h: "Historical setting in Paris or Vienna between 1875 and 1930, drawn in the same cartoon style; people are stylized cartoon humans in accurate period clothing (frock coats, bowler and top hats, long dresses), streets have gas lamps, horse carriages and Haussmann stone buildings, machines are period-accurate (steam engines, brass gauges, cast-iron pipes). Show nothing that did not exist yet at that time: no modern cars, plastic, neon or glass towers, and no Eiffel Tower before 1889. Show every person's whole head, including any hat, with clear space above it; no head or hat cut by the frame edge."
+  m: "Present-day or late 20th-century setting drawn in the same cartoon style; people are stylized cartoon humans."
+image: {model: gpt_image_2_6, params: {aspect_ratio: "16:9", quality: low, resolution: 2k}, price_credits: 1.25}
+animation: {model: grok_video_v15_lite, resolution: 720p, duration: 4, price_credits: 4.0, max_clips: 2}
+budget: {higgsfield_credits: 200, elevenlabs_credits: 30000, retry_reserve: 0.10}
+narration:
+  voice_id: GQQpeRnV5mCWTgxKhGo5
+  voice_name: Ryan - American Documentary Narrator
+  model: eleven_v4
+competitor:
+  source: "Primal Space, 'The Underground Clocks of Paris' (YouTube gol_p2aWrJg, 2024) - starting point only"
+release:
+  hook: On the evening of 21 January 1910, every pneumatic clock in Paris stopped within five minutes. For nearly thirty years
+    their hands had been pushed forward by puffs of compressed air, sent once a minute through pipes in the sewers. This is
+    how the air clocks worked, why the flooded Seine stopped them, and how the same company built a compressed-air power network
+    that ran until 1994.
+  title_options:
+  - The Clocks of Paris Ran on Air
+  - The Night the Air Clocks of Paris Stopped (1910)
+  - How Paris Told Time With Compressed Air
+  tags:
+  - pneumatic clocks
+  - paris history
+  - compressed air
+  - air clocks
+  - victor popp
+  - mayrhofer
+  - paris flood 1910
+  - great flood of paris
+  - sudac
+  - time distribution
+  - clock history
+  - engineering history
+  - paris sewers
+  - compressed air power
+  - industrial history
+  hashtags:
+  - '#history'
+  - '#engineering'
+  - '#paris'
+  sources:
+  - E. Hospitalier, "Les horloges pneumatiques", La Nature no. 365 (29 May 1880) — https://cnum.cnam.fr/pgi/redir.php?onglet=c&ident=4KY28.14
+  - '"Pneumatic Clocks", Nature vol. 22 (8 July 1880), doi:10.1038/022226a0 — https://archive.org/details/paper-doi-10_1038_022226a0'
+  - J. A. Berly, "The Distribution of Time by a System of Pneumatic Clocks", Journal of the Society of Arts vol. 30 (2 Dec
+    1881) — https://archive.org/details/journalofsociety30soci_0
+  - American Architect and Building News, 14 Jan 1882 (abridged Berly) — https://archive.org/details/sim_american-architect-and-architecture_1882-01-14_11_316
+  - 'F. E. Idell (ed.), Compressed Air: Experiments upon the Transmission of Power by Compressed Air in Paris (Popp''s System),
+    1892 — reprints A. B. W. Kennedy (1889) — https://archive.org/details/compressedairex00kenngoog'
+  - C. A. Mayrhofer, Memorandum an den Gemeinderath, Vienna, Oct 1882 (Wienbibliothek) — https://www.digital.wienbibliothek.at/download/pdf/1889125.pdf
+  - P. Payer, "The City and the Clock" — https://stadt-forschung.at/wp-content/uploads/2022/01/The-City-and-the-Clock.pdf
+  - Wien Museum, hydro-pneumatic apparatus for automatic clocks (1877) — https://sammlung.wienmuseum.at/en/object/862703-hydro-pneumatisches-apparatensystem-zum-automatischen-uhrenbetrieb/
+  - M. Dikeç, "Urban temporal infrastructures in nineteenth-century Paris", Urban History (2025), doi:10.1017/S0963926824000725
+    — https://www.cambridge.org/core/product/01389D48D9CAD9D7AD9B107729DC7295/core-reader
+  - SUDAC, Histoire de la SUDAC (1877–1996) — https://www.sudac.fr/sites/g/files/dvc4171/files/document/2021/03/Livre%20-%20Histoire%20de%20la%20Sudac%20%281877%20-%201996%29.pdf
+  - Le Petit Parisien, 23 Jan 1910, as quoted by Histoires de Paris — https://www.histoires-de-paris.fr/inondation-usine-air-comprime-janvier-1910/
+  - DRIEAT Île-de-France, 1910 flood bulletin for 21 Jan 1910 — https://www.drieat.ile-de-france.developpement-durable.gouv.fr/IMG/pdf/bulletin_21-01-1910_cle06a199.pdf
+  - DRIEAT Île-de-France, 1910 flood summary — https://www.drieat.ile-de-france.developpement-durable.gouv.fr/IMG/pdf/bilan_1910_cle7c8919.pdf
+  - Archives de Paris, chronology of the 1910 flood (Wayback copy) — http://web.archive.org/web/20250613085621/https://archives.paris.fr/_depot_ad75/_depot_arko/articles/643/crue-1910_doc.pdf
+  - Ministère de la Culture, POP Mérimée PA00133012 (former compressed-air plant, quai de la Gare) — https://www.pop.culture.gouv.fr/notice/merimee/PA00133012
+  - NASA Glenn, speed of sound — https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/speed-of-sound-interactive/
+  notes:
+  - 'All facts in the narration were checked against the sources above (fact-check report: 34 corrections). Where sources
+    disagree (for example on which floor of 7 rue Sainte-Anne held the master clock) the script avoids the disputed detail.'
+  - 'A few details rest on a single company history (SUDAC): the 13-day interruption in 1910, the purge of the pipes and the
+    hand-over of customers to Magneta.'
+  - Illustrations and the one short animated shot are AI-generated in an original cartoon style; they are interpretations,
+    not historical photographs. The narration voice, sound effects and music are AI-generated. Charts and diagrams were made
+    for this video from the cited figures.
+  thumbnails:
+  - name: thumbnail_a
+    frame: 1
+    lines:
+    - - THE CLOCKS
+      - 100
+    - - STOPPED
+      - 100
+    - - PARIS, 21 JANUARY 1910
+      - 36
+    side: left
+  - name: thumbnail_b
+    frame: 26
+    lines:
+    - - CLOCKS
+      - 120
+    - - RUN BY AIR
+      - 110
+    - - PARIS, 1880
+      - 40
+    side: left
+  - name: thumbnail_c
+    frame: 91
+    lines:
+    - - NO AIR,
+      - 110
+    - - NO TIME
+      - 110
+    - - THE PARIS FLOOD OF 1910
+      - 38
+    side: right
+  known_items:
+  - '#28 title "4,000+ clocks · 750 buildings" sits on the drawn pipe line (the subtitle band leaves no room lower).'
+  - '#86 and #110 show the same power-mains chart (intro and recap of the network); icons were moved locally so the chart
+    does not cover them.'
+  - '#3 says "between 10:48 and 10:53" (evening, as the narration says); #93 uses the 24-hour form 22:48–22:53.'
+  - The opening shot uses a local rain effect instead of an AI clip (the generated clip moved the clock hands).
+  - '#115 shows the Eiffel Tower in the distance behind the quai de la Gare plant (it is about 5 km downstream; the framing
+    is artistic).'

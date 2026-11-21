@@ -146,6 +146,43 @@ def report(episode: Ep, batch: int, before: float, after: float) -> None:
     production.cmd_report(SimpleNamespace(batch=batch, before=before, after=after))
 
 
+@pipe_app.command("sheet")
+def sheet(episode: Ep, frames: str, out: Path | None = None) -> None:
+    """Contact sheets (12 per page) of the latest attempt of frames a-b, labelled with QA status, for review."""
+    _use(episode)
+    from PIL import Image, ImageDraw, ImageFont
+
+    from . import production, qa
+    e = ep()
+    lo, hi = (int(x) for x in frames.split("-"))
+    out = out or e.work / "review" / "frames"
+    out.mkdir(parents=True, exist_ok=True)
+    st = production.load_state()
+    font = ImageFont.truetype(str(qa.FONT), 22)
+    colour = {"PASS": (0, 150, 80), "WARNING": (200, 130, 0), "NEEDS_FIX": (200, 30, 30)}
+    ns, cols, tw, th = list(range(lo, hi + 1)), 4, 480, 270
+    for page in range(0, len(ns), 12):
+        chunk = ns[page:page + 12]
+        rows = (len(chunk) + cols - 1) // cols
+        sh = Image.new("RGB", (cols * tw + (cols - 1) * 6, rows * (th + 6)), "white")
+        d = ImageDraw.Draw(sh)
+        for k, n in enumerate(chunk):
+            att = st["frames"].get(str(n), {}).get("attempts", [])
+            x, y = (k % cols) * (tw + 6), (k // cols) * (th + 6)
+            if not att:
+                d.rectangle([x, y, x + tw, y + th], fill=(60, 60, 60))
+                d.text((x + 8, y + 8), f"#{n} -", font=font, fill="white")
+                continue
+            a = att[-1]
+            im = qa.to_169(Image.open(e.frames_dir / a["file"]).convert("RGB"))[0].resize((tw, th))
+            sh.paste(im, (x, y))
+            d.rectangle([x, y, x + 120, y + 30], fill=colour.get(a["qa_status"], (90, 90, 90)))
+            d.text((x + 6, y + 4), f"#{n} v{len(att)}", font=font, fill="white")
+        p = out / f"frames_{chunk[0]:03d}-{chunk[-1]:03d}.png"
+        sh.save(p)
+        typer.echo(p)
+
+
 @pipe_app.command("qa")
 def qa_cmd(episode: Ep, paths: list[str], no_fix: bool = False) -> None:
     """Composition QA for images or folders."""
@@ -159,7 +196,8 @@ def qa_cmd(episode: Ep, paths: list[str], no_fix: bool = False) -> None:
 
 
 @pipe_app.command("record-clip")
-def record_clip(episode: Ep, n: int, job: str, url: str, credits: float, model: str = "",
+def record_clip(episode: Ep, n: int, job: str, url: str, credits: Annotated[float, typer.Option()] = 4.0,
+                model: str = "",
                 resolution: str = "", duration: int = 0) -> None:
     """Save an accepted image-to-video clip for frame N (projects/<slug>/production/anim/)."""
     _use(episode)

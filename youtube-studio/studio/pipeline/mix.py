@@ -31,9 +31,9 @@ from . import frames as frames_mod
 from .episode import ep
 
 SR = 48000
-# ElevenLabs credit quotes (Creator plan, 2026-11-21): spot effect with automatic length ~17, 20 s loop ~67,
-# music ~27.5 per second. Used for the cost preflight only; the real charge is read back after generation.
-PRICE = {"spot": 17.0, "ambience_per_s": 3.35, "music_per_s": 27.5}
+# ElevenLabs credits actually charged (Creator plan, 2026-11-21): spot effect with automatic length ~17,
+# 20 s loop ~67, music ~15 per second (the up-front estimate shows ~27.5/s). Preflight only.
+PRICE = {"spot": 17.0, "ambience_per_s": 3.35, "music_per_s": 15.0}
 REL = {"spot": -6.0, "ambience": -16.0, "music": -9.0}      # LU relative to the narration (before ducking)
 
 

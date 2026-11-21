@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+<rect x="300" y="100" width="1320" height="620" rx="28" fill="#FFFFFF" fill-opacity="0.95" stroke="#0C5274" stroke-width="4"/>
+<text x="360" y="178" fill="#071B35" font-family="Inter, sans-serif" font-size="38" font-weight="bold" text-anchor="start" dominant-baseline="alphabetic">How far the air pulse travels</text>
+<text x="360" y="220" fill="#51657A" font-family="Inter, sans-serif" font-size="26" font-weight="normal" text-anchor="start" dominant-baseline="alphabetic">front of the pressure wave at about 340 m/s (speed of sound in air)</text>
+<polyline points="450.0,270.0 450.0,600.0 1510.0,600.0" fill="none" stroke="#071B35" stroke-opacity="1.0" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="450.0,600.0 1510.0,279.4" fill="none" stroke="#0C5274" stroke-opacity="1.0" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="450.0,552.9 605.9,552.9 605.9,600.0" fill="none" stroke="#FFA51F" stroke-opacity="1.0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="10,9"/>
+<circle cx="605.8823529411765" cy="552.8571428571429" r="11" fill="#FFA51F" stroke="#071B35" stroke-width="3"/>
+<text x="627.8823529411765" y="592.8571428571429" fill="#071B35" font-family="Inter, sans-serif" font-size="28" font-weight="bold" text-anchor="start" dominant-baseline="alphabetic">1 km in ~3 s</text>
+<polyline points="450.0,364.3 1229.4,364.3 1229.4,600.0" fill="none" stroke="#FFA51F" stroke-opacity="1.0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="10,9"/>
+<circle cx="1229.4117647058824" cy="364.2857142857143" r="11" fill="#FFA51F" stroke="#071B35" stroke-width="3"/>
+<text x="1207.4117647058824" y="342.2857142857143" fill="#071B35" font-family="Inter, sans-serif" font-size="28" font-weight="bold" text-anchor="end" dominant-baseline="alphabetic">5 km in ~15 s</text>
+<text x="450.0" y="642" fill="#071B35" font-family="Inter, sans-serif" font-size="24" font-weight="normal" text-anchor="middle" dominant-baseline="alphabetic">0 s</text>
+<text x="715.0" y="642" fill="#071B35" font-family="Inter, sans-serif" font-size="24" font-weight="normal" text-anchor="middle" dominant-baseline="alphabetic">5 s</text>
+<text x="980.0" y="642" fill="#071B35" font-family="Inter, sans-serif" font-size="24" font-weight="normal" text-anchor="middle" dominant-baseline="alphabetic">10 s</text>
+<text x="1245.0" y="642" fill="#071B35" font-family="Inter, sans-serif" font-size="24" font-weight="normal" text-anchor="middle" dominant-baseline="alphabetic">15 s</text>
+<text x="1510.0" y="642" fill="#071B35" font-family="Inter, sans-serif" font-size="24" font-weight="normal" text-anchor="middle" dominant-baseline="alphabetic">20 s</text>
+<text x="432" y="600.0" fill="#071B35" font-family="Inter, sans-serif" font-size="24" font-weight="normal" text-anchor="end" dominant-baseline="central">0 km</text>
+<text x="432" y="505.7142857142857" fill="#071B35" font-family="Inter, sans-serif" font-size="24" font-weight="normal" text-anchor="end" dominant-baseline="central">2 km</text>
+<text x="432" y="411.42857142857144" fill="#071B35" font-family="Inter, sans-serif" font-size="24" font-weight="normal" text-anchor="end" dominant-baseline="central">4 km</text>
+<text x="432" y="317.14285714285717" fill="#071B35" font-family="Inter, sans-serif" font-size="24" font-weight="normal" text-anchor="end" dominant-baseline="central">6 km</text>
+</svg>
