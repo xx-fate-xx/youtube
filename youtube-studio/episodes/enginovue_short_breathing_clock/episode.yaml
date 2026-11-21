@@ -1,0 +1,74 @@
+# YouTube Short (1080x1920) linked to enginovue_paris_air_clocks; media go to projects/enginovue_short_breathing_clock/ (git-ignored).
+slug: enginovue_short_breathing_clock
+title: The Clocks of Paris That Breathed
+brand: Enginovue
+channel: engineering_explained
+format: short
+parent: enginovue_paris_air_clocks
+sound_library: enginovue_paris_air_clocks
+language: en-US
+style: enginovue_cartoon
+storyboard_end: "0:54"
+eras:
+  h: 'Historical setting in Paris or Vienna between 1875 and 1930, drawn in the same cartoon style; people are stylized cartoon
+    humans in accurate period clothing (frock coats, bowler and top hats, long dresses), streets have gas lamps, horse carriages
+    and Haussmann stone buildings, machines are period-accurate (steam engines, brass gauges, cast-iron pipes). Show nothing
+    that did not exist yet at that time: no modern cars, plastic, neon or glass towers, and no Eiffel Tower before 1889. Show
+    every person''s whole head, including any hat, with clear space above it; no head or hat cut by the frame edge.'
+  m: Present-day or late 20th-century setting drawn in the same cartoon style; people are stylized cartoon humans.
+image:
+  model: gpt_image_2_6
+  params:
+    aspect_ratio: '9:16'
+    quality: low
+    resolution: 2k
+  price_credits: 1.25
+animation:
+  model: grok_video_v15_lite
+  resolution: 720p
+  duration: 4
+  price_credits: 4.0
+  max_clips: 1
+budget:
+  higgsfield_credits: 20
+  elevenlabs_credits: 1500
+  retry_reserve: 0.1
+narration:
+  voice_id: GQQpeRnV5mCWTgxKhGo5
+  voice_name: Ryan - American Documentary Narrator
+  model: eleven_v4
+  intro_s: 0.2
+  gap_s: 0.0
+  outro_s: 0.8
+  lead_s: 0.12
+release:
+  hook: In the 1880s, thousands of Paris clocks were driven by a puff of compressed air every minute. Here is how one breath
+    moved the minute hand.
+  title_options:
+  - The Clocks of Paris That Breathed
+  - How a Puff of Air Moved a Clock Hand
+  - Paris Ran Its Clocks on Compressed Air
+  tags:
+  - pneumatic clocks
+  - paris history
+  - compressed air
+  - clock mechanism
+  - engineering history
+  - shorts
+  hashtags:
+  - '#engineering'
+  - '#history'
+  - '#paris'
+  long_video: The Air-Powered Clocks of Paris (link after upload)
+  sources:
+  - E. Hospitalier, "Les horloges pneumatiques", La Nature no. 365 (29 May 1880) — https://cnum.cnam.fr/pgi/redir.php?onglet=c&ident=4KY28.14
+  - '"Pneumatic Clocks", Nature vol. 22 (8 July 1880), doi:10.1038/022226a0 — https://archive.org/details/paper-doi-10_1038_022226a0'
+  - J. A. Berly, "The Distribution of Time by a System of Pneumatic Clocks", Journal of the Society of Arts vol. 30 (2 Dec
+    1881) — https://archive.org/details/journalofsociety30soci_0
+  - American Architect and Building News, 14 Jan 1882 (abridged Berly) — https://archive.org/details/sim_american-architect-and-architecture_1882-01-14_11_316
+  - M. Dikeç, "Urban temporal infrastructures in nineteenth-century Paris", Urban History (2025), doi:10.1017/S0963926824000725
+    — https://www.cambridge.org/core/product/01389D48D9CAD9D7AD9B107729DC7295/core-reader
+  notes:
+  - Illustrations are AI-generated in an original cartoon style; they are interpretations, not historical photographs. The
+    narration voice, sound effects and music are AI-generated.
+  known_items: []

@@ -129,6 +129,8 @@ def parse(path: Path | None = None) -> list[dict]:
             raise SystemExit(f"frame #{f['n']} has non-positive duration")
         f["file"] = tc_filename(f["t"]) + ".png"
         f["gfx_file"] = tc_filename(f["t"]) + "_gfx.png" if f.get("gfx") else ""
+        if f.get("gfx") and ep().vertical:
+            raise SystemExit(f"frame #{f['n']}: chart overlays (GFX) are 16:9 only; not available in Shorts yet")
     if frames and not frames[0].get("chapter"):
         frames[0]["chapter"] = "Intro"
     return frames
@@ -157,7 +159,7 @@ def image_prompt(f: dict) -> tuple[str, list[str]]:
         parts.append("Historical people: " + " ".join(people) + " " + style["hist_rule"])
     if f.get("gfx"):
         parts.append(style["gfx_rule"])
-    parts.append(style["tech"])
+    parts.append(style.get("tech_short", style["tech"]) if ep().vertical else style["tech"])
     return " ".join(p for p in parts if p), refs
 
 

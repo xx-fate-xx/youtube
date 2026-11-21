@@ -1,0 +1,78 @@
+# Recurring real people of this episode. `look` goes into every prompt where the code appears in the
+# characters column of frames.txt; `ref` is attached automatically once that file exists.
+field:
+  name: Cyrus West Field
+  ru: Филд
+  ref: refs/hist_field.png
+  life: born 30 Nov 1819; aged 34-39 in the 1854-1858 frames
+  look: 'Cyrus Field, American merchant in his mid-to-late thirties: slim, wiry build; long oval face with a high
+    forehead and receding hairline; wavy medium-brown hair worn long and full over the ears; a chin-curtain beard
+    along the jaw and chin with a clean-shaven upper lip (no moustache); dark 1850s frock coat, waistcoat, white
+    high collar, black cravat'
+  evidence:
+  - 'Photograph ''CyrusField4.jpg'', Wikimedia Commons (lead image of the English Wikipedia article; undated, 1860s-style
+    carte de visite): high receding forehead, long wavy hair at the sides, chin beard with clean-shaven upper lip.'
+  - 'Mathew Brady studio portrait, 1858, imperial salted paper print, Smithsonian National Portrait Gallery (npg.si.edu,
+    ''Cyrus West Field, 1819-1892''): Field posed with a length of cable and a globe. Not inspected yet.'
+  status: partly verified. Beard style and hairline come from a photo of uncertain date, probably the 1860s; compare
+    with the 1858 Brady portrait before making a reference sheet. Hair colour cannot be read from monochrome photos
+    (medium brown is an assumption).
+  avoid: Do not give him a moustache or a full beard; he is a businessman, not a sailor.
+thomson:
+  name: William Thomson (later Lord Kelvin), 1855-1861
+  ru: Томсон
+  ref: refs/hist_thomson_1850s.png
+  life: born 26 Jun 1824; aged 31-37 in these frames; Glasgow professor from 1846
+  look: 'William Thomson, Belfast-born physics professor at Glasgow in his early thirties: slim young man with a
+    lively, intelligent face, dark brown hair, a neat short dark beard; no spectacles, no walking stick; dark 1850s
+    frock coat, waistcoat, white collar and dark cravat'
+  evidence:
+  - Late-life portraits (e.g. 'Heroes of the telegraph - William Thomson', 1891, and the engraving in 'Biographies
+    of Scientific Men', Wikimedia Commons) show the full beard of his later years; they do not show how he looked
+    in the 1850s.
+  - Silvanus P. Thompson, 'The Life of William Thomson, Baron Kelvin of Largs' (1910, 2 vols, on Wikimedia Commons
+    / Internet Archive) has dated plates. Not inspected yet.
+  status: 'NOT VERIFIED for the 1850s. The short dark beard is a provisional choice kept from the original storyboard.
+    Check against a dated 1850s portrait before any reference sheet is generated. The spectacles in the old frame
+    #32 had no source and were removed.'
+  avoid: 'In December 1860 a curling accident broke his thigh and left him with a limp: no cane or limp in 1850s
+    frames. No white beard (that belongs to thomson_late).'
+thomson_1866:
+  name: Sir William Thomson, 1866
+  ru: Томсон (1866)
+  ref: refs/hist_thomson_1866.png
+  life: aged 42 when knighted in 1866
+  look: 'William Thomson in his early forties: same face as his younger self, dark hair beginning to recede, a fuller
+    dark beard; formal dark frock coat for a ceremony'
+  evidence:
+  - No dated 1866 portrait inspected yet.
+  status: NOT VERIFIED. Provisional bridge between the 1850s and late-life looks.
+  avoid: No white beard, no walking stick in the kneeling pose.
+thomson_late:
+  name: William Thomson, Lord Kelvin, late life
+  ru: Кельвин
+  ref: refs/hist_thomson_late.png
+  life: Baron Kelvin from 1892, aged 68+
+  look: 'Lord Kelvin as an elderly man: full, long white beard and moustache, high balding forehead with white hair
+    at the sides and back, thoughtful eyes, dark frock coat'
+  evidence:
+  - '''Heroes of the telegraph - William Thomson'' (1891) and ''Lord Kelvin (Biographies of Scientific Men)'', Wikimedia
+    Commons: long white beard and moustache, balding crown.'
+  status: verified from late-life portraits.
+  avoid: Do not exaggerate age into frailty; he stays active and alert.
+whitehouse:
+  name: Edward Orange Wildman Whitehouse
+  ru: Уайтхаус
+  ref: refs/hist_whitehouse.png
+  life: born 1816; aged about 40-42 in the 1856-1858 frames; surgeon from Brighton
+  look: 'Wildman Whitehouse, English surgeon turned electrician in his early forties: solid, sturdy build; full
+    round face; high forehead with a receding hairline and thick wavy hair at the sides; bushy side-whiskers running
+    down the cheeks to the jaw, chin and upper lip clean-shaven; dark frock coat, buttoned waistcoat with a watch
+    chain, white shirt, dark bow tie; confident, self-assured posture'
+  evidence:
+  - Studio albumen portrait by Maull and Polyblank, London, dated 1856-1865, Science Museum Group collection object
+    co8032132; reproduced on Wikimedia Commons as 'Edward-orange-wildman-whitehouse.jpg' (lead image of the English
+    Wikipedia article).
+  status: verified for the period (photograph dated 1856-1865). Hair colour cannot be read from the sepia print.
+  avoid: 'He is the story''s mistaken expert, but draw him as a credible professional: no villain features, no grotesque
+    caricature.'

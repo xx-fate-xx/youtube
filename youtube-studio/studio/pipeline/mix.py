@@ -193,6 +193,7 @@ def sound_design(write: bool = True) -> dict:
 
 
 def asset_path(kind: str, sid: str) -> Path:
+    """Where a newly generated asset of this episode is saved (lookups use ep().sound_file)."""
     return ep().audio / ("music" if kind == "music" else "sfx") / f"{sid}.mp3"
 
 
@@ -202,7 +203,7 @@ def status() -> dict:
     out = {"missing": [], "present": [], "credits_missing": 0.0}
     for kind, key in (("spot", "spots"), ("ambience", "ambience"), ("music", "music")):
         for sid, spec in (lib.get(key) or {}).items():
-            p = asset_path(kind, sid)
+            p = ep().sound_file(kind, sid)
             if kind == "spot":
                 cost = PRICE["spot"]
             elif kind == "ambience":
@@ -238,7 +239,7 @@ def mix(cue: dict | None = None) -> Path:
 
     def asset(name: str, kind: str) -> np.ndarray:
         if name not in cache:
-            p = AUDIO / ("music" if kind == "music" else "sfx") / f"{name}.mp3"
+            p = ep().sound_file(kind, name)          # own file, else the sound library's
             cache[name] = (decode(p), lufs(p))
         a, lu = cache[name]
         return a * db(ref + REL[kind] - lu)

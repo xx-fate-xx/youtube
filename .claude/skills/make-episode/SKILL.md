@@ -1,6 +1,6 @@
 ---
 name: make-episode
-description: Produce a complete YouTube documentary episode end to end with the youtube-studio video pipeline — research, original fact-checked script, storyboard, Higgsfield images and clips, ElevenLabs narration, sound design and mix, animated render, titles, QA and release kit — from a topic or a competitor video/script used only as a starting point. Use when the user asks to make a new video/episode, "сделай видос", "вот сценарий конкурента", or runs /make-episode.
+description: Produce a complete YouTube documentary episode end to end with the youtube-studio video pipeline — research, original fact-checked script, storyboard, Higgsfield images and clips, ElevenLabs narration, sound design and mix, animated render, titles, QA and release kit — from a topic or a competitor video/script used only as a starting point. Use when the user asks to make a new video/episode, "сделай видос", "вот сценарий конкурента", or runs /make-episode. Also YouTube Shorts ("шортсы", `/make-episode short ...`): 1080x1920 Shorts linked to a long video.
 ---
 
 # make-episode — the video pipeline playbook
@@ -127,3 +127,26 @@ Commit `episodes/<slug>/` on a branch (never media; never secrets).
 
 **CHECKPOINT 2** — tell the user where the release folder is, total credits spent (Higgsfield + ElevenLabs),
 known minor issues, and that they should watch it with headphones and upload it as Private first.
+
+## Shorts (1080x1920, 30–55 s, linked to a long video)
+Plan: 3 Shorts a week per channel. Each Short is its own episode with `format: short`; it reuses the long video's
+voice, eras, characters and sound library, and its facts must come from that episode's verified research.
+1. `studio pipe new-short <slug> --title "..." --parent <long_slug>` (slug `<brand>_short_<topic>`; budget
+   Higgsfield 20, ElevenLabs 1,500; image aspect 9:16).
+2. Script in `episodes/<slug>/script_source.py` with `studio.pipeline.scriptgen.Script` (see
+   `episodes/enginovue_short_breathing_clock/`), then `python script_source.py`. Rules: one idea; a true hook in the
+   first sentence; 110–135 words (≤ 55 s spoken, hard limit 60 s); 11–12 shots; 2–3 short titles; the last line
+   points to the long video. Narration is written new — never cut from the long video. No GFX charts (16:9 only).
+   Effects/ambiences/music ids from the parent's sounds.yaml (MUSIC on shot 1; a fresh cue is optional).
+3. Copy the long video's narration to `projects/<slug>/input/long_video_narration.txt`, `studio pipe build`,
+   `studio pipe originality` (must pass), then an independent fact-check subagent against the parent's research
+   → fixes → `factcheck_report.md`. `studio pipe preflight`.
+4. CHECKPOINT 1 for the week's batch (all Shorts together): scripts in Russian summary + English hooks, fact-check
+   fixes, cost (≈ 17 Higgsfield + ≈ 700 ElevenLabs credits each). After "yes": `studio pipe approve` per Short.
+5. Then the same stages as a long video (images 9:16 → narration → mix → titles → render → check → release).
+   Vertical frames get format/resolution QA only: review them by eye on `pipe sheet`. Composition: subject in the
+   upper-middle (18–58 % height), calm bottom 40 % (captions at ~64 %, YouTube interface below), nothing key in the
+   right 15 % (buttons). Titles use Shorts anchors (top_center, top_left, top_right, upper_center, mid_center).
+   The render burns in word-timed captions (2–3 words, Inter Display ExtraBold) and never dips to black.
+6. Release kit: hook, title options (≤ 60 chars), tags, `long_video` link line, sources; no thumbnails. The
+   operator uploads Private first and sets the long video as the Short's "Related video".

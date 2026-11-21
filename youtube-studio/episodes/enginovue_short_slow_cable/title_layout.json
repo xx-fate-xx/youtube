@@ -1,0 +1,42 @@
+{
+ "1": {
+  "main": "Aug 1858",
+  "sub": null,
+  "pos": "top_left",
+  "dx": 0,
+  "dy": 0,
+  "source": "manual"
+ },
+ "2": {
+  "main": "~100 words · ~16 hours",
+  "sub": null,
+  "pos": "top_center",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "6": {
+  "main": "1855",
+  "sub": null,
+  "pos": "top_left",
+  "dx": 0,
+  "dy": 0,
+  "source": "manual"
+ },
+ "7": {
+  "main": "2× length → 4× delay",
+  "sub": null,
+  "pos": "top_center",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "11": {
+  "main": "early Sep 1858",
+  "sub": null,
+  "pos": "upper_center",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ }
+}

@@ -139,3 +139,52 @@ def status(episode: Episode | None = None) -> list[tuple[str, bool, str]]:
     rows.append(("render", final.is_file(), final.name))
     rows.append(("release", _exists(e.release_dir / "description.txt"), "release kit"))
     return rows
+
+
+SHORT_NOTE = ("Illustrations are AI-generated in an original cartoon style; they are interpretations, not "
+              "historical photographs. The narration voice, sound effects and music are AI-generated.")
+
+
+def new_short(slug: str, title: str, parent: str) -> Path:
+    """Scaffold a YouTube Short (1080x1920) that links to the long video `parent` and reuses its eras, narration
+    voice, characters and sound library. The narration is written new for the Short (never cut from the long one)."""
+    import shutil
+
+    import yaml
+    src = EPISODES / slug
+    if src.exists():
+        raise SystemExit(f"{src} already exists")
+    par = Episode.load(parent)
+    cfg = {
+        "slug": slug, "title": title, "brand": par.cfg.get("brand", "Enginovue"),
+        "channel": par.cfg.get("channel", "engineering_explained"),
+        "format": "short", "parent": par.slug, "sound_library": par.slug,
+        "language": par.cfg.get("language", "en-US"), "style": par.cfg.get("style", "enginovue_cartoon"),
+        "storyboard_end": "0:45",
+        "eras": dict(par.cfg.get("eras") or {}),
+        "image": {"model": par.cfg["image"]["model"],
+                  "params": {**par.cfg["image"]["params"], "aspect_ratio": "9:16"},
+                  "price_credits": par.cfg["image"]["price_credits"]},
+        "animation": {**par.cfg["animation"], "max_clips": 1},
+        "budget": {"higgsfield_credits": 20, "elevenlabs_credits": 1500, "retry_reserve": 0.10},
+        "narration": {**par.cfg["narration"], "intro_s": 0.2, "gap_s": 0.0, "outro_s": 0.8},
+        "release": {"hook": "", "title_options": [], "tags": [], "hashtags": [], "long_video": "",
+                    "sources": [], "notes": [SHORT_NOTE],
+                    "known_items": []},
+    }
+    src.mkdir(parents=True)
+    (src / "episode.yaml").write_text(
+        f"# YouTube Short (1080x1920) linked to {par.slug}; media go to projects/{slug}/ (git-ignored).\n"
+        + yaml.safe_dump(cfg, allow_unicode=True, sort_keys=False, width=120)
+        .replace("storyboard_end: 0:45", 'storyboard_end: "0:45"'), encoding="utf-8")
+    (src / "frames.txt").write_text(FRAMES_TXT.format(title=title), encoding="utf-8")
+    if (par.src / "characters.yaml").is_file():
+        shutil.copy2(par.src / "characters.yaml", src / "characters.yaml")
+    else:
+        (src / "characters.yaml").write_text("{}\n", encoding="utf-8")
+    (src / "sounds.yaml").write_text(
+        f"# Uses the sound library of {par.slug} (sound_library in episode.yaml); add Short-only sounds here.\n"
+        "spots: {}\nambience: {}\nmusic: {}\n", encoding="utf-8")
+    e = use(src)
+    (e.work / "input").mkdir(parents=True, exist_ok=True)
+    return src

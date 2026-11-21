@@ -107,6 +107,52 @@ def to_169(img: Image.Image) -> tuple[Image.Image, int, int]:
     return img.crop((0, dy // 2, w, dy // 2 + th)), 0, dy
 
 
+def _vertical() -> bool:
+    try:
+        return ep().vertical
+    except RuntimeError:            # loose images without an episode: the long format
+        return False
+
+
+def to_916(img: Image.Image) -> tuple[Image.Image, int, int]:
+    """Centre-crop to exact 9:16 (Shorts). Returns image and cropped pixels (x, y)."""
+    w, h = img.size
+    tw = round(h * 9 / 16)
+    if tw <= w:
+        dx = w - tw
+        return img.crop((dx // 2, 0, dx // 2 + tw, h)), dx, 0
+    th = round(w * 16 / 9)
+    dy = h - th
+    return img.crop((0, dy // 2, w, dy // 2 + th)), 0, dy
+
+
+def to_frame(img: Image.Image) -> tuple[Image.Image, int, int]:
+    """Centre-crop to the selected episode's frame aspect (16:9, or 9:16 for a Short)."""
+    return to_916(img) if _vertical() else to_169(img)
+
+
+def check_vertical(path: Path, meta: dict | None, img: Image.Image | None = None) -> Result:
+    """Shorts frames: format and resolution only. The composition analysis below is built for 16:9 frames;
+    vertical frames are reviewed by eye on contact sheets (`studio pipe sheet`)."""
+    src = img or Image.open(path)
+    w, h = src.size
+    mode = ("B" if meta and meta["mode"] == "B" else "A") if meta else "?"
+    r = Result(str(path), meta["n"] if meta else None, mode, "vertical", f"{w}x{h}")
+    dev = (w / h) / (9 / 16) - 1
+    if abs(dev) <= 0.01:
+        r.add("format", "PASS", f"aspect {w / h:.3f} ≈ 9:16")
+    else:
+        r.add("format", "NEEDS_FIX" if abs(dev) > 0.03 else "WARNING",
+              f"aspect {w / h:.3f} is {dev:+.1%} off 9:16", "regenerate with aspect_ratio 9:16")
+    if w >= 1080 - 8 and h >= 1920 - 8:
+        r.add("resolution", "PASS", f"{w}x{h} downscales to 1080x1920 (zoom reserve ×{w / 1080:.2f})")
+    else:
+        r.add("resolution", "WARNING", f"{w}x{h} needs ×{1080 / w:.2f} upscale for 1080x1920",
+              "generate at 2k for final frames")
+    r.add("composition", "PASS", "vertical frame: review by eye (pipe sheet)")
+    return r
+
+
 def lum(a: np.ndarray) -> np.ndarray:
     return a[..., 0] * 0.299 + a[..., 1] * 0.587 + a[..., 2] * 0.114
 
@@ -742,6 +788,9 @@ def run(paths: list[Path], out: Path, fix: bool = True, base: Path | None = None
     for p in paths:
         m = STEM_RE.search(p.stem)
         meta = meta_all.get(m.group(1)) if m else None
+        if _vertical():
+            results.append(check_vertical(p, meta))
+            continue
         r, an, norm = check(p, meta)
         stem = unique_stem(p, base)
         if fix and an.method == "plain" and any(

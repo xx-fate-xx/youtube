@@ -1,5 +1,9 @@
 """Episode context for the video pipeline.
 
+Formats: `format: long` (default, 1920x1080 documentary) or `format: short` (1080x1920 YouTube Short with
+burned-in captions). A short names its long video in `parent:` and may reuse that episode's sound library
+(`sound_library: <slug>`: sounds.yaml entries and the generated sfx/music files).
+
 An episode has two directories:
   src  = episodes/<slug>/   committed sources: episode.yaml, frames.txt, characters.yaml, sounds.yaml,
                             overlays.py (optional exact charts), title_layout.json, fact-check notes
@@ -23,6 +27,9 @@ FONTS = ROOT / "assets" / "fonts" / "inter"
 STYLES = Path(__file__).resolve().parent / "styles"
 
 DEFAULTS: dict = {
+    "format": "long",                                # long (1920x1080) | short (1080x1920)
+    "parent": None,                                  # short: slug of the long video it links to
+    "sound_library": None,                           # slug whose sounds.yaml + audio files are reused
     "language": "en-US",
     "style": "enginovue_cartoon",
     "storyboard_end": None,                          # "m:ss" end of the last storyboard slot
@@ -101,6 +108,22 @@ class Episode:
     def overlays_dir(self) -> Path:
         return self.src / "overlays"
 
+    # ---- format
+    @property
+    def vertical(self) -> bool:
+        return self.cfg.get("format") == "short"
+
+    @property
+    def size(self) -> tuple[int, int]:
+        """Output frame size: 1920x1080 for long videos, 1080x1920 for Shorts."""
+        return (1080, 1920) if self.vertical else (1920, 1080)
+
+    @property
+    def library(self) -> Episode | None:
+        """The episode whose sound library this one reuses (None = its own)."""
+        lib = self.cfg.get("sound_library")
+        return Episode.load(lib) if lib and lib != self.slug else None
+
     # ---- settings
     def style(self) -> dict:
         s = yaml.safe_load((STYLES / f"{self.cfg['style']}.yaml").read_text(encoding="utf-8"))
@@ -113,8 +136,32 @@ class Episode:
         return (yaml.safe_load(f.read_text(encoding="utf-8")) or {}) if f.is_file() else {}
 
     def sounds(self) -> dict:
+        """sounds.yaml; with a sound_library its entries come first and this episode's own file adds to them."""
         f = self.src / "sounds.yaml"
-        return (yaml.safe_load(f.read_text(encoding="utf-8")) or {}) if f.is_file() else {}
+        own = (yaml.safe_load(f.read_text(encoding="utf-8")) or {}) if f.is_file() else {}
+        lib = self.library
+        if lib is None:
+            return own
+        base = lib.sounds()
+        out = {**base, **{k: v for k, v in own.items() if not isinstance(v, dict)}}
+        for k in ("spots", "ambience", "music"):
+            out[k] = {**(base.get(k) or {}), **(own.get(k) or {})}
+        for k in ("duck_db", "chapter_whoosh"):
+            if k in own:
+                out[k] = own[k]
+        return out
+
+    def sound_file(self, kind: str, sid: str) -> Path:
+        """Generated sound asset: this episode's own file if present, else the sound library's."""
+        sub = "music" if kind == "music" else "sfx"
+        own = self.audio / sub / f"{sid}.mp3"
+        lib = self.library
+        f = self.src / "sounds.yaml"
+        mine = (yaml.safe_load(f.read_text(encoding="utf-8")) or {}) if f.is_file() else {}
+        declared_here = any(sid in (mine.get(k) or {}) for k in ("spots", "ambience", "music"))
+        if own.is_file() or lib is None or declared_here:
+            return own
+        return lib.audio / sub / f"{sid}.mp3"
 
 
 _CURRENT: Episode | None = None

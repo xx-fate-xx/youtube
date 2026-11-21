@@ -1,0 +1,50 @@
+{
+ "1": {
+  "main": "21 Jan 1910",
+  "sub": null,
+  "pos": "top_right",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "4": {
+  "main": "quai de la Gare",
+  "sub": null,
+  "pos": "top_left",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "5": {
+  "main": "~1 m a day",
+  "sub": null,
+  "pos": "top_right",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "8": {
+  "main": "10:48 – 10:53 pm",
+  "sub": null,
+  "pos": "top_right",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "9": {
+  "main": "8.62 m · 28 Jan",
+  "sub": null,
+  "pos": "top_center",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "10": {
+  "main": "13 days",
+  "sub": null,
+  "pos": "top_right",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ }
+}

@@ -45,6 +45,15 @@ def new(slug: str, title: Annotated[str, typer.Option()], channel: str = "engine
     typer.echo(f"created {src}\nput reference material (competitor transcript, notes) in {ep().work / 'input'}")
 
 
+@pipe_app.command("new-short")
+def new_short(slug: str, title: Annotated[str, typer.Option()], parent: Annotated[str, typer.Option()]) -> None:
+    """Create a YouTube Short (1080x1920) episode linked to the long video PARENT (reuses its voice, eras,
+    characters and sound library)."""
+    from .workflow import new_short as mk
+    src = mk(slug, title, parent)
+    typer.echo(f"created {src} (format: short, parent: {parent})")
+
+
 @pipe_app.command("status")
 def status(episode: Ep) -> None:
     """Stage overview: what is done and what is next."""
@@ -161,6 +170,8 @@ def sheet(episode: Ep, frames: str, out: Path | None = None) -> None:
     font = ImageFont.truetype(str(qa.FONT), 22)
     colour = {"PASS": (0, 150, 80), "WARNING": (200, 130, 0), "NEEDS_FIX": (200, 30, 30)}
     ns, cols, tw, th = list(range(lo, hi + 1)), 4, 480, 270
+    if e.vertical:
+        cols, tw, th = 6, 270, 480
     for page in range(0, len(ns), 12):
         chunk = ns[page:page + 12]
         rows = (len(chunk) + cols - 1) // cols
@@ -174,7 +185,7 @@ def sheet(episode: Ep, frames: str, out: Path | None = None) -> None:
                 d.text((x + 8, y + 8), f"#{n} -", font=font, fill="white")
                 continue
             a = att[-1]
-            im = qa.to_169(Image.open(e.frames_dir / a["file"]).convert("RGB"))[0].resize((tw, th))
+            im = qa.to_frame(Image.open(e.frames_dir / a["file"]).convert("RGB"))[0].resize((tw, th))
             sh.paste(im, (x, y))
             d.rectangle([x, y, x + 120, y + 30], fill=colour.get(a["qa_status"], (90, 90, 90)))
             d.text((x + 6, y + 4), f"#{n} v{len(att)}", font=font, fill="white")
