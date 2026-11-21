@@ -1,66 +1,72 @@
-"""Production bookkeeping for Enginovue stills (Visual Pipeline v1.0). Never calls a paid API.
+"""Production bookkeeping for generated stills. Never calls a paid API.
 
-Generation itself runs through Higgsfield MCP after explicit approval of each batch; this tool
-decides WHAT to generate, records what came back and keeps accepted frames out of later batches.
+Generation runs through the Higgsfield MCP (driven by Claude) after the episode's cost preflight was
+approved; this module decides WHAT to generate, records what came back and keeps accepted frames out
+of later batches.
 
-Commands:
-  py production.py plan [--batch 10] [--reserve 0.15]   batches of frames still to generate + budget
-  py production.py next                                 the next batch (next_batch.json + next_batch_mcp.json)
-  py production.py record N JOB_ID URL                  save PNG + JSON as a new version, run qa.py
-  py production.py decide N accept|accept_fixed|reject [--file NAME] [--note TEXT]
-  py production.py status                               per-frame state
-  py production.py report --batch K --before B --after A   batch report: QA, files, credits used
+Commands (via `studio pipe ...`):
+  plan [--batch 8] [--reserve 0.10]   batches of frames still to generate + budget
+  next                                the next batch (next_batch.json + next_batch_mcp.json)
+  record N JOB_ID URL                 save PNG + JSON as a new version, run QA
+  decide N accept|accept_fixed|candidate|reject [--file NAME] [--note TEXT]
+  status                              per-frame state
+  report --batch K --before B --after A   batch report: QA, files, credits used
 
-State (account-specific, git-ignored): projects/enginovue_cable_1858/production/state.json
-Frames:                                 projects/enginovue_cable_1858/production/frames/
-Accepted pilot frames are read from pilot_v1_manifest.json and skipped automatically.
+State (git-ignored): projects/<slug>/production/state.json; frames in projects/<slug>/production/frames/.
 Existing PNGs are never overwritten: a new attempt becomes <file>_v2.png, _v3.png, ...
 """
 
 from __future__ import annotations
 
-import argparse
 import hashlib
 import json
 import math
 import stat
 import urllib.request
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
-HERE = Path(__file__).resolve().parent
-PROJECT = HERE.parents[1] / "projects" / "enginovue_cable_1858"
-PROD = PROJECT / "production"
-FRAMES = PROD / "frames"
-STATE = PROD / "state.json"
-PILOT_MANIFEST = HERE / "pilot_v1_manifest.json"
-PRICE = 1.25                     # credits per frame, gpt_image_2_6 low/2k (Higgsfield quote, Plus account, 2026-11-21)
+from .episode import ep
+
 ACCEPTED = {"accepted", "accepted_with_note", "accepted_fixed"}
 SKIP = ACCEPTED | {"candidate"}  # candidate: generated, awaiting an editorial decision; not re-generated
 
 
+def _price() -> float:
+    return float(ep().cfg["image"]["price_credits"])
+
+
+def _pilot_manifest() -> Path | None:
+    m = ep().cfg.get("pilot_manifest")
+    return ep().src / m if m else None
+
+
+
 def prompts() -> dict[int, dict]:
-    return {r["n"]: r for r in (json.loads(x) for x in (HERE / "prompts.jsonl").read_text(encoding="utf-8").splitlines())}
+    return {r["n"]: r for r in (json.loads(x) for x in (ep().src / "prompts.jsonl").read_text(encoding="utf-8").splitlines())}
 
 
 def load_state() -> dict:
-    if STATE.is_file():
-        return json.loads(STATE.read_text(encoding="utf-8"))
+    state_file = ep().prod / "state.json"
+    if state_file.is_file():
+        return json.loads(state_file.read_text(encoding="utf-8"))
     return {"frames": {}, "reference_media_ids": {}}
 
 
 def save_state(state: dict) -> None:
-    PROD.mkdir(parents=True, exist_ok=True)
-    tmp = STATE.with_suffix(".tmp")
+    ep().prod.mkdir(parents=True, exist_ok=True)
+    state_file = ep().prod / "state.json"
+    tmp = state_file.with_suffix(".tmp")
     tmp.write_text(json.dumps(state, ensure_ascii=False, indent=1), encoding="utf-8")
-    tmp.replace(STATE)           # atomic save
+    tmp.replace(state_file)      # atomic save
 
 
 def decisions(state: dict) -> dict[int, dict]:
     """Current decision per frame: production state overrides the pilot manifest."""
     out: dict[int, dict] = {}
-    if PILOT_MANIFEST.is_file():
-        for f in json.loads(PILOT_MANIFEST.read_text(encoding="utf-8"))["frames"]:
+    pm = _pilot_manifest()
+    if pm is not None and pm.is_file():
+        for f in json.loads(pm.read_text(encoding="utf-8"))["frames"]:
             acc = f"pilot_low_2k/{f['accepted_file']}" if f["accepted_file"] else None
             out[f["frame"]] = {"decision": f["decision"], "file": acc, "source": "pilot"}
     for n, f in state["frames"].items():
@@ -79,27 +85,29 @@ def cmd_plan(a) -> None:
     left = todo(state)
     dec = decisions(state)
     batches = [left[i:i + a.batch] for i in range(0, len(left), a.batch)]
-    base = len(left) * PRICE
-    reserve = math.ceil(base * a.reserve / PRICE) * PRICE      # whole frames of headroom
-    plan = {"created": datetime.now(timezone.utc).isoformat(timespec="seconds"),
-            "price_per_frame": PRICE, "frames_total": len(prompts()),
+    base = len(left) * _price()
+    reserve = math.ceil(base * a.reserve / _price()) * _price()      # whole frames of headroom
+    plan = {"created": datetime.now(UTC).isoformat(timespec="seconds"),
+            "price_per_frame": _price(), "frames_total": len(prompts()),
             "accepted": sorted(n for n, d in dec.items() if d["decision"] in ACCEPTED),
             "awaiting_decision": sorted(n for n, d in dec.items() if d["decision"] == "candidate"),
             "to_generate": len(left), "base_credits": base, "reserve_share": a.reserve,
             "reserve_credits": reserve, "total_credits": base + reserve,
-            "batches": [{"batch": i + 1, "frames": b, "credits": len(b) * PRICE} for i, b in enumerate(batches)]}
-    PROD.mkdir(parents=True, exist_ok=True)
-    (PROD / "plan.json").write_text(json.dumps(plan, indent=1), encoding="utf-8")
+            "batches": [{"batch": i + 1, "frames": b, "credits": len(b) * _price()} for i, b in enumerate(batches)]}
+    ep().prod.mkdir(parents=True, exist_ok=True)
+    (ep().prod / "plan.json").write_text(json.dumps(plan, indent=1), encoding="utf-8")
     print(f"frames {plan['frames_total']}, accepted {len(plan['accepted'])} {plan['accepted']}, "
           f"awaiting decision {plan['awaiting_decision']}, to generate {len(left)}")
     print(f"base {base:g} cr + reserve {a.reserve:.0%} ≈ {reserve:g} cr = {base + reserve:g} credits")
     for b in plan["batches"]:
         print(f"  batch {b['batch']:>2}: {len(b['frames']):>2} frames {b['frames'][0]}–{b['frames'][-1]} "
               f"({b['credits']:g} cr)")
-    print(f"plan saved to {PROD / 'plan.json'}")
+    print(f"plan saved to {ep().prod / 'plan.json'}")
 
 
 def cmd_next(a) -> None:
+    from .preflight import require_approval
+    require_approval()
     state = load_state()
     left = todo(state)
     rows = prompts()
@@ -108,25 +116,25 @@ def cmd_next(a) -> None:
             "image_references": r["image_references"],
             "reference_media_ids": [state["reference_media_ids"].get(x) for x in r["image_references"]],
             "prompt": r["prompt"]} for r in batch]
-    missing = [(r["n"], x) for r in out for x, m in zip(r["image_references"], r["reference_media_ids"]) if not m]
+    missing = [(r["n"], x) for r in out for x, m in zip(r["image_references"], r["reference_media_ids"], strict=True) if not m]
     if missing:
         raise SystemExit(f"reference media ids missing for {missing}; upload the refs first")
-    plan = json.loads((PROD / "plan.json").read_text(encoding="utf-8")) if (PROD / "plan.json").is_file() else {}
+    plan = json.loads((ep().prod / "plan.json").read_text(encoding="utf-8")) if (ep().prod / "plan.json").is_file() else {}
     batch_no = next((b["batch"] for b in plan.get("batches", []) if b["frames"] == [r["n"] for r in out]), None)
-    (PROD / "next_batch.json").write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8")
+    (ep().prod / "next_batch.json").write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8")
     # exact request list for the Higgsfield MCP generate_image_batch tool (index = frame number)
     mcp = [{"index": r["n"], "params": {"model": r["model"], "count": 1, **r["params"], "prompt": r["prompt"],
             **({"medias": [{"value": m, "role": "image_references"} for m in r["reference_media_ids"]]}
                if r["reference_media_ids"] else {})}} for r in out]
-    (PROD / "next_batch_mcp.json").write_text(json.dumps(mcp, ensure_ascii=False, indent=1), encoding="utf-8")
+    (ep().prod / "next_batch_mcp.json").write_text(json.dumps(mcp, ensure_ascii=False, indent=1), encoding="utf-8")
     print(f"next batch{f' {batch_no}' if batch_no else ''}: {[r['n'] for r in out]} "
-          f"({len(out) * PRICE:g} credits) -> {PROD / 'next_batch.json'}, next_batch_mcp.json")
+          f"({len(out) * _price():g} credits) -> {ep().prod / 'next_batch.json'}, next_batch_mcp.json")
 
 
 def cmd_report(a) -> None:
     """After a batch: QA status per frame, files written and the credits actually used."""
     state = load_state()
-    plan = json.loads((PROD / "plan.json").read_text(encoding="utf-8"))
+    plan = json.loads((ep().prod / "plan.json").read_text(encoding="utf-8"))
     batch = next(b for b in plan["batches"] if b["batch"] == a.batch)
     used = round(a.before - a.after, 2)
     lines = [f"# Batch {a.batch} report\n", f"Frames {batch['frames'][0]}–{batch['frames'][-1]}; "
@@ -138,10 +146,10 @@ def cmd_report(a) -> None:
         last = att[-1] if att else {}
         lines.append(f"| #{n} | {last.get('file', '— not generated')} | {last.get('qa_status', '—')} | "
                      f"{last.get('qa_fixed_status') or '—'} | {f.get('decision', 'pending')} |")
-    (PROD / f"batch_{a.batch:02d}_report.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    (ep().prod / f"batch_{a.batch:02d}_report.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
     state.setdefault("ledger", []).append({"batch": a.batch, "frames": batch["frames"], "estimate": batch["credits"],
                                            "balance_before": a.before, "balance_after": a.after, "used": used,
-                                           "at": datetime.now(timezone.utc).isoformat(timespec="seconds")})
+                                           "at": datetime.now(UTC).isoformat(timespec="seconds")})
     save_state(state)
     print("\n".join(lines[1:]))
     if used > batch["credits"] + 1e-9:
@@ -149,19 +157,19 @@ def cmd_report(a) -> None:
 
 
 def new_version_path(file: str) -> Path:
-    path = FRAMES / file
+    path = ep().frames_dir / file
     k = 2
     while path.exists():
-        path = FRAMES / file.replace(".png", f"_v{k}.png")
+        path = ep().frames_dir / file.replace(".png", f"_v{k}.png")
         k += 1
     return path
 
 
 def cmd_record(a) -> None:
-    import qa  # local import: qa needs numpy, the planning commands do not
+    from . import qa  # local import: qa needs numpy, the planning commands do not
     rows = prompts()
     row = rows[a.n]
-    FRAMES.mkdir(parents=True, exist_ok=True)
+    ep().frames_dir.mkdir(parents=True, exist_ok=True)
     png = new_version_path(row["file"])
     urllib.request.urlretrieve(a.url, png)
     state = load_state()
@@ -171,11 +179,11 @@ def cmd_record(a) -> None:
             "prompt_sha256": hashlib.sha256(row["prompt"].encode()).hexdigest(), "prompt": row["prompt"],
             "gfx_file": row["gfx_file"], "via": a.via,
             "billing": "unlimited_trial" if a.unlim else "credits",
-            "credits_used": a.credits if a.credits is not None else (0.0 if a.unlim else PRICE),
-            "saved": datetime.now(timezone.utc).isoformat(timespec="seconds")}
+            "credits_used": a.credits if a.credits is not None else (0.0 if a.unlim else _price()),
+            "saved": datetime.now(UTC).isoformat(timespec="seconds")}
     png.with_suffix(".json").write_text(json.dumps(meta, ensure_ascii=False, indent=1), encoding="utf-8")
     png.chmod(stat.S_IREAD | stat.S_IRGRP | stat.S_IROTH)   # originals are read-only from now on
-    r = qa.run([png], FRAMES / "qa", base=FRAMES)[0]
+    r = qa.run([png], ep().frames_dir / "qa", base=ep().frames_dir)[0]
     f = state["frames"].setdefault(str(a.n), {"attempts": []})
     f["attempts"].append({"file": png.name, "sha256": hashlib.sha256(png.read_bytes()).hexdigest(),
                           "job_id": a.job, "billing": meta["billing"], "credits_used": meta["credits_used"],
@@ -197,18 +205,18 @@ def cmd_decide(a) -> None:
             raise SystemExit("no recorded attempt; pass --file")
         last = f["attempts"][-1] if f["attempts"] else {}
         if a.file:
-            rel = a.file.replace("\\", "/")            # relative to projects/enginovue_cable_1858/
+            rel = a.file.replace("\\", "/")            # relative to projects/<slug>/
         else:
             name = last.get("qa_fixed_file") if a.decision == "accept_fixed" else last.get("file")
             rel = f"production/frames/{'qa/' if a.decision == 'accept_fixed' else ''}{name}"
-        path = PROJECT / rel
+        path = ep().work / rel
         if not path.is_file():
             raise SystemExit(f"{path} not found")
         state_name = {"accept": "accepted", "accept_fixed": "accepted_fixed", "candidate": "candidate"}
         f.update(decision=state_name[a.decision], accepted_file=rel,
                  accepted_sha256=hashlib.sha256(path.read_bytes()).hexdigest())
     f["note"] = a.note
-    f["decided"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
+    f["decided"] = datetime.now(UTC).isoformat(timespec="seconds")
     save_state(state)
     print(f"#{a.n}: {f['decision']} {f.get('accepted_file') or ''}")
 
@@ -224,31 +232,3 @@ def cmd_status(a) -> None:
             att = state["frames"].get(str(n), {}).get("attempts", [])
             print(f"#{n:<4} {d:<20} {dec.get(n, {}).get('file') or ''}  attempts={len(att)}")
     print(counts)
-
-
-def main() -> None:
-    ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
-    sp = ap.add_subparsers(dest="cmd", required=True)
-    p = sp.add_parser("plan"); p.add_argument("--batch", type=int, default=10); p.add_argument("--reserve", type=float, default=0.15)
-    p.set_defaults(fn=cmd_plan)
-    p = sp.add_parser("next"); p.add_argument("--batch", type=int, default=10); p.set_defaults(fn=cmd_next)
-    p = sp.add_parser("record"); p.add_argument("n", type=int); p.add_argument("job"); p.add_argument("url")
-    p.add_argument("--via", default="higgsfield-mcp", help="where the job was run, e.g. claude.ai")
-    p.add_argument("--unlim", action="store_true", help="generated with the free Unlimited trial")
-    p.add_argument("--credits", type=float, help="actual credits used (verified from the balance)")
-    p.set_defaults(fn=cmd_record)
-    p = sp.add_parser("decide"); p.add_argument("n", type=int)
-    p.add_argument("decision", choices=["accept", "accept_fixed", "candidate", "reject"])
-    p.add_argument("--file"); p.add_argument("--note", default="")
-    p.set_defaults(fn=cmd_decide)
-    p = sp.add_parser("status"); p.add_argument("-v", "--verbose", action="store_true"); p.set_defaults(fn=cmd_status)
-    p = sp.add_parser("report"); p.add_argument("--batch", type=int, required=True)
-    p.add_argument("--before", type=float, required=True, help="balance before the batch")
-    p.add_argument("--after", type=float, required=True, help="balance after the batch")
-    p.set_defaults(fn=cmd_report)
-    a = ap.parse_args()
-    a.fn(a)
-
-
-if __name__ == "__main__":
-    main()

@@ -1,0 +1,52 @@
+# Channel visual style for the Enginovue tech-cartoon look (used by studio.pipeline.frames).
+# Episodes add their own eras (e.g. a historical period) in episode.yaml.
+name: Enginovue tech cartoon
+style: 'ENGINOVUE TECH CARTOON style: professional digital 2D cartoon illustration for a YouTube engineering documentary.
+  Bold, smooth, confident dark outlines; rounded friendly shapes; layered cel-shading with soft gradients inside
+  shapes; glossy highlights on glass, metal and helmets; small local turquoise and sky-blue glows only on technological
+  elements; clear separation of foreground, midground and background; moderate detail; one clear focal point. Color
+  guide: deep navy #071B35, sea blue #0C5274, bright turquoise #22E5EF, sky blue #28BFF5, engineering orange #FFA51F,
+  golden yellow #FFC342, silver-white #EDEAF1, dark graphite #242735. Stylized 2D with depth from color and shadow.
+  Not photorealistic, not a 3D render, not anime, not stick figures, not MS Paint.'
+modes:
+  A: 'LIGHT EXPLAINER look: by default a clean white, light grey or pale blue background, minimal clutter, large
+    readable subjects, simple handsome engineering diagrams, soft contact shadows. For engineering analogies, charts,
+    diagrams and equipment demonstrations keep the background plain: no random mountains, clouds, trees, landscapes
+    or decorative props. When the scene names a specific setting (a lab, factory, ship, historical room or natural
+    location), draw that setting as described, in the same light, uncluttered Enginovue cartoon style.'
+  B: 'DARK CINEMATIC TECH look: deep navy background and atmosphere, turquoise rim light, warm orange light accents,
+    cinematic depth, glow kept restrained.'
+mode_names:
+  A: Light Explainer
+  B: Dark Cinematic Tech
+eras:
+  m: Present-day or late 20th-century setting drawn in the same cartoon style; people are stylized cartoon humans.
+  '-': ''
+shots:
+  wide: 'Wide establishing shot: people and machines small inside a large environment, strong sense of place and
+    depth.'
+  medium: 'Medium shot: main subject placed off-center on a rule-of-thirds line, with breathing room around it;
+    show only the surroundings the scene describes.'
+  close: 'Close-up shot: one subject large and clear, still fully inside the safe margins.'
+  macro: 'Macro detail shot: a single mechanical detail large and sharp, background simplified.'
+  cutaway: Clean technical cutaway / cross-section view, layers clearly separated.
+  infographic: 'Clean infographic composition: orderly flat layout with generous empty space.'
+  dynamic: 'Dynamic dramatic angle: low or high camera, strong diagonal lines.'
+tech: '16:9 horizontal frame. Composition rules: keep safe margins of 8-10% of the frame on every side; no character,
+  face, hand, tool, key machine part or diagram element touches or is cut by the frame edges (only scenery, water,
+  sky and deliberately continuing objects such as long cables or pipes may run off the edge). Keep the bottom 15%
+  of the frame a calm, uncluttered, low-detail area for subtitles, with no faces or key details in it. In medium
+  and wide shots keep characters small enough that the whole figure fits with breathing room. Keep believable relative
+  scale between people, tools, machines, ships and cables unless the scene is an explicit analogy; when the scene
+  is about length, distance, size or quantity, make that scale visually obvious. Bold silhouettes, clear contrast
+  and a few large shapes, so the image reads at small YouTube viewing size. No text, letters, numbers, captions,
+  logos or watermarks in the image. Clean separable shapes suited to 2D image-to-video animation: clearly readable
+  limbs, no extra limbs, no tangled overlaps, no distorted machinery.'
+gfx_rule: 'An exact chart is composited over this frame in editing: do not draw any chart, graph, curve, axis, bar,
+  waveform, scale ruler or numbers yourself, and keep the reserved area plain.'
+hist_rule: Draw these real people as stylized cartoon humans, recognisable by the listed traits, and keep the traits
+  identical in every frame where they appear; respectful, no grotesque caricature. Always show the whole head, including
+  any hat or tall hair, with clear empty space above it.
+anim_tail: Smooth 2D animation of this exact frame. Keep the Enginovue cartoon drawing style, outlines, colors and
+  every character design unchanged. No morphing, no new objects, no scene change.
+no_mascot_line: No mascot characters in this frame.

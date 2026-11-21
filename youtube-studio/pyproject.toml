@@ -11,6 +11,8 @@ dependencies = [
     "pyyaml>=6.0",
     "pillow>=10.3",
     "imageio-ffmpeg>=0.5",
+    "numpy>=1.26",        # video pipeline: QA, mix
+    "fonttools>=4.40",    # video pipeline: title glyph fallback
 ]
 
 [project.optional-dependencies]
@@ -45,3 +47,8 @@ ignore = ["B008", "UP047", "SIM905"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+
+[tool.ruff.lint.per-file-ignores]
+# ported production modules: long FFmpeg filter graphs, prompts and report lines read better unwrapped
+"studio/pipeline/*.py" = ["E501"]
+"episodes/*/overlays.py" = ["E501"]

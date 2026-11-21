@@ -1,25 +1,21 @@
-"""Render the Enginovue episode as an animated silent 1920x1080 30 fps MP4 (FFmpeg), v2.
+"""Render an episode as an animated 1920x1080 30 fps MP4 (FFmpeg).
 
-For every timecode of edit_timeline.csv:
-  * picture = accepted image from the production manifest (production.py decisions), or an accepted
-    image-to-video clip from state["anim"] (AI clip, scaled to 1080p and trimmed to the slot);
-    a clearly marked placeholder card is used if a frame has no accepted image yet;
-  * camera move chosen per frame from the ANIM camera hint, else from the shot type: push-in, pull-out,
-    pans, tilts, drift, handheld sway, snap shake; never the same move twice in a row; static for
-    chart frames, frames whose editing note forbids a push toward an edge, and placeholders;
-  * local effects: rain + lightning (storm), rising bubbles and motes (underwater), lamp / fire / spark
-    flicker; chart overlays and editor titles fade in; chapter changes dip to black;
-  * duration = the frame's slot in the timeline (total 8:19). Original images are only read.
-Narration is added later (ElevenLabs); an .srt with the scripted narration per slot is written.
-
-Usage: py render_video.py [--out DIR] [--only 1-20] [--crf 18] [--plan]
-Output: <out>/enginovue_1858_v2_animated.mp4, .srt, render_report_v2.md (default out: projects/.../render)
+For every storyboard shot (frames.txt):
+  * picture = accepted image from the production state (production decisions), or an accepted
+    image-to-video clip from state["anim"] (slowed with motion interpolation if the slot is longer, never
+    frozen); a clearly marked placeholder card is used if a frame has no accepted image yet;
+  * camera move from CAMERA in frames.txt, else from the ANIM camera hint, else by shot type: push-in,
+    pull-out, pans, tilts, drift, handheld sway, snap shake; never the same move twice in a row; chart frames
+    and "no push to edge" frames get a barely visible centred move;
+  * local effects from FX: rain, lightning@t, rising bubbles and motes, lamp (auto from the scene text),
+    fire and spark flicker; chart overlays fade in; editor titles (titles.py) fade in with a small rise;
+    CHAPTER frames dip to black;
+  * duration = the aligned narration slot (narration_timing.json) or, with --silent, the storyboard slot.
+Original images are only read. Output: projects/<slug>/render/<name>.mp4 + .srt + render report.
 """
 
 from __future__ import annotations
 
-import argparse
-import csv
 import json
 import random
 import re
@@ -30,33 +26,16 @@ from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFont
 
-import build
-import production
-import qa
-import titles
+from . import frames as frames_mod
+from . import production, qa, titles
+from .episode import FONTS, ep
 
-HERE = Path(__file__).resolve().parent
 W, H, FPS = 1920, 1080, 30
 SRC = (3840, 2160)               # supersampled source: sub-pixel smooth camera moves
 NAVY, TURQ, SILVER = (7, 27, 53), (34, 229, 239), (237, 234, 241)
-FONT_B = HERE.parents[1] / "assets" / "fonts" / "inter" / "Inter-Bold.ttf"
-FONT_R = HERE.parents[1] / "assets" / "fonts" / "inter" / "Inter-Regular.ttf"
-STEM = "enginovue_1858_v2_animated"
-STEM_VOICED = "enginovue_1858_v3_voiced"
-STEM_MIXED = "enginovue_1858_v4_mixed"     # narration + music + ambiences + effects (mix_audio.py)
-NARRATION = production.PROJECT / "audio"   # narration_timing.json + narration_full.wav (align_narration.py)
-
-# Narrative chapters: the first frame of each chapter opens with a dip from black.
-CHAPTERS = {14: "The ten-day gap", 25: "Cyrus Field", 31: "Thomson's warning", 48: "The 1857 cable",
-            71: "The 1858 plan", 87: "The mirror galvanometer", 107: "The inquiry",
-            115: "The Great Eastern", 132: "Two working cables", 142: "Today"}
-STORM = {75, 76, 77}                       # rain + handheld sway
-LIGHTNING = {75}                           # lightning flashes (at LIGHTNING_T s)
-LIGHTNING_T = 1.3
-SNAP = {68, 121, 124}                      # decaying shake at the moment of the snap
-SPARKS = {47, 100}                         # strong electric flicker
-FIRE = {7}                                 # fire flicker
-UNDERWATER = {10, 12, 101, 102, 103, 104, 122, 123, 129, 130, 142, 151}
+FONT_B = FONTS / "Inter-Bold.ttf"
+FONT_R = FONTS / "Inter-Regular.ttf"
+LIGHTNING_T = 1.3                          # default lightning time when FX has no @t
 LAMP_RE = re.compile(r"oil lamp|lamplight|candle|gas ?lamp|gaslight|lantern|firelight|fireplace|lamp", re.I)
 STATIC_NOTES = ("push", "edge", "headroom")   # editing notes that forbid moving toward an edge
 
@@ -88,8 +67,17 @@ def ffmpeg() -> str:
     return exe
 
 
-def timeline() -> list[dict]:
-    return list(csv.DictReader(open(HERE / "edit_timeline.csv", encoding="utf-8")))
+def names() -> dict[str, str]:
+    """Output names: silent picture, narration only, full mix (episode.yaml render_names)."""
+    slug = ep().slug
+    return {"silent": f"{slug}_silent", "voiced": f"{slug}_voiced", "mixed": f"{slug}_final",
+            **(ep().cfg.get("render_names") or {})}
+
+
+def timeline(frames: list[dict]) -> list[dict]:
+    return [{"n": str(f["n"]), "duration_s": str(f["duration"]),
+             "gfx_overlay": f"overlays/{f['gfx_file']}" if f["gfx_file"] else "",
+             "overlay": f["overlay"], "voiceover": f["vo"]} for f in frames]
 
 
 def ts(sec: float) -> str:
@@ -170,6 +158,7 @@ def camera_hint(anim: str) -> str | None:
 def plan(rows: list[dict], frames: dict[int, dict], notes: dict[int, str], anim_ok: set[int]) -> dict[int, dict]:
     out, prev, rot = {}, None, {}
     prev_title = None
+    chapter_frames = {k for k, _ in frames_mod.chapters(list(frames.values()))}
     for r in rows:
         n = int(r["n"])
         f = frames[n]
@@ -177,12 +166,8 @@ def plan(rows: list[dict], frames: dict[int, dict], notes: dict[int, str], anim_
         hint = camera_hint(f.get("anim", ""))
         if n in anim_ok:
             move = "ai_clip"
-        elif n in STORM:
-            move = "sway"
-        elif n in SNAP:
-            move = "snap"
-        elif n in SPARKS and n != 47:
-            move = "settle"
+        elif f.get("camera"):
+            move = f["camera"]
         elif any(k in notes.get(n, "").lower() for k in STATIC_NOTES):
             move = "breathe_out"     # never a frozen picture; ends on the uncropped frame
         elif gfx:
@@ -203,24 +188,26 @@ def plan(rows: list[dict], frames: dict[int, dict], notes: dict[int, str], anim_
                    "pull_out": "push_in", "tilt_up": "drift", "tilt_down": "drift"}.get(move)
             if alt:
                 move = alt
-        fx = []
-        if n in STORM:
+        tags = {t.split("@")[0]: t for t in f.get("fx", [])}
+        fx, lt = [], LIGHTNING_T
+        if "rain" in tags:
             fx.append("rain")
-        if n in LIGHTNING:
+        if "lightning" in tags:
             fx.append("lightning")
-        if n in UNDERWATER:
+            lt = float(tags["lightning"].split("@")[1]) if "@" in tags["lightning"] else LIGHTNING_T
+        if "bubbles" in tags:
             fx.append("bubbles")
-        if n in SPARKS:
+        if "sparks" in tags:
             fx.append("sparks")
-        elif n in FIRE:
+        elif "fire" in tags:
             fx.append("fire")
-        elif LAMP_RE.search(f["scene"]):
+        elif "lamp" in tags or ("nolamp" not in tags and LAMP_RE.search(f["scene"])):
             fx.append("lamp")
         title = (r["overlay"], r["gfx_overlay"])
         fade_title = title != prev_title and any(title)
-        out[n] = {"move": move, "fx": fx, "fade_title": fade_title,
-                  "dip_in": n in CHAPTERS or n == int(rows[0]["n"]),
-                  "dip_out": (n + 1) in CHAPTERS or n == int(rows[-1]["n"])}
+        out[n] = {"move": move, "fx": fx, "lightning_t": lt, "fade_title": fade_title,
+                  "dip_in": n in chapter_frames or n == int(rows[0]["n"]),
+                  "dip_out": (n + 1) in chapter_frames or n == int(rows[-1]["n"])}
         prev, prev_title = move, title
     return out
 
@@ -249,7 +236,7 @@ def cam_filter(move: str, frames: int) -> str:
     return f"zoompan=z='{z}':x='{x}':y='{y}':d={frames}:s={W}x{H}:fps={FPS}"
 
 
-def light_filter(fx: list[str]) -> str | None:
+def light_filter(fx: list[str], lightning_t: float = 1.3) -> str | None:
     terms = []
     if "lamp" in fx:
         terms.append("0.012*sin(t*9.1)+0.008*sin(t*23.3)+0.006*sin(t*4.1)")
@@ -258,7 +245,7 @@ def light_filter(fx: list[str]) -> str | None:
     if "sparks" in fx:
         terms.append("0.05*pow(max(sin(t*13.7)*sin(t*7.3),0),3)+0.035*pow(max(sin(t*19.1),0),8)")
     if "lightning" in fx:
-        t0 = LIGHTNING_T
+        t0 = lightning_t
         terms.append(f"0.32*exp(-pow((t-{t0})*9,2))+0.18*exp(-pow((t-{t0 + 0.22})*11,2))")
     return f"eq=eval=frame:brightness='{'+'.join(terms)}'" if terms else None
 
@@ -285,7 +272,7 @@ def render_clip(n: int, p: dict, src: Image.Image | Path, layer: Image.Image | N
         inputs += ["-loop", "1", "-framerate", str(FPS), "-i", str(base)]
         chain = [f"[0]{cam_filter(p['move'], frames)}"]
     chain[-1] += ",setsar=1,format=yuv420p"
-    lf = light_filter(p["fx"])
+    lf = light_filter(p["fx"], p.get("lightning_t", LIGHTNING_T))
     if lf:
         chain[-1] += "," + lf
     chain[-1] += "[v0]"
@@ -328,50 +315,50 @@ def render_clip(n: int, p: dict, src: Image.Image | Path, layer: Image.Image | N
 
 # ---------------------------------------------------------------- main
 
-def main() -> None:
-    ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
-    ap.add_argument("--out", default=str(production.PROJECT / "render"))
-    ap.add_argument("--only", help="frame range a-b for a preview")
-    ap.add_argument("--crf", type=int, default=18)
-    ap.add_argument("--plan", action="store_true", help="print the motion plan and exit")
-    ap.add_argument("--silent", action="store_true", help="ignore the narration; use the storyboard slot lengths")
-    ap.add_argument("--remux", action="store_true", help="reuse the rendered clips; only rebuild the soundtrack mux")
-    a = ap.parse_args()
-    out = Path(a.out); work = out / "work_v2"; work.mkdir(parents=True, exist_ok=True)
-    rows = timeline()
+def run(only: str | None = None, crf: int = 18, plan_only: bool = False, silent: bool = False,
+        remux: bool = False, out: Path | None = None) -> Path | None:
+    """Render (or print the motion plan with plan_only). Returns the video path."""
+    from types import SimpleNamespace
+    a = SimpleNamespace(only=only, crf=crf, plan=plan_only, silent=silent, remux=remux)
+    NARRATION = ep().audio
+    out = Path(out) if out else ep().render_dir
+    work = out / "work_v2"
+    work.mkdir(parents=True, exist_ok=True)
+    parsed = frames_mod.parse()
+    rows = timeline(parsed)
     if a.only:
         lo, hi = (int(x) for x in a.only.split("-"))
         rows = [r for r in rows if lo <= int(r["n"]) <= hi]
     state = production.load_state()
     dec = production.decisions(state)
     notes = {int(n): f.get("note", "") for n, f in state["frames"].items()}
-    frames = {f["n"]: f for f in build.parse(HERE / "frames.txt")}
+    frames = {f["n"]: f for f in parsed}
     anim = {int(n): v for n, v in state.get("anim", {}).items()
-            if v.get("decision") == "accepted" and (production.PROJECT / v["file"]).is_file()}
+            if v.get("decision") == "accepted" and (ep().work / v["file"]).is_file()}
     pl = plan(rows, frames, notes, set(anim))
     if a.plan:
         for n, p in pl.items():
             print(f"#{n:<4} {frames[n]['shot']:<12} {p['move']:<10} {','.join(p['fx']) or '-':<16} "
                   f"{'title-fade ' if p['fade_title'] else ''}{'dip-in ' if p['dip_in'] else ''}"
                   f"{'dip-out' if p['dip_out'] else ''}")
-        return
+        return None
     timing_file = NARRATION / "narration_timing.json"
     voiced = timing_file.is_file() and not a.silent
     timing = {f["n"]: f for f in json.loads(timing_file.read_text(encoding="utf-8"))["frames"]} if voiced else {}
     tiles = particle_tiles(work)
-    layout = titles.load()           # per-frame title placement (title_layout.json)
+    layout = titles.specs()          # title text (frames.txt) + placement (title_layout.json)
     clips, report, srt, t = [], [], [], 0.0
     for r in rows:
         n = int(r["n"])
         dur = timing[n]["duration"] if voiced else float(r["duration_s"])
         p = pl[n]
-        gfx = HERE / r["gfx_overlay"] if r["gfx_overlay"] else None
+        gfx = ep().src / r["gfx_overlay"] if r["gfx_overlay"] else None
         if n in anim:
-            src: Image.Image | Path = production.PROJECT / anim[n]["file"]
+            src: Image.Image | Path = ep().work / anim[n]["file"]
             source = anim[n]["file"]
         else:
             d = dec.get(n, {})
-            path = production.PROJECT / d["file"] if d.get("decision") in production.ACCEPTED and d.get("file") else None
+            path = ep().work / d["file"] if d.get("decision") in production.ACCEPTED and d.get("file") else None
             if path and path.is_file():
                 src, source = qa.to_169(Image.open(path).convert("RGB"))[0], d["file"]
             else:
@@ -392,7 +379,8 @@ def main() -> None:
         srt.append(f"{len(srt) + 1}\n{ts(t)} --> {ts(t + dur)}\n{r['voiceover']}\n")
         t += dur
         print(f"#{n:<4} {p['move']:<9} {fx:<22} {source}", flush=True)
-    base_stem = (STEM_MIXED if (NARRATION / "mix_full.wav").is_file() else STEM_VOICED) if voiced else STEM
+    nm = names()
+    base_stem = (nm["mixed"] if (NARRATION / "mix_full.wav").is_file() else nm["voiced"]) if voiced else nm["silent"]
     stem = base_stem if not a.only else f"{base_stem}_preview_{a.only}"
     lst = work / f"concat_{stem}.txt"
     lst.write_text("".join(f"file '{c.as_posix()}'\n" for c in clips), encoding="utf-8")
@@ -415,12 +403,10 @@ def main() -> None:
     (out / f"render_report_{stem}.md").write_text(
         f"# Render report — {stem}\n\nFrames: {len(report)}, duration {t:g} s, placeholders: {missing}, "
         f"AI image-to-video clips: {ai}. 1920x1080, 30 fps, H.264. "
-        + ("Narration: ElevenLabs (Ryan, eleven_v4); slot lengths follow the aligned narration.\n\n" if voiced
+        + (f"Narration: ElevenLabs ({ep().cfg['narration'].get('voice_name') or 'voice'}, "
+           f"{ep().cfg['narration'].get('model')}); slot lengths follow the aligned narration.\n\n" if voiced
            else "Silent; the .srt holds the scripted narration per slot.\n\n")
         + "| Frame | Timecode | Slot | Picture | Camera | Effects | Transition | Title | Chart overlay |\n"
         "|---|---|---|---|---|---|---|---|---|\n" + "\n".join(report) + "\n", encoding="utf-8")
     print(f"video: {video}\nframes {len(report)}, {t:g} s, placeholders {missing}, AI clips {ai}")
-
-
-if __name__ == "__main__":
-    main()
+    return video

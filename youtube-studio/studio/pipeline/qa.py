@@ -1,4 +1,4 @@
-"""Automatic composition QA for generated Enginovue frames (local, free, no API calls).
+"""Automatic composition QA for generated frames (local, free, no API calls).
 
 Checks every image against the storyboard rules:
   * 16:9 format and enough pixels for 1920x1080;
@@ -25,14 +25,15 @@ neither cuts content nor extends a continuing object. Dark/complex scenes are ne
 Source PNGs are never modified; fixes go to <out>/<stem>_fixed.png.
 
 Usage:
-  py qa.py <image-or-dir> [...] [--out DIR] [--no-fix]
-  (generate.py calls qa.run() after every saved frame.)
+  studio pipe qa <image-or-dir> [...] [--out DIR] [--no-fix]   (or python -m studio.pipeline.qa)
+  (`studio pipe record` calls qa.run() after every saved frame.)
 Output: <out>/qa_report.md, <out>/qa_report.json, <out>/<stem>_preview.png, <out>/<stem>_fixed.png
 """
 
 from __future__ import annotations
 
 import argparse
+import contextlib
 import json
 import re
 from dataclasses import asdict, dataclass, field
@@ -41,8 +42,9 @@ from pathlib import Path
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
-HERE = Path(__file__).resolve().parent
-FONT = HERE.parents[1] / "assets" / "fonts" / "inter" / "Inter-Bold.ttf"
+from .episode import FONTS, ep
+
+FONT = FONTS / "Inter-Bold.ttf"
 
 AW, AH = 480, 270           # analysis resolution (16:9)
 MARGIN, MARGIN_GOOD = 0.08, 0.10
@@ -87,8 +89,8 @@ class Result:
 def frame_meta() -> dict[str, dict]:
     """file stem -> storyboard frame (mode, shot, characters, gfx) from frames.txt."""
     try:
-        import build  # local module; parsing only, nothing is written
-        return {f["file"][:-4]: f for f in build.parse(HERE / "frames.txt")}
+        from . import frames  # parsing only, nothing is written
+        return {f["file"][:-4]: f for f in frames.parse()}
     except Exception:  # noqa: BLE001 - QA must still run on loose images
         return {}
 
@@ -264,7 +266,7 @@ def find_heads(norm: Image.Image) -> tuple[list[dict], np.ndarray]:
     all_skin = np.zeros((HH, HW), bool)
     for prof in SKIN_PROFILES:
         skin = (warm & (r - g > prof["rg"][0]) & (r - g < prof["rg"][1]) & (sat > prof["sat"][0])
-                & (sat < prof["sat"][1]) & (L > prof["L"][0]) & (L < prof["L"][1]))
+                & (sat < prof["sat"][1]) & (prof["L"][0] < L) & (prof["L"][1] > L))
         headlike = skin | (L < 85) | ((r >= g) & (g >= b) & (L < 170)) | ((sat < 0.12) & (L > 200))
         skin = morph(morph(morph(skin, 3, "erode"), 9, "dilate"), 5, "erode")  # merge lit fragments
         skin = fill_holes(skin)                                                   # eyes, brows, mouth
@@ -599,9 +601,9 @@ def headroom_check(r: Result, norm: Image.Image, named_people: bool = False) -> 
 def gfx_check(r: Result, an: Analysis, meta: dict | None, norm: Image.Image) -> None:
     if not meta or not meta.get("gfx"):
         return
-    ov = HERE / "overlays" / meta["gfx_file"]
+    ov = ep().overlays_dir / meta["gfx_file"]
     if not ov.is_file():
-        r.add("gfx_area", "WARNING", f"overlay {ov.name} missing; run build.py")
+        r.add("gfx_area", "WARNING", f"overlay {ov.name} missing; run `studio pipe build`")
         return
     box = Image.open(ov).getchannel("A").getbbox()
     if not box:
@@ -638,7 +640,7 @@ def plan_fix(an: Analysis) -> tuple[float, float, float] | None:
     for s in (1.0, 0.98, 0.96, 0.94, 0.92, 0.90):
         for tx in np.arange(-0.10, 0.1001, 0.0025):
             for ty_ in np.arange(-0.06, 0.0601, 0.0025):
-                f = lambda v, t: 0.5 + s * (v - 0.5) + t  # noqa: E731
+                f = lambda v, t: 0.5 + s * (v - 0.5) + t  # noqa: E731, B023 - used within this iteration
                 gap = {"left": f(0, tx) > 1e-6, "right": f(1, tx) < 1 - 1e-6,
                        "top": f(0, ty_) > 1e-6, "bottom": f(1, ty_) < 1 - 1e-6}
                 if any(gap[k] and not plain[k] for k in gap):
@@ -893,8 +895,10 @@ def selftest() -> None:
             print(f"{'ok ' if good else 'BAD'} {name:12} -> {r.status}"
                   f"{' / fixed copy ' + r.fixed_status if r.fixed_file else ''}  (expected {want}"
                   f"{' / fixed ' + want_fix if want_fix else ''})")
-        control = HERE.parents[1] / "projects" / "enginovue_cable_1858" / "pilot_low_2k" / "00_02_20_000.png"
-        if control.is_file():   # pilot frame #44: top hat touching the top edge must be caught
+        control = None
+        with contextlib.suppress(RuntimeError):     # no episode selected: skip the pilot control frame
+            control = ep().work / "pilot_low_2k" / "00_02_20_000.png"
+        if control is not None and control.is_file():   # pilot frame #44: top hat touching the top edge must be caught
             rc, _, _ = check(control, frame_meta().get("00_02_20_000"))
             hr = next((i for i in rc.issues if i.check == "headroom"), None)
             good = bool(hr) and hr.status == "NEEDS_FIX"

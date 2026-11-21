@@ -1,0 +1,130 @@
+# Sound library of the episode (ElevenLabs: eleven_text_to_sound_v3 effects/ambiences, eleven_music_v2_5 music).
+# Files: projects/enginovue_cable_1858/audio/{sfx,music}/<id>.mp3. Placement lives in frames.txt (AMB/SFX/MUSIC).
+duck_db:
+  music: 6
+  ambience: 4
+  sfx: 6
+chapter_whoosh:
+  sfx: s26_whoosh
+  at: -0.9
+  gain_db: -12
+spots:
+  s01_telegraph_key:
+    prompt: Brass telegraph key tapping Morse code, crisp metallic clicks, close-mic, small wooden room
+  s02_clock_tick:
+    prompt: Large old wall clock ticking slowly, deep wooden tick-tock, quiet room
+  s03_crowd_cheer:
+    prompt: Large outdoor crowd bursting into cheers and applause, joyful shouting, city street
+  s04_church_bells:
+    prompt: Church bells ringing in celebration from a stone tower, bright and resonant
+  s05_fireworks:
+    prompt: Fireworks launching and bursting overhead, crackling sparkles, distant booms echoing off buildings
+  s06_roof_fire:
+    prompt: Roof fire crackling and roaring, wooden beams popping, distant alarmed shouts
+  s07_shop_bell:
+    prompt: Small brass shop door bell jingling as a door opens, quiet shop interior
+  s08_signal_fade:
+    prompt: Weak electrical buzzing signal slowly fading out to silence, low hum dying away
+  s09_steamship:
+    prompt: Old steamship whistle blowing in the distance, paddle wheel churning water
+  s10_locomotive:
+    prompt: Steam locomotive chugging past with puffs of steam and a short whistle
+  s11_quill:
+    prompt: Quill pen scratching on paper, close-mic, quiet study
+  s12_chalk:
+    prompt: Chalk writing quickly on a blackboard, crisp scratches and taps
+  s13_audience_murmur:
+    prompt: Audience murmuring and stirring in a lecture hall, a few raised voices
+  s14_wire_twisting:
+    prompt: Iron wire strands twisting through a cable-making machine, metallic creaks and clanks
+  s15_cable_payout:
+    prompt: Heavy cable running over an iron pulley wheel into water, steady rumble and splashing
+  s16_brake_squeal:
+    prompt: Iron brake clamping hard on a turning drum, loud metal squeal and grinding
+  s17_cable_snap:
+    prompt: Taut thick cable snapping with a sharp crack, whipping through the air, heavy splash into the sea
+  s18_thunder:
+    prompt: Close thunder crack followed by a long rolling rumble over the open sea
+  s19_hull_creak:
+    prompt: Wooden ship hull groaning and creaking under strain, heavy coils sliding across a wet deck
+  s20_beach_cheer:
+    prompt: Small crowd cheering on a beach, waves lapping, distant and joyful
+  s21_sparks:
+    prompt: High-voltage electric sparks arcing between brass terminals, loud crackling zaps and buzzing
+  s22_bubbles:
+    prompt: Underwater bubbles rising and fizzing, muffled deep water
+  s23_book_drop:
+    prompt: Heavy leather-bound book dropped onto a wooden desk, deep thud, papers fluttering
+  s24_grapple_drag:
+    prompt: Iron grappling hook dragging through sand and gravel underwater, muffled scraping, rope tension
+  s25_rope_snap:
+    prompt: Thick rope snapping under load, ship windlass ratchet spinning free, men shouting
+  s26_whoosh:
+    prompt: Soft deep airy whoosh transition, smooth and subtle
+  s27_boom:
+    prompt: Deep low cinematic boom impact with a long dark reverb tail
+  s28_data_pulse:
+    prompt: Fast soft electronic data pulse swish, light shimmering tone
+  s29_laptop_click:
+    prompt: Single laptop trackpad click followed by a soft keyboard tap, quiet room
+  s30_galvo_tick:
+    prompt: Tiny delicate mechanical ticks of a small brass instrument needle swinging, close-mic
+ambience:
+  a1_telegraph_office:
+    prompt: Quiet 19th-century telegraph office at night, soft room tone, faint clock ticking, oil lamp hiss, occasional
+      distant telegraph clicks
+    duration: 20
+    loop: true
+  a2_city_crowd:
+    prompt: Festive city street crowd at dusk, continuous happy murmur and distant cheering, horse carriages
+    duration: 20
+    loop: true
+    gain_db: 2
+  a3_calm_sea:
+    prompt: Calm open sea from the deck of a wooden sailing ship, waves washing against the hull, rigging creaks,
+      light wind
+    duration: 20
+    loop: true
+  a4_storm:
+    prompt: Violent storm at sea, heavy rain, howling wind, big waves crashing over a ship deck
+    duration: 20
+    loop: true
+    gain_db: 3
+  a5_underwater:
+    prompt: Deep ocean underwater ambience, low muffled rumble, slow water movement, faint distant bubbles
+    duration: 20
+    loop: true
+  a6_factory:
+    prompt: Victorian factory workshop ambience, distant steam engine thumping, metal clanks, belts and gears turning
+    duration: 20
+    loop: true
+  a7_office_room:
+    prompt: Quiet wood-panelled office room tone, faint distant street outside, occasional paper rustle
+    duration: 20
+    loop: true
+  a8_modern_hum:
+    prompt: Soft modern electronic hum of servers and cooling fans, smooth and steady, low volume
+    duration: 20
+    loop: true
+    gain_db: -4
+music:
+  m1_opening:
+    prompt: 'Instrumental orchestral documentary opening with a Victorian 1850s atmosphere: gentle anticipation
+      with a soft ticking pulse, building to a short celebratory swell of strings and brass, then turning quiet,
+      uncertain and mysterious at the end. Sparse and unobtrusive, made to sit under voice-over. No vocals.'
+    duration: 58
+    instrumental: true
+  m2_journey:
+    prompt: 'Instrumental documentary underscore about ambitious 19th-century engineering and voyages at sea: a
+      steady, curious pulse with warm strings, piano and light percussion; determined and inventive, with rising
+      tension and a dramatic storm-like passage in the second half, then a hopeful lift at the end. Subdued enough
+      to sit under voice-over. No vocals.'
+    duration: 250
+    instrumental: true
+  m3_resolve:
+    prompt: 'Instrumental documentary underscore: a setback turning into perseverance and triumph. Starts introspective
+      and minor-key with solo piano and cello, grows steadily with strings, reaches a confident, uplifting orchestral
+      peak, and ends in a calm, modern and hopeful outro with soft electronic textures. Made to sit under voice-over.
+      No vocals.'
+    duration: 245
+    instrumental: true

@@ -39,6 +39,7 @@ from studio.models import (
     StateTransition,
     VerificationStatus,
 )
+from studio.pipeline.cli import pipe_app
 from studio.providers.footage import import_local_asset
 from studio.providers.llm import MockLLMProvider, find_sample
 from studio.providers.voice import (
@@ -100,6 +101,7 @@ app.add_typer(diagrams_app, name="diagrams")
 app.add_typer(author_app, name="author")
 app.add_typer(draft_app, name="draft")
 app.add_typer(connect_app, name="connect")
+app.add_typer(pipe_app, name="pipe")
 
 KNOWN_ERRORS = (IllegalTransition, BudgetError, ResearchError, ReviewBlocked, PublishBlocked,
                 KeyError, ValueError, FileNotFoundError, RuntimeError)

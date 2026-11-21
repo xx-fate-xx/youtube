@@ -10,3 +10,6 @@ client_secret*.json
 *token*.json
 .DS_Store
 diagram_previews/
+
+# chart PNGs are rendered from the committed SVGs by `studio pipe build`
+episodes/*/overlays/*.png

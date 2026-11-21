@@ -1,17 +1,21 @@
-"""Mix narration, music, ambiences and spot effects into the episode soundtrack (local, free).
+"""Soundtrack: sound design from frames.txt + sounds.yaml, then the local mix (free).
 
-Reads  sound_design.json (cue sheet) + projects/.../audio/narration_timing.json (frame starts)
-       projects/.../audio/{narration_full.wav, sfx/*.mp3, music/*.mp3}
-Writes projects/.../audio/mix_full.wav and stems (stem_music.wav, stem_ambience.wav, stem_sfx.wav)
+Sound library (episodes/<slug>/sounds.yaml): spot effects, looping ambiences and music cues with their
+ElevenLabs prompts; Claude generates the missing ones with the ElevenLabs MCP (see `status()`) and saves
+them as projects/<slug>/audio/{sfx,music}/<id>.mp3 (read-only).
 
+Placement comes from frames.txt: AMB (ambience bed, persists until changed), SFX (spot effects with offset,
+gain, max length, tail), MUSIC (cue start), CHAPTER (whoosh in the dip before each chapter).
+
+Mix -> projects/<slug>/audio/mix_full.wav + stems (stem_music, stem_ambience, stem_sfx):
 * every asset is loudness-normalised (EBU R128, measured with FFmpeg) relative to the narration,
-  then the cue sheet's gain_db is applied;
+  then the cue gain is applied;
 * ambience loops are tiled over runs of consecutive frames with 0.8 s fades;
-* music cues are cut at chapter boundaries with a 2 s crossfade inside the dip to black;
-* music and ambiences are ducked under the narration (envelope follower, 80 ms attack / 600 ms release);
-* the master is peak-limited; render_video.py applies the final loudness normalisation.
-
-Usage: py mix_audio.py
+* music cues are cut at their boundaries with a 2 s crossfade inside the dip to black;
+* music, ambiences and effects are ducked under the narration (envelope follower), and a rider keeps the
+  whole bed >= SPEECH_MARGIN dB under the voice while it speaks (voice always on top);
+* a spot never outlives its own frame (cut at the frame end + tail_s, default 0.5 s);
+* the master is peak-limited; the render applies the final loudness normalisation.
 """
 
 from __future__ import annotations
@@ -23,9 +27,13 @@ from pathlib import Path
 
 import numpy as np
 
-HERE = Path(__file__).resolve().parent
-AUDIO = HERE.parents[1] / "projects" / "enginovue_cable_1858" / "audio"
+from . import frames as frames_mod
+from .episode import ep
+
 SR = 48000
+# ElevenLabs credit quotes (Creator plan, 2026-11-21): spot effect with automatic length ~17, 20 s loop ~67,
+# music ~27.5 per second. Used for the cost preflight only; the real charge is read back after generation.
+PRICE = {"spot": 17.0, "ambience_per_s": 3.35, "music_per_s": 27.5}
 REL = {"spot": -6.0, "ambience": -16.0, "music": -9.0}      # LU relative to the narration (before ducking)
 
 
@@ -137,8 +145,83 @@ def report_masking(narr: np.ndarray, bed: np.ndarray, env: np.ndarray, start: di
     return worst
 
 
-def main() -> None:
-    cue = json.loads((HERE / "sound_design.json").read_text(encoding="utf-8"))
+def sound_design(write: bool = True) -> dict:
+    """Cue sheet derived from frames.txt (AMB/SFX/MUSIC/CHAPTER) and sounds.yaml."""
+    lib = ep().sounds()
+    frames = frames_mod.parse()
+    amb_ids = list((lib.get("ambience") or {}).keys())
+    runs: dict[str, list[list[int]]] = {}
+    for f in frames:
+        a = f.get("amb")
+        if not a:
+            continue
+        if a not in amb_ids:
+            raise SystemExit(f"frame #{f['n']}: ambience '{a}' is not in sounds.yaml")
+        r = runs.setdefault(a, [])
+        if r and r[-1][1] == f["n"] - 1:
+            r[-1][1] = f["n"]
+        else:
+            r.append([f["n"], f["n"]])
+    spot_ids = set((lib.get("spots") or {}).keys())
+    spots = []
+    for f in frames:
+        for sp in f.get("sfx", []):
+            if sp["sfx"] not in spot_ids:
+                raise SystemExit(f"frame #{f['n']}: effect '{sp['sfx']}' is not in sounds.yaml")
+            spots.append(sp)
+    music_ids = set((lib.get("music") or {}).keys())
+    starts = [(f["n"], f["music"]) for f in frames if f.get("music")]
+    music = []
+    for k, (n, m) in enumerate(starts):
+        if m["file"] not in music_ids:
+            raise SystemExit(f"frame #{n}: music '{m['file']}' is not in sounds.yaml")
+        music.append({"file": m["file"], "from_frame": n, "to_frame": starts[k + 1][0] if k + 1 < len(starts) else None,
+                      "gain_db": m["gain_db"]})
+    wh = lib.get("chapter_whoosh") or {}
+    chapter_frames = [n for n, _ in frames_mod.chapters(frames)][1:]
+    cue = {"ambience": {a: runs[a] for a in amb_ids if a in runs},
+           "ambience_gain_db": {a: v["gain_db"] for a, v in (lib.get("ambience") or {}).items() if v.get("gain_db")},
+           "spots": spots,
+           "chapter_whoosh": {"sfx": wh.get("sfx"), "frames": chapter_frames if wh.get("sfx") else [],
+                              "at": wh.get("at", -0.9), "gain_db": wh.get("gain_db", -12)},
+           "music": music,
+           "duck_db": lib.get("duck_db") or {"music": 6, "ambience": 4, "sfx": 6}}
+    if write:
+        ep().audio.mkdir(parents=True, exist_ok=True)
+        (ep().audio / "sound_design.json").write_text(json.dumps(cue, ensure_ascii=False, indent=1), encoding="utf-8")
+    return cue
+
+
+def asset_path(kind: str, sid: str) -> Path:
+    return ep().audio / ("music" if kind == "music" else "sfx") / f"{sid}.mp3"
+
+
+def status() -> dict:
+    """Sound library state: which assets exist, which must still be generated, and their credit estimate."""
+    lib = ep().sounds()
+    out = {"missing": [], "present": [], "credits_missing": 0.0}
+    for kind, key in (("spot", "spots"), ("ambience", "ambience"), ("music", "music")):
+        for sid, spec in (lib.get(key) or {}).items():
+            p = asset_path(kind, sid)
+            if kind == "spot":
+                cost = PRICE["spot"]
+            elif kind == "ambience":
+                cost = PRICE["ambience_per_s"] * spec.get("duration", 20)
+            else:
+                cost = PRICE["music_per_s"] * spec["duration"]
+            item = {"id": sid, "kind": kind, "file": str(p), "prompt": spec.get("prompt", ""),
+                    "duration": spec.get("duration"), "loop": spec.get("loop", kind == "ambience"), "credits": cost}
+            if p.is_file():
+                out["present"].append(item)
+            else:
+                out["missing"].append(item)
+                out["credits_missing"] += cost
+    return out
+
+
+def mix(cue: dict | None = None) -> Path:
+    AUDIO = ep().audio
+    cue = cue or sound_design()
     tm = json.loads((AUDIO / "narration_timing.json").read_text(encoding="utf-8"))
     start = {f["n"]: f["start"] for f in tm["frames"]}
     end = {f["n"]: f["start"] + f["duration"] for f in tm["frames"]}
@@ -157,8 +240,8 @@ def main() -> None:
         if name not in cache:
             p = AUDIO / ("music" if kind == "music" else "sfx") / f"{name}.mp3"
             cache[name] = (decode(p), lufs(p))
-        a, l = cache[name]
-        return a * db(ref + REL[kind] - l)
+        a, lu = cache[name]
+        return a * db(ref + REL[kind] - lu)
 
     music, amb, sfx = (np.zeros((n, 2), np.float32) for _ in range(3))
     # ambiences
@@ -196,7 +279,9 @@ def main() -> None:
     # speaks, and never louder than the voice's average level - GAP_MARGIN dB in the pauses
     bed = music + amb + sfx
     g = rider_gain(narr, bed, env[:, 0], ref_rms(narr))
-    music *= g[:, None]; amb *= g[:, None]; sfx *= g[:, None]
+    music *= g[:, None]
+    amb *= g[:, None]
+    sfx *= g[:, None]
     report_masking(narr, music + amb + sfx, env[:, 0], start)
     mix = narr + music + amb + sfx
     peak = float(np.abs(mix).max())
@@ -210,7 +295,4 @@ def main() -> None:
     print(f"narration {ref:.1f} LUFS, peak before safety gain {20 * np.log10(peak):.1f} dBFS, "
           f"{len(spots)} spots, {sum(len(r) for r in cue['ambience'].values())} ambience runs, "
           f"{len(cue['music'])} music cues -> {AUDIO / 'mix_full.wav'}")
-
-
-if __name__ == "__main__":
-    main()
+    return AUDIO / "mix_full.wav"

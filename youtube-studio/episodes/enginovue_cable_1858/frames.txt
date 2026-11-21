@@ -1,16 +1,24 @@
 # Enginovue storyboard source: "The Cable That Changed The World"
 # One block per timecode. Header: #n | timecode | mode (A light / B dark) | shot | characters (historical identity codes or -) | era (h=1850s-60s, m=modern, -=neutral diagram) | editor overlay text (- = none)
 # RU: short Russian summary for the storyboard table. VO: narration. SCENE: English scene core for the image prompt.
-# Mascots were dropped on 2026-11-21. Characters column takes historical identities (field, thomson, thomson_1866, thomson_late, whitehouse; specs in build.py).
-# GFX: overlay id from overlays.py; the image keeps an empty area and the exact chart is composited in editing.
+# Mascots were dropped on 2026-11-21. Characters column takes historical identities (field, thomson, thomson_1866, thomson_late, whitehouse; specs in characters.yaml).
+# GFX: overlay id from this folder's overlays.py; the image keeps an empty area and the exact chart is composited in editing.
 # ANIM: motion || camera || what stays still   (image-to-video prompt; present on every 5th frame and key dynamic frames)
 # Overlay text is added in the video editor, never baked into the generated image.
+# Pipeline annotations (studio/pipeline/frames.py): CHAPTER (chapter start), TITLE (main | small line),
+# FX (rain, bubbles, lightning@t, sparks, fire, lamp, nolamp), CAMERA (move override), AMB (ambience, persists;
+# - stops it), SFX (id @offset gain dB [max=s] [tail=s]; ...), MUSIC (cue start), AI_CLIP (paid image-to-video).
 
 #1 | 0:00 | B | medium | - | h | 16 Aug 1858
 RU: Телеграфист в Валентии передаёт послание королевы
 VO: On August 16, 1858, Queen Victoria sends a message across the Atlantic.
 SCENE: Evening interior of the Valentia telegraph room on the Irish coast, lit by warm oil lamps. A telegraph operator in 1850s clothes sits at a brass Morse key with the handwritten royal dispatch beside him; a framed portrait of Queen Victoria hangs on the wall. Behind him a large wall map of the North Atlantic shows a thin glowing turquoise line from Ireland to Newfoundland.
 ANIM: the operator taps the brass key rhythmically, lamp flames flicker softly, the turquoise line on the map pulses from Ireland toward Newfoundland || slow push-in toward the map || the portrait, room architecture and furniture stay still
+CHAPTER: A message across the ocean
+AMB: a1_telegraph_office
+SFX: s01_telegraph_key @0.3 -4dB
+MUSIC: m1_opening
+AI_CLIP: yes
 
 #2 | 0:04 | A | medium | - | h | 98 words
 RU: Свиток телеграммы летит к президенту Бьюкенену
@@ -21,6 +29,7 @@ SCENE: On the left, a long cream telegram scroll unrolls toward the right, cover
 RU: Уставший телеграфист, часы отсчитывают много часов
 VO: With stops and repeats, getting it through takes about sixteen hours.
 SCENE: A tired, sweating 1850s telegraph operator in shirtsleeves and waistcoat hunches over a brass Morse key at a wooden desk. A large wall clock dominates the upper right, its hands drawn with faint motion arcs to suggest many hours passing. Stacks of used paper slips and a cold teacup show a long night shift.
+SFX: s02_clock_tick @0 -8dB
 
 #4 | 0:12 | A | infographic | - | h | avg ≈ 10 min / word
 RU: Песочные часы, карточка ползёт по проводу к сонному клерку
@@ -32,33 +41,43 @@ RU: Толпа в Нью-Йорке ликует, шляпы в воздухе
 VO: And still, New York goes wild.
 SCENE: Busy 1858 New York street at dusk with brick buildings decorated with flags and bunting. A cheering crowd of stylized cartoon people in top hats, bonnets and work caps throws hats into the air. Warm gaslight and orange highlights under a deep navy evening sky.
 ANIM: hats fly up and fall, crowd members wave arms and bounce slightly, flags flutter || gentle slow pan from left to right || buildings, street layout and sky stay fixed
+AMB: a2_city_crowd
+SFX: s03_crowd_cheer @0 -2dB
 
 #6 | 0:18 | B | wide | - | h | -
 RU: Парад, колокола, салют над крышами
 VO: The city celebrates for days with parades, church bells and fireworks.
 SCENE: Wide celebratory view of an 1858 city: a marching brass band with banners in the foreground, a church tower with swinging bells in the midground, colorful fireworks bursting above the rooftops against a deep navy night sky.
+SFX: s04_church_bells @0.2 -8dB tail=1.2; s05_fireworks @0.8 -6dB
 
 #7 | 0:22 | B | dynamic | - | h | -
 RU: Фейерверк поджигает купол мэрии, пожарные с вёдрами
 VO: The fireworks even set the roof of City Hall on fire.
 SCENE: Dynamic low angle on New York City Hall, a white classical building with a domed cupola. The cupola roof has caught fire from stray firework sparks, orange flames and smoke rising. In the foreground 1850s volunteer firemen in red shirts and leather helmets run with buckets beside a hand-pumped fire engine.
 ANIM: flames flicker and smoke rises from the cupola, firemen run forward swinging buckets, sparks drift || slight shake and slow tilt up toward the cupola || City Hall building shape stays rigid and unchanged
+FX: fire
+SFX: s06_roof_fire @0 -8dB max=4.5
 
 #8 | 0:26 | A | medium | - | h | -
 RU: Витрина ювелира: обрезки кабеля как сувениры
 VO: Tiffany & Co. buys leftover cable and sells short pieces as souvenirs.
 SCENE: Elegant 1850s jewelry shop window with a dark wood frame. On velvet trays sit short polished pieces of armored telegraph cable, each about four inches long with brass end caps, displayed like precious keepsakes, small blank price tags hanging from them. No shop name, no brand logos.
+SFX: s07_shop_bell @0.2 -8dB
 
 #9 | 0:30 | A | close | - | h | -
 RU: Стрелка прибора падает, телеграфист стучит по стеклу
 VO: Then the signals coming out of the cable start to fade.
 SCENE: Close-up of a brass 1850s telegraph receiving instrument with a round glass dial whose needle droops toward zero. A worried operator's finger taps the glass. Faint signal wave lines drawn above the instrument shrink to almost nothing.
+AMB: a1_telegraph_office
+SFX: s08_signal_fade @0 -8dB
 
 #10 | 0:34 | B | wide | - | h | early Sep 1858
 RU: Кабель лежит на дне, гаснет последний отблеск
 VO: By early September, the line is effectively dead.
 SCENE: Dark cinematic underwater scene on the deep Atlantic seabed. The thin 1858 armored cable lies across sand and rocks, a last faint turquoise glow fading along it. A few fish swim past. A small weathered stone marker without inscription rests beside the cable like a gravestone.
 ANIM: particles drift in the water, a fish swims slowly across, the last turquoise glow on the cable fades out || very slow push-in along the cable || seabed, cable shape and stone marker stay still
+FX: bubbles
+AMB: a5_underwater
 
 #11 | 0:37 | A | medium | - | h | 1857 · 1858
 RU: Два лета работы: уставшие матросы на бухтах кабеля
@@ -69,27 +88,36 @@ SCENE: Exhausted 1850s sailors in striped shirts and caps sit on huge coils of c
 RU: Целый кабель на дне, последний импульс гаснет; любопытная рыба
 VO: So why did it fail within a month?
 SCENE: Dark cinematic close view of the deep Atlantic seabed: an intact, unbroken 1858 telegraph cable, about as thick as a finger, lies on the sand and runs diagonally from the lower left into the dark distance; its outer armor is iron wires twisted in a spiral. Inside the cable a few faint turquoise signal pulses travel away from the viewer, each one dimmer than the last, the glow fading out completely before the far end. The cable shows no break, cut or damage. A small curious fish hovers beside the spot where the last pulse died, nose almost touching the dark cable.
+FX: bubbles
+SFX: s27_boom @0 -6dB tail=1.2
 
 #13 | 0:43 | A | medium | - | h | -
 RU: Инвестор с пустым кошельком над новым мотком кабеля
 VO: And why did anyone agree to try again?
 SCENE: A Victorian investor in a top hat and waistcoat scratches his head while holding an empty open leather purse. In front of him sits an enormous fresh coil of new cable on a wooden pallet. His expression mixes doubt and temptation.
+AMB: a7_office_room
 
 #14 | 0:46 | B | wide | - | h | London → New York
 RU: Колёсный пароход везёт почту через Атлантику
 VO: In the 1850s, news from London reached New York by steamship.
 SCENE: An 1850s paddle-wheel steamship with one tall funnel and auxiliary sails crosses a rolling grey-blue Atlantic, smoke trailing. On deck sits a stack of canvas mail sacks tied with rope. Dramatic clouds with warm light breaking through.
+CHAPTER: Ten days behind the news
+AMB: a3_calm_sea
+SFX: s09_steamship @0.4 -10dB max=6
+MUSIC: m2_journey -1dB
 
 #15 | 0:50 | A | infographic | - | - | ~10 days
 RU: Отрывной календарь, листы слетают один за другим
 VO: The crossing took around ten days.
 SCENE: Clean infographic: a large tear-off wall calendar in the center with blank pages flying off toward the right, about ten loose pages fluttering in the air. A tiny paddle steamer icon chugs slowly along a dotted line at the bottom of the frame.
 ANIM: calendar pages tear off and flutter away one by one, the small steamer icon moves slowly along the dotted line || static camera || calendar base and background stay still
+AMB: -
 
 #16 | 0:52 | A | medium | - | h | -
 RU: Торговец хлопком у доски цен
 VO: A trader in New York priced his cotton
 SCENE: A New York cotton trader in a brown frock coat stands behind a counter piled with white cotton bales, writing on a chalkboard of prices drawn as abstract chalk marks. Warehouse interior with wooden beams and a window onto the harbor.
+AMB: a7_office_room
 
 #17 | 0:55 | A | close | - | h | -
 RU: Газета в паутине: новости устарели
@@ -111,6 +139,8 @@ RU: Телеграфные столбы вдоль железной дороги
 VO: On land, the problem had already been solved.
 SCENE: Bright countryside landscape: a small steam locomotive with a short train runs along a railway, and a neat line of wooden telegraph poles with wires follows the tracks into the distance. Light blue sky, green hills, clean explainer look.
 ANIM: the locomotive moves forward with puffs of steam, a subtle turquoise pulse runs along the telegraph wires || slow sideways tracking with the train || poles, hills and sky stay still
+AMB: -
+SFX: s10_locomotive @0 -10dB max=5
 
 #21 | 1:06 | A | infographic | - | h | -
 RU: Карта Британии с паутиной телеграфных линий
@@ -126,17 +156,21 @@ SCENE: Same engraved map style for the eastern United States: glowing city dots 
 RU: Телеграфист на ирландском утёсе с обрывком провода
 VO: Nobody had managed to wire across the ocean,
 SCENE: A lone 1850s telegraph worker stands on a rocky green Irish cliff edge holding the frayed end of a telegraph wire that stops at the shore. Before him a vast stormy grey-blue ocean stretches to the horizon under a moody sky.
+AMB: a3_calm_sea
 
 #24 | 1:15 | A | infographic | - | h | ~2,000 miles
 RU: Два землемера растягивают рулетку через Атлантику
 VO: close to 2,000 miles of water between Ireland and Newfoundland.
 SCENE: Clean map infographic of the North Atlantic: Ireland on the right, Newfoundland on the left, wide empty ocean between them. A long brass surveyor's measuring tape with end ticks spans the whole gap, held taut by two tiny cartoon surveyors standing on the opposite coasts, so the great distance is obvious.
+AMB: -
 
 #25 | 1:19 | A | medium | field | h | Cyrus Field
 RU: Сайрус Филд в конторе среди стопок бумаги
 VO: In 1854 a wealthy New York paper merchant named Cyrus Field
 SCENE: A stylized cartoon Cyrus Field, wearing a dark frock coat, stands confidently in an 1850s New York office full of tall stacks of paper reams and ledgers.
 ANIM: Field adjusts his coat lapels and gives a small confident nod, papers on a stack flutter slightly || slow push-in to a medium close-up || office furniture and paper stacks stay in place
+CHAPTER: Cyrus Field's idea
+AMB: a7_office_room
 
 #26 | 1:23 | A | wide | - | h | -
 RU: Лесорубы прорубают просеку под телеграф на Ньюфаундленде
@@ -157,22 +191,26 @@ SCENE: Close-up of the globe: Field's finger traces a path across the North Atla
 RU: Мешки денег с двух берегов летят в одну шляпу
 VO: He raised money on both sides of the Atlantic,
 SCENE: Two coastlines at the frame edges: America on the left with a tiny New York skyline, Britain on the right with a tiny London skyline. Cloth money bags fly in arcs from both sides toward a single top hat resting on a rock in the middle of the ocean.
+SFX: s11_quill @0 -12dB max=3.5
 
 #30 | 1:38 | A | wide | - | h | Atlantic Telegraph Company · 1856
 RU: Фасад лондонской конторы компании
 VO: and in 1856 the Atlantic Telegraph Company was founded in London.
 SCENE: Facade of a grand 1850s London office building with columns and gas lamps, gentlemen in top hats entering, a blank brass nameplate beside the door. Light overcast London sky.
 ANIM: gentlemen walk in through the door, a carriage passes in the foreground, gas lamp flames flicker || slow crane-down from the roofline to the door || building facade stays rigid
+TITLE: Atlantic Telegraph Company | 1856
 
 #31 | 1:42 | A | medium | thomson | h | -
 RU: Молодой профессор Томсон у доски
 VO: One of its directors was a 32-year-old physics professor
 SCENE: A stylized cartoon young William Thomson, a 32-year-old Belfast-born physics professor at Glasgow in a dark Victorian suit, stands at a large blackboard filled with abstract chalk curves and diagrams in a Glasgow university lecture room.
+CHAPTER: Thomson's warning
 
 #32 | 1:46 | A | close | thomson | h | William Thomson · Glasgow
 RU: Томсон крупно, задумался с мелом в руке
 VO: from Glasgow named William Thomson.
 SCENE: Medium close-up of young William Thomson pausing mid-thought with a piece of chalk raised, a sharp, intelligent look, chalk dust on his sleeve, a tall window of the old stone college behind him.
+TITLE: William Thomson | Glasgow
 
 #33 | 1:48 | A | medium | thomson | h | -
 RU: Томсон хмурится над расчётами
@@ -183,6 +221,7 @@ SCENE: Thomson sits at a cluttered desk covered with pages of calculations and a
 RU: Разрез кабеля в морской воде, указка инженера
 VO: Copper wire, wrapped in insulation and lying in seawater,
 SCENE: Large clean cross-section of a submarine cable lying in blue seawater: copper core in the center and a thick insulation ring around it. A gloved engineer's hand at the edge of the frame points at the copper core with a slim brass pointer. Clear diagram style on a light background.
+AMB: -
 
 #35 | 1:55 | A | infographic | - | - | -
 RU: Вдоль кабеля один за другим загораются заряды
@@ -194,6 +233,7 @@ ANIM: plus signs light up one by one from left to right along the core while min
 RU: Инженер льёт воду в начало длинной трубы (аналогия)
 VO: Every pulse you send has to fill that line
 SCENE: Analogy scene on a plain light background: a Victorian engineer in shirtsleeves and a leather apron pours a bucket of glowing turquoise water straight into the open round mouth at the left end of a very long horizontal pipe; the stream enters the opening itself, not the top or the back of the pipe. The pipe recedes in perspective far into the distance toward the right edge of the frame, its evenly spaced supports getting smaller and smaller, so its great length is obvious. Water fills only the first short section near his end; the rest of the pipe is still empty. No landscape, mountains, clouds or trees.
+AMB: a7_office_room
 
 #37 | 2:01 | A | medium | - | h | -
 RU: Подмастерье ждёт с кружкой у дальнего конца трубы
@@ -205,6 +245,7 @@ RU: Ирландский берег и кабель; чёткий импульс
 VO: A crisp dot leaves Ireland
 SCENE: Clean light diagram background with a faint grid. In the lower right, just above the subtitle area, a small Irish coastline icon; a thin cable line runs west from it across the lower part of the frame, with a small arrow pointing left. The upper two thirds of the frame stay clean and empty: the pulse graph is composited there in editing.
 GFX: pulse_sent
+AMB: -
 
 #39 | 2:06 | A | infographic | - | - | -
 RU: Берег Ньюфаундленда; размазанный импульс — точное наложение в монтаже
@@ -217,12 +258,15 @@ RU: Томсон пишет формулу на доске
 VO: In 1855 Thomson calculated that this delay grows
 SCENE: William Thomson writes on a blackboard with chalk and turns toward the viewer with a serious expression. The area where he writes is a clean empty patch of board, reserved for a formula added in editing. 1850s classroom setting.
 ANIM: Thomson's hand moves with the chalk, he turns his head toward the viewer, chalk dust drifts || slow push-in || blackboard and room stay still
+AMB: a7_office_room
+SFX: s12_chalk @0 -10dB
 
 #41 | 2:12 | A | infographic | thomson | h | -
 RU: Томсон у доски указывает на место графика t ∝ L²
 VO: with the square of the cable's length.
 SCENE: William Thomson stands in the left third of the frame beside the edge of a blackboard, chalk in hand, turning toward the viewer and gesturing confidently toward the right. The right half of the frame stays clean, empty light wall: the graph is composited there in editing.
 GFX: delay_vs_length
+AMB: -
 
 #42 | 2:15 | A | infographic | - | h | ×10
 RU: Землемер с мерным колесом; полоса для сравнения длин
@@ -240,12 +284,14 @@ GFX: delay_x100
 RU: Уайтхаус с докторским саквояжем, из которого торчат провода
 VO: The company's chief electrician was Wildman Whitehouse,
 SCENE: Wide shot with the camera well back in a simple, uncluttered Victorian electrical workshop. A stylized cartoon Wildman Whitehouse in a top hat and frock coat stands on the left third of the frame as a complete full figure, from his shoes to the top of his top hat, small in the frame: the whole figure takes up only about half of the frame height. A wide band of plain empty wall fills the space above his top hat, at least a fifth of the frame height. He confidently holds a doctor's leather bag at chest height, coils of wire and a small induction coil poking out of it; the bag stays well above the bottom subtitle area.
+AMB: a7_office_room
 
 #45 | 2:23 | A | wide | whitehouse,thomson | h | -
 RU: Уайтхаус спорит с Томсоном перед залом; Томсон отвечает письмом
 VO: a surgeon by training who argued in public that Thomson was wrong.
 SCENE: Victorian scientific meeting hall: Whitehouse at the lectern gestures dismissively toward a diagram on an easel while rows of an audience in top hats watch, some leaning forward. In a round inset in the upper corner, Thomson, far away at his own desk, writes a sharp reply letter.
 ANIM: Whitehouse gestures emphatically, audience members turn their heads, Thomson's pen moves in the inset || slow push-in toward Whitehouse || hall architecture and the inset frame stay still
+SFX: s13_audience_murmur @0 -10dB max=5
 
 #46 | 2:27 | A | medium | whitehouse | h | -
 RU: Уайтхаус слушает кабель стетоскопом
@@ -256,11 +302,16 @@ SCENE: Light humor: Whitehouse kneels beside a coil of cable on a workshop floor
 RU: Уайтхаус у огромной искрящей катушки
 VO: by pushing more voltage into the line.
 SCENE: Dark workshop: Whitehouse eagerly works the controls of a huge induction coil apparatus on a bench, bright blue-white sparks jumping between brass terminals, orange lamplight on his face.
+FX: sparks
+AMB: a6_factory
+SFX: s21_sparks @0.2 -10dB max=3.5
 
 #48 | 2:33 | A | wide | - | h | 1857
 RU: Совет директоров торопится, тычет в календарь
 VO: The directors wanted the cable laid in 1857,
 SCENE: Victorian boardroom with a long table, directors in frock coats pointing impatiently at a large blank wall calendar with one page circled in red, a wall clock beside it, papers and inkwells on the table.
+CHAPTER: The 1857 cable
+AMB: -
 
 #49 | 2:36 | A | wide | whitehouse,thomson | h | -
 RU: Поспешный заказ тонкого кабеля, Уайтхаус одобряет, Томсон встревожен
@@ -272,6 +323,7 @@ RU: Рука рабочего с образцом кабеля толщиной 
 VO: The cable they ordered was only about as thick as your finger.
 SCENE: Close-up of a worker's hand holding a short sample of the 1858 armored cable right next to his extended index finger; the cable is about the same thickness as the finger. Plain light background.
 ANIM: the hand turns the cable sample slightly to show its iron armor, the finger taps it once || slow push-in || background stays plain and still
+AMB: a6_factory
 
 #51 | 2:43 | A | macro | - | h | -
 RU: Семь медных жил под большой лупой
@@ -298,6 +350,7 @@ RU: Полный разрез кабеля, руки рабочего затяг
 VO: and on the outside, 18 strands of twisted iron wire.
 SCENE: Final stepped cable cutaway showing all layers from inside out: copper core, gutta-percha, tarred hemp, and an outer armor of eighteen twisted iron wire strands spiraling around. A factory worker's gloved hands guide the last iron strand into place.
 ANIM: the gloved hands tighten the last strand, a soft highlight runs along the iron strands || slow slight pan around the cable || cable layers, colors and structure stay unchanged
+SFX: s14_wire_twisting @0 -10dB max=4
 
 #56 | 2:58 | A | infographic | - | h | 1 mile ≈ 1 ton
 RU: Весы: моток кабеля уравновешен тонной, мастер проверяет
@@ -334,6 +387,7 @@ SCENE: On a ship-deck workbench, two cable engineers join the two cable ends in 
 RU: Кабель грузят на два корабля: Гринвич и Биркенхед
 VO: The cable was divided between two warships,
 SCENE: Split-screen wide scene: on the left, HMS Agamemnon loads cable from a quay at Greenwich on the River Thames; on the right, USS Niagara loads cable at Birkenhead on the River Mersey; in each half a long cable stream runs up a gangway into the ship.
+AMB: a3_calm_sea
 
 #63 | 3:19 | B | wide | - | h | HMS Agamemnon · USS Niagara
 RU: Агамемнон и Ниагара бок о бок
@@ -344,12 +398,14 @@ SCENE: Two 1850s steam warships side by side at sea: a British wooden ship of th
 RU: Корабль отходит от берега бухты Валентия
 VO: In August 1857 the Niagara set out from Valentia Bay,
 SCENE: Calm bay at Valentia, Ireland: a small strand on the mainland shore with cottages and onlookers, Valentia Island visible across the water. A steam frigate pulls away from shore while the cable runs from the beach into the sea behind it.
+TITLE: Valentia Bay | Aug 1857
 
 #65 | 3:27 | A | medium | - | h | -
 RU: Кабель сходит с кормы в воду
 VO: paying cable over its stern as it steamed west.
 SCENE: Stern of the ship seen from behind: the cable runs over a large wooden sheave wheel at the stern and slides down into the water, the ship's wake trailing behind.
 ANIM: the cable slides steadily over the stern wheel into the water, the wake ripples || camera follows slightly behind the ship || ship structure stays rigid
+SFX: s15_cable_payout @0 -8dB max=6
 
 #66 | 3:30 | A | infographic | - | h | ~2 mi deep
 RU: Карта и разрез глубины: кабель уходит на две мили
@@ -360,12 +416,15 @@ SCENE: Split infographic: on the left a map of the Atlantic with a short line fr
 RU: Матрос изо всех сил тянет рычаг тормоза
 VO: the brake on the paying-out gear was applied too hard
 SCENE: Night on deck by lamplight: a sailor at the cable paying-out machine, a big iron drum with a brake wheel, hauls hard on the brake lever, straining, the cable visibly taut.
+SFX: s16_brake_squeal @0.6 -6dB
 
 #68 | 3:38 | B | dynamic | - | h | -
 RU: Кабель лопается и уходит в тёмную воду
 VO: and the cable snapped and sank.
 SCENE: Dramatic moment: the taut cable snaps right behind the stern, the broken end whipping and plunging into the dark sea, sailors leaning over the rail in shock, spray in the air.
 ANIM: the cable snaps and the end whips down into the water, sailors lunge to the rail || quick but smooth tilt down following the cable into the water || ship hull stays rigid
+CAMERA: snap
+SFX: s17_cable_snap @0.3 -2dB
 
 #69 | 3:40 | A | medium | - | h | -
 RU: Матросы сняли шапки и смотрят в воду
@@ -382,6 +441,8 @@ ANIM: the cable slides slowly into a tank, light snow falls || static camera || 
 RU: Инженеры над картой зачёркивают старый план
 VO: For 1858 the engineers changed the plan.
 SCENE: Engineers in waistcoats gather around a big chart table; one crosses out an old single line from Ireland with a red pencil, another points at the middle of the ocean.
+CHAPTER: The 1858 plan
+AMB: -
 
 #72 | 3:48 | A | infographic | - | h | -
 RU: План на карте капитана: корабли встречаются в центре
@@ -403,33 +464,45 @@ RU: Шторм накрывает флот
 VO: In June 1858 a storm hit the fleet on the way out.
 SCENE: Violent storm on the Atlantic: towering dark waves, lightning in a navy sky, two wooden warships pitching among the waves, slanting rain.
 ANIM: waves surge and roll, lightning flashes, the ships pitch up and down || slow handheld sway || ship designs stay unchanged
+FX: rain, lightning@1.3
+CAMERA: sway
+AMB: a4_storm
+SFX: s18_thunder @1.3 -2dB tail=1.2
 
 #76 | 4:00 | B | dynamic | - | h | -
 RU: Перегруженный Агамемнон опасно кренится
 VO: The Agamemnon, top-heavy with cable, rolled so hard
 SCENE: Dutch-angle view of the overloaded British warship heeling dangerously in the storm, masts tilting toward the waves, water washing across the deck.
+FX: rain
+CAMERA: sway
 
 #77 | 4:03 | B | medium | - | h | -
 RU: Бухты кабеля катятся по палубе, матросы держатся за канаты
 VO: that coils broke loose and her crew feared she would capsize.
 SCENE: On the storm-tossed deck, huge coils of cable have broken loose and slide across; sailors cling to ropes and the mast, a lantern swinging overhead.
 ANIM: cable coils slide across the deck, sailors grip the ropes, the lantern swings || camera rocks gently with the ship || character outlines and ship structure stay stable
+FX: rain
+CAMERA: sway
+SFX: s19_hull_creak @0 -6dB max=6
 
 #78 | 4:07 | A | infographic | - | h | ×3
 RU: Три обрывка кабеля на палубе, рука кладёт третий
 VO: Once the weather cleared, the cable broke three times
 SCENE: Three broken cable segments laid in a row on a wet ship deck, each with a frayed break; a weary sailor's hand places the third one beside the others under storm-grey light.
+AMB: -
 
 #79 | 4:10 | A | wide | - | h | -
 RU: Потрёпанные корабли заходят в ирландскую гавань
 VO: and the ships returned to Ireland.
 SCENE: Battered ships with torn sails limp into a calm Irish harbor under grey clouds, small boats rowing out to meet them.
+AMB: a3_calm_sea
 
 #80 | 4:12 | A | medium | - | h | -
 RU: Мрачные директора хотят всё продать
 VO: Some directors wanted to quit and sell what was left.
 SCENE: Boardroom: gloomy directors around the table, one holding up a blank placard in frustration, others with heads in hands, papers scattered.
 ANIM: the director waves the placard, others shake their heads || slow push-in || table and room stay still
+AMB: a7_office_room
 
 #81 | 4:16 | A | medium | field | h | -
 RU: Филд убеждает их попробовать ещё раз
@@ -440,6 +513,7 @@ SCENE: Cyrus Field stands at the head of the table, fist on the table, leaning f
 RU: Корабли снова встречаются в спокойном море
 VO: On July 29, 1858, back in mid-ocean, the two ships
 SCENE: Calm mid-Atlantic at golden hour: the two warships side by side on smooth water, a small rowing boat ferrying the cable end between them.
+AMB: a3_calm_sea
 
 #83 | 4:24 | A | close | - | h | -
 RU: Руки затягивают последнее соединение
@@ -456,6 +530,7 @@ RU: Шлюпка вытягивает кабель на берег Валент�
 VO: Agamemnon brought her end ashore at Valentia,
 SCENE: A rowing boat hauls the cable end onto the Valentia beach as townspeople wave and cheer, cottages and green hills behind.
 ANIM: rowers pull their oars, people wave, the cable end is pulled up the beach || static wide camera || coastline and houses stay still
+SFX: s20_beach_cheer @0 -10dB max=6
 
 #86 | 4:34 | A | wide | - | h | Trinity Bay
 RU: Кабель выводят на берег Ньюфаундленда среди елей
@@ -466,6 +541,9 @@ SCENE: Trinity Bay, Newfoundland: sailors pull the cable ashore on a rocky beach
 RU: Оператор хмурится: сигнал угасает
 VO: Trouble showed up within days of the landing.
 SCENE: A Valentia telegraph operator frowns at his receiving instrument; above it a soft turquoise glow of a faint signal pulse flickers and fades out, with no axes, labels or numbers.
+CHAPTER: The mirror galvanometer
+AMB: a1_telegraph_office
+MUSIC: m3_resolve
 
 #88 | 4:41 | A | infographic | - | - | -
 RU: Из кабеля выползает крошечный слабый импульс
@@ -509,12 +587,14 @@ RU: Слабый ток чуть поворачивает магнит
 VO: The faintest current twisted the magnet a little,
 SCENE: Close diagram: a faint current arrow enters the coil and the mirror-magnet rotates slightly, a small curved arrow showing the twist.
 ANIM: the current arrow pulses, the mirror rotates a few degrees back and forth || static camera || coil and frame stay still
+SFX: s30_galvo_tick @0.2 -8dB
 
 #96 | 5:06 | B | infographic | - | h | -
 RU: Пятно света прыгает влево-вправо, оператор следит
 VO: and the light spot jumped left or right.
 SCENE: In a darkened telegraph room the spot of light jumps to the left and to the right on the paper scale, faint motion trails showing both positions; an operator's silhouette leans close, eyes following it.
 ANIM: the light spot jumps left, back to center, then right, the operator's head follows || static camera || scale and room stay unchanged
+SFX: s30_galvo_tick @0.2 -8dB
 
 #97 | 5:09 | A | infographic | - | - | one swing = dot · other = dash
 RU: Отклонение в одну сторону — точка, в другую — тире
@@ -525,44 +605,56 @@ SCENE: The paper scale with a centre mark and two zones, a large dot symbol in o
 RU: Ночью двое операторов: один следит за пятном, другой записывает
 VO: With it, operators could read messages one slow letter at a time.
 SCENE: Night in the telegraph hut: two operators work in near darkness, one watching the spot of light on the scale and calling out its swings, the other writing the letters in a logbook by a small lamp, a window showing the night sky.
+SFX: s01_telegraph_key @0.3 -12dB max=4
 
 #99 | 5:16 | A | medium | whitehouse | h | -
 RU: Уайтхаус бьётся со своим аппаратом
 VO: At first, Whitehouse had used his own equipment,
 SCENE: Whitehouse hunches over his own bulky receiving apparatus, frustrated, twisting knobs, in a cluttered station room.
+AMB: a6_factory
 
 #100 | 5:19 | B | dynamic | whitehouse | h | 1,000s of volts
 RU: Индукционные катушки мечут искры
 VO: with huge induction coils that hit the line with thousands of volts.
 SCENE: Huge induction coils on a bench throw violent blue-white sparks, connected by cables to the line, the room lit harshly. Whitehouse stands back shielding his eyes.
 ANIM: sparks crackle and flash between the terminals, light flickers across the room || slight camera shake || coil and Whitehouse design stay stable
+FX: sparks
+CAMERA: settle
+SFX: s21_sparks @0 -4dB
 
 #101 | 5:23 | B | cutaway | - | - | -
 RU: На дне в изоляции появляется трещина
 VO: Somewhere under the Atlantic, the already-flawed insulation gave way.
 SCENE: Dark underwater cutaway: a cross-section of the cable on the seabed with a crack forming in the gutta-percha insulation, small glowing stress lines around it.
+FX: bubbles
+AMB: a5_underwater
 
 #102 | 5:27 | B | macro | - | - | -
 RU: Морская вода просачивается к меди
 VO: Seawater reached the copper,
 SCENE: Macro: seawater seeps through the crack toward the copper wires, tiny bubbles, blue water touching the orange copper.
+FX: bubbles
+SFX: s22_bubbles @0 -8dB max=5
 
 #103 | 5:29 | B | infographic | - | - | -
 RU: Ток утекает из трещины, свечение гаснет участками
 VO: current leaked into the ocean, and the signal faded day after day.
 SCENE: Underwater: sparks of current escape from the crack into the dark water; along the cable behind it the turquoise glow dims in steps, each section darker than the last, with no graph, axes or numbers.
 ANIM: sparks drift out of the crack, the graph line steps downward || slow push-in || cable and graph frame stay still
+FX: bubbles
 
 #104 | 5:33 | B | wide | - | - | -
 RU: Тот же камень у мёртвого кабеля, венок из водорослей
 VO: By early September, no readable message got through.
 SCENE: The same deep seabed as before: the dead cable beside the small weathered stone marker, now with a modest wreath of seaweed laid against it. Only the cable, the seabed and natural sea life: no divers, no people, no submarines, no robots or any modern equipment.
+FX: bubbles
 
 #105 | 5:36 | A | medium | whitehouse | h | -
 RU: Уайтхаус уходит с ящиком приборов
 VO: Whitehouse, dismissed back in August, took the blame.
 SCENE: Whitehouse walks out of the company office carrying a wooden crate of his instruments, head down, a clerk closing the door behind him.
 ANIM: Whitehouse walks forward slowly, the door closes behind him || static camera || building and clerk stay still
+AMB: a7_office_room
 
 #106 | 5:39 | A | medium | - | h | HOAX?
 RU: Мальчишка-газетчик выкрикивает новость
@@ -573,6 +665,7 @@ SCENE: A Victorian newsboy on a street corner shouts and waves a newspaper, pass
 RU: Чиновник и директор пожимают руки
 VO: In 1859 the British Board of Trade and the company
 SCENE: A Board of Trade official in grey and a company director in black shake hands in a government office with tall windows.
+CHAPTER: The inquiry
 
 #108 | 5:47 | A | wide | - | h | -
 RU: Комитет экспертов изучает образцы кабеля
@@ -589,11 +682,14 @@ RU: Толстый том отчёта падает на стол
 VO: and in 1861 it published a long report
 SCENE: A thick leather-bound report volume lands heavily on a desk with a puff of dust, loose papers fluttering.
 ANIM: the heavy book drops onto the desk, dust puffs, loose papers flutter || static camera || desk stays still
+TITLE: Report | 1861
+SFX: s23_book_drop @0.3 -4dB
 
 #111 | 5:58 | A | close | - | h | -
 RU: Руки листают отчёт со схемами кабеля
 VO: on how to build, test and lay them.
 SCENE: A committee member's hands flip through the open report, pages showing cable cross-section diagrams and check marks with no readable text, a pencil underlining one diagram.
+SFX: s11_quill @0 -12dB max=3.5
 
 #112 | 6:01 | A | medium | thomson | h | -
 RU: Томсон проверяет катушку меди
@@ -615,6 +711,8 @@ RU: Новый толстый кабель и в тумане силуэт ги�
 VO: By 1865 the company had a new cable and a new ship.
 SCENE: A new, thicker cable coil on a dock in the foreground, and in the misty background the enormous silhouette of a giant iron steamship.
 ANIM: mist drifts slowly, light rays move across the ship silhouette || slow push-in toward the ship || cable coil and ship outline stay unchanged
+CHAPTER: The Great Eastern
+AMB: a3_calm_sea
 
 #116 | 6:15 | A | medium | - | h | Isambard Kingdom Brunel
 RU: Брюнель у корпуса Great Eastern
@@ -647,22 +745,31 @@ RU: Кабель лопается у носа Great Eastern при подъём�
 VO: and after more than 1,000 miles the cable snapped
 SCENE: At the bow of the Great Eastern, as the cable is being hauled back aboard over the big bow wheel, it snaps with a violent whip, sailors jumping back, strain lines drawn around the break.
 ANIM: the cable snaps at the bow wheel and whips away, sailors jump back || quick tilt toward the water || ship stays rigid
+CAMERA: snap
+SFX: s17_cable_snap @0.4 -2dB
 
 #122 | 6:33 | B | wide | - | - | 2+ miles deep
 RU: Кабель уходит в бездну
 VO: and dropped into water over two miles deep.
 SCENE: Vertical underwater composition: the broken cable spirals down into the abyss, light fading from turquoise near the surface to deep black below, a simple depth gauge on the side. Only the cable, the seabed and natural sea life: no divers, no people, no submarines, no robots or any modern equipment.
+FX: bubbles
+AMB: a5_underwater
 
 #123 | 6:36 | B | medium | - | h | -
 RU: Крюк-кошка волочится по дну
 VO: The crew dragged the seabed with grappling hooks for days
 SCENE: Deep seabed: a heavy multi-pronged grappling hook on a long rope drags through the sand toward the lost cable lying ahead.
+FX: bubbles
+SFX: s24_grapple_drag @0 -8dB max=6
 
 #124 | 6:40 | B | dynamic | - | h | ×3
 RU: Трос рвётся, матросы падают на палубу
 VO: and raised the cable three times, but each time the line broke.
 SCENE: On deck the grappling rope snaps under tension, sailors tumbling backward onto the deck, the windlass spinning.
 ANIM: the rope snaps, sailors fall back, the windlass spins || slight shake || ship deck stays stable
+CAMERA: snap
+AMB: a3_calm_sea
+SFX: s25_rope_snap @0.3 -4dB
 
 #125 | 6:44 | B | wide | - | h | 1866
 RU: Great Eastern снова выходит в море
@@ -674,6 +781,7 @@ ANIM: seagulls glide, smoke drifts, the ship moves forward || slow crane-up || s
 RU: Кабель выводят на берег рыбацкой деревни
 VO: On July 27 she landed it at Heart's Content, Newfoundland.
 SCENE: A small fishing village in a Newfoundland bay with wooden houses and boats: sailors and villagers haul the cable onto the beach, the huge Great Eastern anchored in the bay behind.
+TITLE: Heart's Content | 27 Jul 1866
 
 #127 | 6:52 | A | close | - | h | -
 RU: Стрелка бодро качается, телеграфист улыбается
@@ -689,22 +797,29 @@ SCENE: The Great Eastern stationary in the open ocean beside a small marker buoy
 RU: На дне лежит кабель 1865 года, обросший ракушками
 VO: where the 1865 cable lay on the bottom.
 SCENE: Deep seabed: the lost cable lies on the bottom encrusted with small shells and sea growth, a crab walking over it. Only the cable, the seabed and natural sea life: no divers, no people, no submarines, no robots or any modern equipment.
+FX: bubbles
+AMB: a5_underwater
 
 #130 | 7:00 | B | dynamic | - | - | -
 RU: Крюк поднимает кабель из темноты к свету
 VO: They hooked it, hauled it up from more than two miles down,
 SCENE: Vertical underwater view: a grappling hook lifts the shell-covered cable up from the dark depths toward the bright surface far above.
 ANIM: the cable rises slowly toward the light, shells and particles drift off || slow tilt upward following the cable || cable and hook shapes stay stable
+FX: bubbles
+SFX: s24_grapple_drag @0 -10dB max=5
 
 #131 | 7:04 | A | medium | - | h | -
 RU: Матросы сращивают свежий кабель со старым концом
 VO: spliced on fresh cable and finished the line to Newfoundland.
 SCENE: On the Great Eastern's deck, 1860s sailors and engineers splice fresh cable onto the recovered old cable end, the ship heading toward a distant coastline.
+AMB: a3_calm_sea
 
 #132 | 7:08 | A | infographic | - | h | Sept 1866
 RU: Две светящиеся линии через океан, флажки на берегах
 VO: By September 1866 there were two working cables across the Atlantic.
 SCENE: Clean map of the North Atlantic with two parallel glowing turquoise cable lines from Ireland to Newfoundland, small celebratory flags at both landing points.
+CHAPTER: Two working cables
+AMB: -
 
 #133 | 7:12 | A | close | - | h | 8 wpm
 RU: Датчик скорости высоко, клерк радуется, лента бежит
@@ -732,6 +847,7 @@ ANIM: the lightning arrow streaks across the map, the steamer rocks || static ca
 RU: Церемония посвящения Томсона в рыцари
 VO: William Thomson was knighted for his part in the work.
 SCENE: Formal Victorian ceremony: a William Thomson in his early forties kneels as an elderly Queen Victoria in a black mourning dress and a small diamond crown touches his shoulder with a ceremonial sword, a few dignitaries watching in an ornate hall.
+AMB: a7_office_room
 
 #138 | 7:29 | A | close | thomson_late | h | Lord Kelvin
 RU: Пожилой Томсон у двери с латунной табличкой
@@ -742,27 +858,34 @@ SCENE: A dark wooden office door with a blank polished brass nameplate; an older
 RU: Большой лабораторный термометр: иней внизу, пламя вверху
 VO: and the kelvin, the scientific unit of temperature, carries his name.
 SCENE: A large brass-and-glass laboratory thermometer with a clean blank scale stands on a Victorian lab bench, frost on the bulb at the bottom and a small warm flame glow at the top.
+AMB: -
 
 #140 | 7:35 | A | infographic | - | h | 1870 · Bombay
 RU: Линия от Британии до Бомбея, кораблик идёт по маршруту
 VO: By 1870 a chain of cables ran from Britain to Bombay.
 SCENE: Map of Europe, the Mediterranean, the Red Sea and India: a glowing cable line runs from Britain through the Mediterranean and Red Sea to Bombay on India's west coast, a tiny steamship icon following the route.
 ANIM: the line draws itself from Britain to Bombay, the tiny ship icon follows || slow pan along the route || map stays still
+TITLE: 1870 | Bombay
 
 #141 | 7:39 | A | infographic | - | - | 1871 · Darwin
 RU: Линия доходит до севера Австралии
 VO: In 1871 another line came ashore at Darwin, in northern Australia.
 SCENE: Map continuing east: the cable line extends through Southeast Asia to the northern coast of Australia, a pin glowing at Darwin.
+TITLE: 1871 | Darwin
 
 #142 | 7:43 | B | cutaway | - | m | -
 RU: Разрез современного оптического кабеля
 VO: Modern cables on the seabed carry pulses of light through glass fibers.
 SCENE: Modern submarine fiber-optic cable cross-section floating in dark water with turquoise rim light: hair-thin glass fibers glowing turquoise inside a central tube, surrounded by steel strength wires, a copper layer and a polyethylene sheath.
+CHAPTER: Undersea cables today
+FX: bubbles
+AMB: a5_underwater
 
 #143 | 7:47 | B | medium | - | m | TAT-8
 RU: Кабельное судно 1980-х укладывает кабель
 VO: The first transatlantic fiber cable, TAT-8,
 SCENE: A 1980s cable-laying ship at sea at dusk, paying out a modern cable over its stern, deck lights on.
+AMB: a8_modern_hum
 
 #144 | 7:50 | A | close | - | m | 1988
 RU: Стол 1980-х: календарь, компьютер, кружка
@@ -774,6 +897,7 @@ RU: Глобус, опутанный сетью подводных кабеле�
 VO: Estimates commonly put the share of data crossing between continents
 SCENE: A dark-blue globe wrapped in a web of glowing turquoise submarine cable routes between continents, floating in deep space-like darkness.
 ANIM: light pulses travel along the cable routes, the globe rotates slowly || slow orbit || cable layout stays consistent
+SFX: s28_data_pulse @0.3 -10dB
 
 #146 | 7:56 | A | infographic | - | m | ~99%
 RU: Космос со спутником и катушка оптоволокна; точная диаграмма в монтаже
@@ -785,6 +909,7 @@ GFX: share_99
 RU: Историческое здание кабельной станции на берегу
 VO: The station at Heart's Content stayed in use until 1965.
 SCENE: The historic brick cable station building on the shore at Heart's Content, Newfoundland, on a sunny day beside a calm bay.
+AMB: a3_calm_sea
 
 #148 | 8:03 | A | wide | - | m | -
 RU: Современные посетители входят в музей
@@ -795,20 +920,26 @@ SCENE: Present-day visitors drawn as stylized cartoon people walk into the same 
 RU: Старое кабельное оборудование в музее станции
 VO: and much of its old cable equipment is still in place.
 SCENE: Museum interior: the station's operating room with rows of early-20th-century cable instruments and equipment on long wooden benches, some smaller pieces under glass, warm lighting.
+AMB: a8_modern_hum
 
 #150 | 8:09 | A | medium | - | m | -
 RU: Человек за ноутбуком нажимает на ссылку
 VO: When you load a page hosted on another continent,
 SCENE: A present-day young person at a laptop in a cozy room clicks a link, the screen glowing softly on their face.
 ANIM: the person clicks, the screen glows brighter, a small light pulse leaves the laptop || slow push-in || room stays still
+SFX: s29_laptop_click @0.4 -6dB
 
 #151 | 8:12 | B | wide | - | m | -
 RU: Свет бежит по кабелю по дну океана
 VO: the data most likely crosses the ocean floor,
 SCENE: Deep seabed at night: a modern cable lies on the ocean floor with a pulse of turquoise light racing along it.
+FX: bubbles
+AMB: a5_underwater
+SFX: s28_data_pulse @0.3 -10dB
 
 #152 | 8:15 | B | wide | - | m | -
 RU: Финал: светящийся кабель и призрак Great Eastern
 VO: along the kind of route those ships first proved could work in 1866.
 SCENE: Cinematic finale: the modern glowing cable on the seabed in the foreground, and above it in the water a faint translucent ghostly silhouette of the Great Eastern; a small school of fish drifts between them.
 ANIM: light pulses race along the cable, the ghost ship fades gently in and out, the fish drift past || slow crane-up from the cable to the ghost ship || cable and ship silhouettes stay consistent
+AI_CLIP: yes

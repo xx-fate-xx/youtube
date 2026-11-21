@@ -1,0 +1,131 @@
+# Episode settings for the video pipeline (studio pipe ... --episode enginovue_cable_1858).
+# Media live in projects/enginovue_cable_1858/ (git-ignored). Produced 2026-11-19..21 before the generic
+# pipeline existed, hence legacy_no_preflight and the old render names.
+slug: enginovue_cable_1858
+title: The Cable That Changed The World
+brand: Enginovue
+channel: engineering_explained
+language: en-US
+style: enginovue_cartoon
+storyboard_end: '8:19'
+eras:
+  h: 'Historical setting, 1850s-1860s, drawn in the same cartoon style; people are stylized cartoon humans in accurate
+    period clothing, ships and machines are period-accurate. Show nothing that did not exist yet at that time: no
+    later bridges, buildings, landmarks or machines (for example no Brooklyn Bridge, which opened in 1883). Show
+    every person''s whole head, including any hat, with clear space above it; no head or hat cut by the frame edge.'
+image:
+  model: gpt_image_2_6
+  params:
+    aspect_ratio: '16:9'
+    quality: low
+    resolution: 2k
+  price_credits: 1.25
+animation:
+  model: grok_video_v15_lite
+  resolution: 720p
+  duration: 4
+  price_credits: 4.0
+  max_clips: 2
+budget:
+  higgsfield_credits: 200
+  elevenlabs_credits: 25000
+  retry_reserve: 0.1
+narration:
+  voice_id: GQQpeRnV5mCWTgxKhGo5
+  voice_name: Ryan - American Documentary Narrator
+  model: eleven_v4
+  intro_s: 0.6
+  gap_s: 1.0
+  outro_s: 2.0
+  lead_s: 0.12
+pilot_manifest: pilot_v1_manifest.json
+legacy_no_preflight: true
+render_names:
+  silent: enginovue_1858_v2_animated
+  voiced: enginovue_1858_v3_voiced
+  mixed: enginovue_1858_v4_mixed
+release:
+  hook: In August 1858 a cable across the Atlantic carried Queen Victoria's 98-word message to President Buchanan
+    — and it took about sixteen hours to get through. A month later the line was dead. This is the engineering story
+    of why the first transatlantic telegraph failed, what William Thomson understood that others didn't, and how
+    the Great Eastern finally made it work in 1866.
+  title_options:
+  - 'The Cable That Changed the World: The First Transatlantic Telegraph'
+  - '98 Words in 16 Hours: Why the First Atlantic Cable Failed'
+  - The 1858 Atlantic Cable Died in a Month. Here's Why.
+  tags:
+  - transatlantic cable
+  - atlantic telegraph
+  - '1858'
+  - cyrus field
+  - lord kelvin
+  - william thomson
+  - great eastern
+  - submarine cable
+  - telegraph history
+  - engineering history
+  - undersea cables
+  hashtags:
+  - '#history'
+  - '#engineering'
+  - '#telegraph'
+  sources:
+  - Henry M. Field, History of the Atlantic Telegraph (1866) — https://archive.org/details/historyatlantic00fielrich
+  - Charles Bright, The Story of the Atlantic Cable (1903) — https://www.gutenberg.org/ebooks/34765
+  - Silvanus P. Thompson, The Life of William Thomson, Baron Kelvin of Largs (1910) — https://archive.org/details/lifeofwilliamtho01thomuoft
+  - Bruce J. Hunt, "Wildman Whitehouse, William Thomson and the First Atlantic Cable", in Imperial Science (Cambridge
+    University Press, 2021) — https://www.cambridge.org/core/product/28CC0EE56CCC49F8170F92A364BBBEF9/core-reader
+  - 'Science Museum Group: Thomson''s mirror galvanometer, 1858 — https://collection.sciencemuseumgroup.org.uk/objects/co32961/thomsons-mirror-galvanometer-1858'
+  - 'Science Museum Group: Whitehouse''s induction coil, 1858 — https://collection.sciencemuseumgroup.org.uk/objects/co32894/whitehouses-induction-coil-1858'
+  - 'Science Museum Group: sample of the 1857–58 deep-sea cable — https://collection.sciencemuseumgroup.org.uk/objects/co33447/sample-of-deep-sea-section-of-first-transatlantic-cable-1857-1858-cable'
+  - 'IET Archives: The first transatlantic telegraph cable, 1858 — https://www.theiet.org/membership/library-and-archives/the-iet-archives/archives-highlights/the-first-transatlantic-telegraph-cable-1858'
+  - 'Royal Museums Greenwich: Celebrating the submarine telegraph cable, 1858 — https://rmg.co.uk/stories/blog/celebrating-submarine-telegraph-cable-1858'
+  - Smithsonian Magazine on Tiffany & Co. and the cable souvenirs — https://www.smithsonianmag.com/history/to-make-tiffany-co-a-household-name-the-luxury-brands-founder-cashed-in-on-the-trans-atlantic-telegraph-craze-180983782/
+  - 'PBS American Experience: The cable attempts — https://www.pbs.org/wgbh/americanexperience/features/cable-attempts-lay-transatlantic-cable/'
+  - 'University of Glasgow: Kelvin and the Atlantic cable — https://www.gla.ac.uk/myglasgow/library/files/special/exhibns/Kelvin/atlanticcable.html'
+  - 'Canada''s Historic Places: Heart''s Content Cable Station — https://www.historicplaces.ca/en/rep-reg/place-lieu.aspx?id=3057'
+  - ITU, Abuja declaration on submarine cable resilience (2025) — https://www.itu.int/digital-resilience/submarine-cables/wp-content/uploads/sites/2/2025/02/summit-declaration-nigeria-2025.pdf
+  - 'TeleGeography: Submarine cable FAQ — https://www2.telegeography.com/submarine-cable-faqs-frequently-asked-questions'
+  notes:
+  - All facts in the narration were checked against the sources above; where sources disagree (for example 98 vs
+    99 words in the Queen's message, or the coil voltages) the script uses the commonly cited figure or a rounded
+    value.
+  - Illustrations and the two short animated shots are AI-generated in an original cartoon style; they are interpretations,
+    not historical photographs. The narration voice and the music are AI-generated. Diagrams and charts were made
+    for this video.
+  thumbnails:
+  - name: thumbnail_a
+    frame: 10
+    lines:
+    - - IT DIED
+      - 130
+    - - IN A MONTH
+      - 130
+    - - THE 1858 ATLANTIC CABLE
+      - 40
+    side: left
+  - name: thumbnail_b
+    frame: 1
+    lines:
+    - - 98 WORDS.
+      - 120
+    - - 16 HOURS.
+      - 120
+    - - THE FIRST MESSAGE ACROSS THE ATLANTIC
+      - 34
+    side: right
+  - name: thumbnail_c
+    frame: 75
+    lines:
+    - - 2,000 MILES
+      - 118
+    - - OF OCEAN
+      - 118
+    - - THE FIRST ATLANTIC CABLE, 1858
+      - 40
+    side: left
+  known_items:
+  - '#29 tiny Westminster clock tower in an 1856 scene (its clock was completed in 1859).'
+  - '#39 hut icon looks modern.'
+  - '#68, #84, #138, #141: a thin background band at the bottom of the image.'
+  - '"98 words": sources differ (98 widely cited; 99 in the 1858 log count) - the video uses 98.'

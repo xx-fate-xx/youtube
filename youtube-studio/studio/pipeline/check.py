@@ -1,6 +1,6 @@
 """Automatic QA of a rendered episode: frozen picture, unexpected black, audio gaps, A/V length.
 
-Usage: py check_render.py [video.mp4]   (default: newest enginovue_1858_v*_*.mp4 in projects/.../render)
+Usage: studio pipe check [video.mp4]   (default: the newest mp4 in projects/<slug>/render)
 
 * frozen picture: FFmpeg freezedetect on edge maps (>= FREEZE_S without visible change), mapped to frames;
 * black: blackdetect; black is expected only around chapter dips (± DIP_TOL s of a chapter boundary)
@@ -15,25 +15,29 @@ from __future__ import annotations
 import json
 import re
 import subprocess
-import sys
 from pathlib import Path
 
-HERE = Path(__file__).resolve().parent
-PROJECT = HERE.parents[1] / "projects" / "enginovue_cable_1858"
+from . import frames as frames_mod
+from .episode import ep
+
 FREEZE_S, DIP_TOL = 1.0, 0.6
-CHAPTERS = (14, 25, 31, 48, 71, 87, 107, 115, 132, 142)
 
 
 def run(args: list[str]) -> str:
     return subprocess.run(args, capture_output=True, text=True).stderr
 
 
-def main() -> None:
-    video = Path(sys.argv[1]) if len(sys.argv) > 1 else max(
-        (PROJECT / "render").glob("enginovue_1858_v*_*.mp4"), key=lambda p: p.stat().st_mtime)
-    tm = json.loads((PROJECT / "audio" / "narration_timing.json").read_text(encoding="utf-8"))["frames"]
+def check(video: Path | None = None) -> list[str]:
+    if video is None:
+        vids = [p for p in ep().render_dir.glob("*.mp4") if "_preview_" not in p.name]
+        if not vids:
+            raise SystemExit("no rendered video found")
+        video = max(vids, key=lambda p: p.stat().st_mtime)
+    video = Path(video)
+    tm = json.loads((ep().audio / "narration_timing.json").read_text(encoding="utf-8"))["frames"]
+    chapter_frames = {n for n, _ in frames_mod.chapters(frames_mod.parse())} - {1}
     frame_at = lambda t: next((f["n"] for f in reversed(tm) if f["start"] <= t + 1e-6), 1)  # noqa: E731
-    bounds = [f["start"] for f in tm if f["n"] in CHAPTERS]
+    bounds = [f["start"] for f in tm if f["n"] in chapter_frames]
     problems: list[str] = []
 
     # freeze test on edge maps: brightness flicker or fades over a frozen picture do not hide the freeze
@@ -67,8 +71,4 @@ def main() -> None:
 
     print(f"{video.name}: video {durs.get('video', 0):.2f} s, audio {durs.get('audio', 0):.2f} s")
     print("\n".join(problems) if problems else "OK: no frozen picture, no unexpected black, no audio gaps")
-    sys.exit(1 if problems else 0)
-
-
-if __name__ == "__main__":
-    main()
+    return problems

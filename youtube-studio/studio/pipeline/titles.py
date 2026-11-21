@@ -2,28 +2,27 @@
 
 Style (house rule: no accent bars / borders): white InterDisplay Bold with a soft shadow, optional small
 second line in light turquoise caps, and a soft local dark glow behind the block (no box, no full-width
-band). Placement is chosen per frame and stored in title_layout.json:
+band). Title text comes from frames.txt (TITLE: main | small, or the header column); the placement is
+chosen per frame and stored in episodes/<slug>/title_layout.json:
 
   {"<n>": {"main": "...", "sub": "..."|null, "pos": "bottom_center"|..., "dx": 0, "dy": 0, "source": "auto|manual"}}
 
-`py titles.py propose`  -> scores the calmest candidate area of every titled frame (edge density),
-                           keeps manual entries, writes title_layout.json
-`py titles.py sheet OUT [a-b]` -> contact sheets of frames with their titles for visual review
-`py titles.py set N POS [dx dy]` -> manual placement (source=manual)
+`studio pipe titles propose`        -> calmest candidate area of every titled frame (edge density); manual
+                                       entries are kept
+`studio pipe titles sheet [a-b]`     -> contact sheets for visual review (projects/<slug>/review/titles)
+`studio pipe titles set N POS [dx dy]` -> manual placement (source=manual)
+Never cover the subject of a frame (faces, the object the narration talks about).
 """
 
 from __future__ import annotations
 
-import csv
 import json
-import sys
 from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
-HERE = Path(__file__).resolve().parent
-LAYOUT = HERE / "title_layout.json"
-FONTS = HERE.parents[1] / "assets" / "fonts" / "inter"
+from .episode import FONTS, ep
+
 W, H = 1920, 1080
 MAIN_PX, SUB_PX, SUB_GAP = 62, 32, 18
 SUB_COLOR = (190, 240, 245)
@@ -34,8 +33,6 @@ POS = {
     "top_center": (0.50, 0.165), "top_left": (0.24, 0.165), "top_right": (0.76, 0.165),
     "mid_left": (0.22, 0.50), "mid_right": (0.78, 0.50),
 }
-# title text split: frames whose "A · B" becomes big A + small B (others keep one line)
-TWO_TIER = {30, 32, 64, 110, 126, 140, 141}
 NO_TITLE_WITH_CHART = True          # charts already carry the number (#42, #43, #146)
 
 
@@ -86,11 +83,10 @@ def draw_text(d: ImageDraw.ImageDraw, cx: float, cy: float, text: str, name: str
         x += d.textlength(t, font=f)
 
 
-def split(n: int, text: str) -> tuple[str, str | None]:
-    if n in TWO_TIER and "·" in text:
-        a, b = text.split("·", 1)
-        return a.strip(), b.strip().upper()
-    return text, None
+def split(f: dict) -> tuple[str, str | None]:
+    """(main, SUB) from the frame's TITLE; the small line is set in capitals."""
+    main, sub = f["title"]
+    return main, (sub.upper() if sub else None)
 
 
 def block_size(main: str, sub: str | None) -> tuple[int, int]:
@@ -141,27 +137,43 @@ def draw(spec: dict) -> Image.Image:
     return layer
 
 
+def layout_file() -> Path:
+    return ep().src / "title_layout.json"
+
+
 def load() -> dict[int, dict]:
-    if LAYOUT.is_file():
-        return {int(k): v for k, v in json.loads(LAYOUT.read_text(encoding="utf-8")).items()}
+    if layout_file().is_file():
+        return {int(k): v for k, v in json.loads(layout_file().read_text(encoding="utf-8")).items()}
     return {}
 
 
 def save(layout: dict[int, dict]) -> None:
-    LAYOUT.write_text(json.dumps({str(k): layout[k] for k in sorted(layout)}, ensure_ascii=False, indent=1),
-                      encoding="utf-8")
+    layout_file().write_text(json.dumps({str(k): layout[k] for k in sorted(layout)}, ensure_ascii=False,
+                                        indent=1), encoding="utf-8")
 
 
-def titled_rows() -> list[dict]:
-    rows = [r for r in csv.DictReader(open(HERE / "edit_timeline.csv", encoding="utf-8")) if r["overlay"]]
-    return [r for r in rows if not (NO_TITLE_WITH_CHART and r["gfx_overlay"])]
+def titled_frames() -> list[dict]:
+    from . import frames
+    out = [f for f in frames.parse() if f.get("title")]
+    return [f for f in out if not (NO_TITLE_WITH_CHART and f.get("gfx"))]
+
+
+def specs() -> dict[int, dict]:
+    """Render specs: text from frames.txt, placement from title_layout.json (bottom_center if missing)."""
+    layout = load()
+    out = {}
+    for f in titled_frames():
+        main, sub = split(f)
+        pl = layout.get(f["n"], {})
+        out[f["n"]] = {"main": main, "sub": sub, "pos": pl.get("pos", "bottom_center"), "dx": pl.get("dx", 0),
+                       "dy": pl.get("dy", 0), "source": pl.get("source", "default")}
+    return out
 
 
 def frame_image(n: int) -> Image.Image:
-    import production
-    import qa
+    from . import production, qa
     d = production.decisions(production.load_state())[n]
-    return qa.to_169(Image.open(production.PROJECT / d["file"]).convert("RGB"))[0].resize((W, H))
+    return qa.to_169(Image.open(ep().work / d["file"]).convert("RGB"))[0].resize((W, H))
 
 
 def busyness(img: Image.Image, spec: dict) -> float:
@@ -177,11 +189,13 @@ def busyness(img: Image.Image, spec: dict) -> float:
 
 def propose() -> None:
     layout = load()
-    for r in titled_rows():
-        n = int(r["n"])
+    rows = titled_frames()
+    for f in rows:
+        n = f["n"]
         if layout.get(n, {}).get("source") == "manual":
+            layout[n].update(zip(("main", "sub"), split(f), strict=True))
             continue
-        main, sub = split(n, r["overlay"])
+        main, sub = split(f)
         img = frame_image(n)
         best = None
         for pos in POS:
@@ -191,12 +205,28 @@ def propose() -> None:
                 best = (score, pos)
         layout[n] = {"main": main, "sub": sub, "pos": best[1], "dx": 0, "dy": 0, "source": "auto"}
         print(f"#{n:<4} {best[1]:<14} {best[0]:5.1f}  {main}{' / ' + sub if sub else ''}", flush=True)
-    keep = {int(r["n"]) for r in titled_rows()}
+    keep = {f["n"] for f in rows}
     save({k: v for k, v in layout.items() if k in keep})
 
 
-def sheet(out: Path, rng: str | None) -> None:
+def set_manual(n: int, pos: str, dx: int = 0, dy: int = 0) -> dict:
+    if pos not in POS:
+        raise SystemExit(f"unknown position {pos}; use one of {', '.join(POS)}")
     layout = load()
+    f = next((x for x in titled_frames() if x["n"] == n), None)
+    if f is None:
+        raise SystemExit(f"frame #{n} has no title")
+    main, sub = split(f)
+    layout[n] = {**layout.get(n, {}), "main": main, "sub": sub, "pos": pos, "dx": dx, "dy": dy, "source": "manual"}
+    save(layout)
+    return layout[n]
+
+
+def sheet(out: Path | None = None, rng: str | None = None) -> list[Path]:
+    out = out or ep().work / "review" / "titles"
+    out.mkdir(parents=True, exist_ok=True)
+    layout = specs()
+    written = []
     ns = sorted(layout)
     if rng:
         lo, hi = (int(x) for x in rng.split("-"))
@@ -215,25 +245,5 @@ def sheet(out: Path, rng: str | None) -> None:
                    font=font("Inter-SemiBold.ttf", 18))
         p = out / f"titles_{chunk[0]:03d}-{chunk[-1]:03d}.png"
         sh.save(p)
-        print(p)
-
-
-def main() -> None:
-    cmd = sys.argv[1] if len(sys.argv) > 1 else "propose"
-    if cmd == "propose":
-        propose()
-    elif cmd == "sheet":
-        sheet(Path(sys.argv[2]), sys.argv[3] if len(sys.argv) > 3 else None)
-    elif cmd == "set":
-        layout = load()
-        n = int(sys.argv[2])
-        layout[n].update(pos=sys.argv[3], dx=int(sys.argv[4]) if len(sys.argv) > 4 else 0,
-                         dy=int(sys.argv[5]) if len(sys.argv) > 5 else 0, source="manual")
-        save(layout)
-        print(n, layout[n])
-    else:
-        sys.exit(__doc__)
-
-
-if __name__ == "__main__":
-    main()
+        written.append(p)
+    return written
