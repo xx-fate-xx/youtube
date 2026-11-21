@@ -144,7 +144,7 @@ n,timecode,start_s,duration_s,image,anim_clip,gfx_overlay,overlay,voiceover
 143,7:47,467,3,00_07_47_000.png,,,TAT-8,"The first transatlantic fiber cable, TAT-8,"
 144,7:50,470,2,00_07_50_000.png,,,1988,went into service in 1988.
 145,7:52,472,4,00_07_52_000.png,00_07_52_000.mp4,,,Estimates commonly put the share of data crossing between continents
-146,7:56,476,3,00_07_56_000.png,,,~99%,through undersea cables at around 99 percent.
+146,7:56,476,3,00_07_56_000.png,,overlays/00_07_56_000_gfx.png,~99%,through undersea cables at around 99 percent.
 147,7:59,479,4,00_07_59_000.png,,,1866–1965,The station at Heart's Content stayed in use until 1965.
 148,8:03,483,2,00_08_03_000.png,,,,"The building is now a museum,"
 149,8:05,485,4,00_08_05_000.png,,,,and much of its old cable equipment is still in place.

@@ -54,6 +54,9 @@ class Canvas:
     def circle(self, cx, cy, r, fill, stroke=None, sw=0):
         self.items.append(("circle", cx, cy, r, fill, stroke, sw))
 
+    def poly(self, pts, fill):
+        self.items.append(("poly", [(float(a), float(b)) for a, b in pts], fill))
+
     def text(self, x, y, s, size, color, anchor="ls", bold=False):
         """anchor: Pillow-style two letters, horizontal l/m/r + vertical t/m/s (baseline)."""
         self.items.append(("text", x, y, s, size, color, anchor, bold))
@@ -80,6 +83,10 @@ class Canvas:
                 _, cx, cy, r, fill, stroke, sw = it
                 st = f' stroke="{stroke}" stroke-width="{sw}"' if stroke else ""
                 out.append(f'<circle cx="{cx}" cy="{cy}" r="{r}" fill="{fill}"{st}/>')
+            elif k == "poly":
+                _, pts, fill = it
+                p = " ".join(f"{a:.1f},{b:.1f}" for a, b in pts)
+                out.append(f'<polygon points="{p}" fill="{fill}"/>')
             elif k == "text":
                 _, x, y, s, size, color, anchor, bold = it
                 ta = {"l": "start", "m": "middle", "r": "end"}[anchor[0]]
@@ -116,6 +123,9 @@ class Canvas:
                 box = [(cx - r) * SS, (cy - r) * SS, (cx + r) * SS, (cy + r) * SS]
                 d.ellipse(box, fill=_c(fill), outline=_c(stroke) if stroke else None,
                           width=round(sw * SS))
+            elif k == "poly":
+                _, pts, fill = it
+                d.polygon([(a * SS, b * SS) for a, b in pts], fill=_c(fill))
             elif k == "text":
                 _, x, y, s, size, color, anchor, bold = it
                 font = _font(size * SS, bold)
@@ -315,12 +325,46 @@ def delay_x100(c: Canvas) -> None:
         c.text(cx, base + 50, bottom_label, 28, s["muted"], "ms")
 
 
+CABLE_SHARE = 0.99   # ITU (2025): undersea cables carry "over 99%" of intercontinental data traffic
+
+
+def _ring_sector(cx, cy, r_out, r_in, a0, a1, steps=180):
+    """Annular sector from angle a0 to a1 (radians, clockwise from 12 o'clock)."""
+    n = max(2, round(steps * (a1 - a0) / (2 * math.pi)))
+    outer = [(cx + r_out * math.sin(a0 + (a1 - a0) * i / n), cy - r_out * math.cos(a0 + (a1 - a0) * i / n))
+             for i in range(n + 1)]
+    inner = [(cx + r_in * math.sin(a1 - (a1 - a0) * i / n), cy - r_in * math.cos(a1 - (a1 - a0) * i / n))
+             for i in range(n + 1)]
+    return outer + inner
+
+
+def share_99(c: Canvas) -> None:
+    s = STYLES["light"]
+    x0, y0, w, h = 480, 100, 960, 740
+    card(c, s, x0, y0, w, h)
+    c.text(x0 + w / 2, y0 + 70, "Data crossing between continents", 38, s["text"], "ms", bold=True)
+    cx, cy, ro, ri = x0 + 300, y0 + 390, 220, 140
+    cable = 2 * math.pi * CABLE_SHARE
+    c.poly(_ring_sector(cx, cy, ro, ri, 0, cable), SEA)
+    c.poly(_ring_sector(cx, cy, ro + 14, ri - 14, cable, 2 * math.pi), ORANGE)  # the tiny remainder
+    c.text(cx, cy - 10, "~99%", 64, s["text"], "mm", bold=True)
+    c.text(cx, cy + 50, "undersea cables", 24, s["muted"], "mm")
+    lx = x0 + 580
+    c.rect(lx, y0 + 300, 34, 34, fill=SEA, r=6)
+    c.text(lx + 50, y0 + 317, "undersea cables", 28, s["text"], "lm", bold=True)
+    c.rect(lx, y0 + 380, 34, 34, fill=ORANGE, r=6)
+    c.text(lx + 50, y0 + 397, "everything else", 28, s["text"], "lm", bold=True)
+    c.text(lx + 50, y0 + 432, "(satellites, other routes)", 22, s["muted"], "lm")
+    c.text(x0 + 50, y0 + h - 40, "Estimate: International Telecommunication Union (2025)", 22, s["muted"], "ls")
+
+
 OVERLAYS: dict[str, Callable[[Canvas], None]] = {
     "pulse_sent": pulse_sent,
     "pulse_received": pulse_received,
     "delay_vs_length": delay_vs_length,
     "length_x10": length_x10,
     "delay_x100": delay_x100,
+    "share_99": share_99,
 }
 
 

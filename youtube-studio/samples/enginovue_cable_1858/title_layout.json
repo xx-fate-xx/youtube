@@ -1,0 +1,418 @@
+{
+ "1": {
+  "main": "16 Aug 1858",
+  "sub": null,
+  "pos": "top_center",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "2": {
+  "main": "98 words",
+  "sub": null,
+  "pos": "bottom_left",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "3": {
+  "main": "~16 hours",
+  "sub": null,
+  "pos": "top_center",
+  "dx": 190,
+  "dy": -25,
+  "source": "manual"
+ },
+ "4": {
+  "main": "avg ≈ 10 min / word",
+  "sub": null,
+  "pos": "top_center",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "10": {
+  "main": "early Sep 1858",
+  "sub": null,
+  "pos": "top_left",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "11": {
+  "main": "1857 · 1858",
+  "sub": null,
+  "pos": "top_right",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "14": {
+  "main": "London → New York",
+  "sub": null,
+  "pos": "top_left",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "15": {
+  "main": "~10 days",
+  "sub": null,
+  "pos": "mid_right",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "24": {
+  "main": "~2,000 miles",
+  "sub": null,
+  "pos": "bottom_center",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "25": {
+  "main": "Cyrus Field",
+  "sub": null,
+  "pos": "bottom_left",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "30": {
+  "main": "Atlantic Telegraph Company",
+  "sub": "1856",
+  "pos": "top_left",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "32": {
+  "main": "William Thomson",
+  "sub": "GLASGOW",
+  "pos": "bottom_center",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "40": {
+  "main": "delay ∝ L²",
+  "sub": null,
+  "pos": "top_right",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "44": {
+  "main": "Wildman Whitehouse",
+  "sub": null,
+  "pos": "bottom_center",
+  "dx": 0,
+  "dy": 0,
+  "source": "manual"
+ },
+ "48": {
+  "main": "1857",
+  "sub": null,
+  "pos": "bottom_center",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "55": {
+  "main": "18 iron strands",
+  "sub": null,
+  "pos": "bottom_right",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "56": {
+  "main": "1 mile ≈ 1 ton",
+  "sub": null,
+  "pos": "bottom_right",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "57": {
+  "main": "~2,500 miles",
+  "sub": null,
+  "pos": "top_center",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "58": {
+  "main": "Greenwich · Birkenhead",
+  "sub": null,
+  "pos": "top_right",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "63": {
+  "main": "HMS Agamemnon · USS Niagara",
+  "sub": null,
+  "pos": "top_center",
+  "dx": 0,
+  "dy": 0,
+  "source": "manual"
+ },
+ "64": {
+  "main": "Valentia Bay",
+  "sub": "AUG 1857",
+  "pos": "top_left",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "66": {
+  "main": "~2 mi deep",
+  "sub": null,
+  "pos": "mid_left",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "75": {
+  "main": "June 1858",
+  "sub": null,
+  "pos": "top_center",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "78": {
+  "main": "×3",
+  "sub": null,
+  "pos": "top_center",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "82": {
+  "main": "29 Jul 1858",
+  "sub": null,
+  "pos": "top_center",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "84": {
+  "main": "5 Aug 1858",
+  "sub": null,
+  "pos": "top_right",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "85": {
+  "main": "Valentia",
+  "sub": null,
+  "pos": "top_left",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "86": {
+  "main": "Trinity Bay",
+  "sub": null,
+  "pos": "top_left",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "90": {
+  "main": "Mirror galvanometer",
+  "sub": null,
+  "pos": "bottom_center",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "97": {
+  "main": "one swing = dot · other = dash",
+  "sub": null,
+  "pos": "bottom_center",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "100": {
+  "main": "1,000s of volts",
+  "sub": null,
+  "pos": "bottom_right",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "106": {
+  "main": "HOAX?",
+  "sub": null,
+  "pos": "bottom_center",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "110": {
+  "main": "Report",
+  "sub": "1861",
+  "pos": "bottom_right",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "113": {
+  "main": "1861",
+  "sub": null,
+  "pos": "top_center",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "115": {
+  "main": "1865",
+  "sub": null,
+  "pos": "top_left",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "116": {
+  "main": "Isambard Kingdom Brunel",
+  "sub": null,
+  "pos": "top_left",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "120": {
+  "main": "July 1865",
+  "sub": null,
+  "pos": "bottom_center",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "121": {
+  "main": "1,000+ miles",
+  "sub": null,
+  "pos": "bottom_right",
+  "dx": 0,
+  "dy": 0,
+  "source": "manual"
+ },
+ "122": {
+  "main": "2+ miles deep",
+  "sub": null,
+  "pos": "bottom_center",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "124": {
+  "main": "×3",
+  "sub": null,
+  "pos": "top_center",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "125": {
+  "main": "1866",
+  "sub": null,
+  "pos": "bottom_center",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "126": {
+  "main": "Heart's Content",
+  "sub": "27 JUL 1866",
+  "pos": "top_left",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "132": {
+  "main": "Sept 1866",
+  "sub": null,
+  "pos": "bottom_center",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "133": {
+  "main": "8 wpm",
+  "sub": null,
+  "pos": "bottom_right",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "134": {
+  "main": "1–2 wpm",
+  "sub": null,
+  "pos": "top_center",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "138": {
+  "main": "Lord Kelvin",
+  "sub": null,
+  "pos": "bottom_center",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "139": {
+  "main": "K",
+  "sub": null,
+  "pos": "bottom_center",
+  "dx": 175,
+  "dy": 0,
+  "source": "manual"
+ },
+ "140": {
+  "main": "1870",
+  "sub": "BOMBAY",
+  "pos": "bottom_left",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "141": {
+  "main": "1871",
+  "sub": "DARWIN",
+  "pos": "top_right",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "143": {
+  "main": "TAT-8",
+  "sub": null,
+  "pos": "top_left",
+  "dx": 0,
+  "dy": 0,
+  "source": "manual"
+ },
+ "144": {
+  "main": "1988",
+  "sub": null,
+  "pos": "bottom_center",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "147": {
+  "main": "1866–1965",
+  "sub": null,
+  "pos": "top_center",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ }
+}

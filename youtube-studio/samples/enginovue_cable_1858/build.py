@@ -55,7 +55,10 @@ MODES = {
 
 ERAS = {
     "h": "Historical setting, 1850s-1860s, drawn in the same cartoon style; people are stylized "
-    "cartoon humans in accurate period clothing, ships and machines are period-accurate.",
+    "cartoon humans in accurate period clothing, ships and machines are period-accurate. Show "
+    "nothing that did not exist yet at that time: no later bridges, buildings, landmarks or "
+    "machines (for example no Brooklyn Bridge, which opened in 1883). Show every person's whole head, "
+    "including any hat, with clear space above it; no head or hat cut by the frame edge.",
     "m": "Present-day or late 20th-century setting drawn in the same cartoon style; people are "
     "stylized cartoon humans.",
     "-": "",

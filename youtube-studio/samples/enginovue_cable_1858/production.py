@@ -34,7 +34,7 @@ PROD = PROJECT / "production"
 FRAMES = PROD / "frames"
 STATE = PROD / "state.json"
 PILOT_MANIFEST = HERE / "pilot_v1_manifest.json"
-PRICE = 0.5                      # credits per frame, gpt_image_2_6 low/2k (Higgsfield quote 2026-11-20)
+PRICE = 1.25                     # credits per frame, gpt_image_2_6 low/2k (Higgsfield quote, Plus account, 2026-11-21)
 ACCEPTED = {"accepted", "accepted_with_note", "accepted_fixed"}
 SKIP = ACCEPTED | {"candidate"}  # candidate: generated, awaiting an editorial decision; not re-generated
 

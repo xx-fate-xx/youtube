@@ -22,7 +22,7 @@ Evidence:
 ## `thomson` — William Thomson (later Lord Kelvin), 1855-1861
 
 - Life/age in frames: born 26 Jun 1824; aged 31-37 in these frames; Glasgow professor from 1846
-- Frames: #31, #32, #33, #40, #45, #49, #112
+- Frames: #31, #32, #33, #40, #41, #45, #49, #112
 - Reference sheet: `refs/hist_thomson_1850s.png` (not generated)
 - Verification: NOT VERIFIED for the 1850s. The short dark beard is a provisional choice kept from the original storyboard. Check against a dated 1850s portrait before any reference sheet is generated. The spectacles in the old frame #32 had no source and were removed.
 - Avoid: In December 1860 a curling accident broke his thigh and left him with a limp: no cane or limp in 1850s frames. No white beard (that belongs to thomson_late).
