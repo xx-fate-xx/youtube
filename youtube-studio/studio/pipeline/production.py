@@ -135,7 +135,10 @@ def cmd_report(a) -> None:
     """After a batch: QA status per frame, files written and the credits actually used."""
     state = load_state()
     plan = json.loads((ep().prod / "plan.json").read_text(encoding="utf-8"))
-    batch = next(b for b in plan["batches"] if b["batch"] == a.batch)
+    batch = next((b for b in plan["batches"] if b["batch"] == a.batch), None)
+    if batch is None:   # ad-hoc batch (redo of rejected frames): frames = latest candidates, estimate = used
+        redo = sorted(int(n) for n, f in state["frames"].items() if f.get("decision") == "candidate")
+        batch = {"batch": a.batch, "frames": redo or [0], "credits": round(a.before - a.after, 2)}
     used = round(a.before - a.after, 2)
     lines = [f"# Batch {a.batch} report\n", f"Frames {batch['frames'][0]}–{batch['frames'][-1]}; "
              f"estimate {batch['credits']:g} cr; balance {a.before:g} → {a.after:g} (used {used:g} cr).\n",

@@ -1,0 +1,386 @@
+{
+ "1": {
+  "main": "21 Jan 1910",
+  "sub": null,
+  "pos": "top_right",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "3": {
+  "main": "between 10:48 and 10:53",
+  "sub": null,
+  "pos": "top_right",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "7": {
+  "main": "quai de la Gare",
+  "sub": null,
+  "pos": "top_left",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "10": {
+  "main": "1880 → 1994",
+  "sub": null,
+  "pos": "bottom_center",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "17": {
+  "main": "Vienna",
+  "sub": "FEB 1877",
+  "pos": "top_left",
+  "dx": 0,
+  "dy": 0,
+  "source": "manual"
+ },
+ "19": {
+  "main": "~3½ years",
+  "sub": null,
+  "pos": "bottom_left",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "21": {
+  "main": "1878",
+  "sub": null,
+  "pos": "bottom_right",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "23": {
+  "main": "15 Mar 1880",
+  "sub": null,
+  "pos": "top_right",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "24": {
+  "main": "Central station",
+  "sub": "7 RUE SAINTE-ANNE",
+  "pos": "top_left",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "26": {
+  "main": "5 centimes a day",
+  "sub": null,
+  "pos": "bottom_center",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "28": {
+  "main": "4,000+ clocks · 750 buildings",
+  "sub": null,
+  "pos": "bottom_center",
+  "dx": 0,
+  "dy": 0,
+  "source": "manual"
+ },
+ "29": {
+  "main": "50-year concession",
+  "sub": "1881",
+  "pos": "bottom_right",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "32": {
+  "main": "5 atm",
+  "sub": null,
+  "pos": "mid_right",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "33": {
+  "main": "0.7 atm",
+  "sub": null,
+  "pos": "top_right",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "38": {
+  "main": "20 s",
+  "sub": null,
+  "pos": "bottom_center",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "39": {
+  "main": "40 s",
+  "sub": null,
+  "pos": "top_right",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "44": {
+  "main": "Paris Observatory",
+  "sub": null,
+  "pos": "bottom_center",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "45": {
+  "main": "10 mains",
+  "sub": null,
+  "pos": "bottom_left",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "46": {
+  "main": "27 mm",
+  "sub": null,
+  "pos": "top_center",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "48": {
+  "main": "15 mm",
+  "sub": null,
+  "pos": "mid_right",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "49": {
+  "main": "6 mm → 3 mm",
+  "sub": null,
+  "pos": "bottom_right",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "52": {
+  "main": "~3 s per km",
+  "sub": null,
+  "pos": "bottom_center",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "53": {
+  "main": "≥15 s · 5 km",
+  "sub": null,
+  "pos": "top_center",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "55": {
+  "main": "within ~4 s",
+  "sub": null,
+  "pos": "bottom_right",
+  "dx": 0,
+  "dy": 0,
+  "source": "manual"
+ },
+ "63": {
+  "main": "60 teeth",
+  "sub": null,
+  "pos": "mid_right",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "67": {
+  "main": "1 pulse = 1 minute",
+  "sub": null,
+  "pos": "bottom_center",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "72": {
+  "main": "1886",
+  "sub": null,
+  "pos": "bottom_right",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "73": {
+  "main": "Rue Saint-Fargeau",
+  "sub": "5 ATM",
+  "pos": "top_center",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "74": {
+  "main": "2,000+ hp",
+  "sub": null,
+  "pos": "top_left",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "75": {
+  "main": "1889",
+  "sub": null,
+  "pos": "bottom_left",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "76": {
+  "main": "225 installations",
+  "sub": null,
+  "pos": "bottom_center",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "83": {
+  "main": "10 hp per 20 hp",
+  "sub": null,
+  "pos": "top_right",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "84": {
+  "main": "Quai de la Gare",
+  "sub": "1892",
+  "pos": "top_right",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "85": {
+  "main": "4 × 1,800 hp",
+  "sub": null,
+  "pos": "top_center",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "88": {
+  "main": "Jan 1910",
+  "sub": null,
+  "pos": "top_center",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "89": {
+  "main": "~1 m per day",
+  "sub": null,
+  "pos": "top_right",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "91": {
+  "main": "quai de la Gare",
+  "sub": null,
+  "pos": "bottom_right",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "93": {
+  "main": "22:48–22:53",
+  "sub": null,
+  "pos": "top_center",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "95": {
+  "main": "8.62 m · 28 Jan",
+  "sub": null,
+  "pos": "top_right",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "96": {
+  "main": "~20,000 buildings",
+  "sub": null,
+  "pos": "top_right",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "97": {
+  "main": "13 days",
+  "sub": "3 FEB 1910",
+  "pos": "bottom_center",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "101": {
+  "main": "16.90 F vs 60.70 F",
+  "sub": null,
+  "pos": "bottom_center",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "103": {
+  "main": "1926",
+  "sub": null,
+  "pos": "bottom_left",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "105": {
+  "main": "1 Mar 1927",
+  "sub": null,
+  "pos": "bottom_center",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "106": {
+  "main": "Magneta",
+  "sub": null,
+  "pos": "top_center",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "107": {
+  "main": "1880–1927",
+  "sub": null,
+  "pos": "bottom_right",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "113": {
+  "main": "peak 1973",
+  "sub": null,
+  "pos": "bottom_center",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ },
+ "114": {
+  "main": "1994",
+  "sub": null,
+  "pos": "bottom_center",
+  "dx": 0,
+  "dy": 0,
+  "source": "auto"
+ }
+}
