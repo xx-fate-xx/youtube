@@ -1,0 +1,4 @@
+# Uses the sound library of whatif_super_speed (sound_library in episode.yaml); add Short-only sounds here.
+spots: {}
+ambience: {}
+music: {}

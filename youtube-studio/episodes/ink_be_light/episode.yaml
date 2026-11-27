@@ -1,0 +1,44 @@
+# ink_mindset Short #3 "Be the Light" (1080x1920): WAIT FOR LIGHT/BE THE LIGHT, STAY SAFE/STEP OUT, SLEEP IN/5 AM,
+# WAIT FOR WIND/MAKE WIND.
+# Skits animated pose to pose and drawn in 2D (studio/ink3d/skits.py + stage2d.py, 60 fps), composited by the
+# comic engine (studio/whatif/ink_short.py).
+slug: ink_be_light
+title: Be the Light
+brand: Ink Mindset
+channel: ink_mindset
+format: short
+sound_library: ink_short_01
+language: en-US
+style: whatif_stickman
+storyboard_end: "0:30"
+fps: 60
+eras: {}
+release:
+  hook: 'Same night, different choice: one waits for the light, one becomes it; one stays safe, one steps out;
+    one sleeps in, one meets the sunrise; one waits for wind, one makes it.'
+  title_options:
+  - Be the Light.
+  - Don't Wait for the Wind. Make It.
+  - Stay Safe or Step Out?
+  tags:
+  - motivation
+  - discipline
+  - self improvement
+  - mindset
+  - motivational shorts
+  - animation
+  - stickman
+  - comfort zone
+  hashtags:
+  - '#motivation'
+  - '#discipline'
+  - '#shorts'
+  sources:
+  - No facts or numbers are shown in this Short; the clock times are illustrative; all scenes are our own.
+  notes:
+  - 'Music: "Waka Floka Type" (Mixkit, Mixkit Stock Music Free License - free for YouTube incl. monetisation,
+    no attribution required).'
+  - 'Animation: original pose-to-pose stick-figure animation (studio/ink3d), no third-party motion. Backgrounds:
+    AI-generated ink paintings (Higgsfield, Nano Banana 2; one location per skit) and locally generated ink ground
+    textures. Sound effects:
+    AI-generated (ElevenLabs).'

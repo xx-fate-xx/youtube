@@ -1,0 +1,15 @@
+# Test assembly (not for upload): metaphor 1 of the ink_mindset pilot with epic music, beat cuts and an AI clip.
+slug: ink_test_epic
+title: Ink Mindset energy test (metaphor 1)
+brand: Ink Mindset (working title)
+channel: ink_mindset
+format: short
+parent: ink_short_01
+sound_library: ink_short_01
+language: en-US
+style: whatif_stickman
+storyboard_end: "0:12"
+eras: {}
+release:
+  notes:
+  - Internal test - not for upload.

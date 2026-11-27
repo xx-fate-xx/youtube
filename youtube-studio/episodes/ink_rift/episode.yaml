@@ -1,0 +1,41 @@
+# ink_mindset pilot "The Rift" (1080x1920): WAIT FOR A DOOR/MAKE ONE, DOUBT/JUMP, STAY DOWN/HIT BACK,
+# TURN BACK/ONE MORE. Pose-to-pose 2D animation (studio/ink3d/rift_anim.py), world + camera in Blender
+# (studio/ink3d/scene_rift2.py), 2D figures (stick2d), composited by the comic engine.
+slug: ink_rift
+title: The Rift
+brand: Ink Mindset
+channel: ink_mindset
+format: short
+sound_library: ink_short_01
+language: en-US
+style: whatif_stickman
+storyboard_end: "0:30"
+fps: 60
+eras: {}
+release:
+  hook: 'Two of you, the same start: one waits for a door, one makes one; one doubts, one jumps; one stays down,
+    one hits back; one turns back, one goes one more.'
+  title_options:
+  - One More.
+  - Wait for a Door, or Make One?
+  - The Gap Between You and Him
+  tags:
+  - motivation
+  - discipline
+  - self improvement
+  - mindset
+  - motivational shorts
+  - animation
+  - stickman
+  hashtags:
+  - '#motivation'
+  - '#discipline'
+  - '#shorts'
+  sources:
+  - No facts or numbers are shown in this Short; all metaphors are our own.
+  notes:
+  - 'Music: "Head Bang" (Mixkit, Mixkit Stock Music Free License - free for YouTube incl. monetisation, no
+    attribution required).'
+  - 'Animation: original pose-to-pose stick-figure animation (studio/ink3d), no third-party motion. Backgrounds:
+    AI-generated ink paintings (Higgsfield) and a locally generated ink ground texture. Sound effects:
+    AI-generated (ElevenLabs).'

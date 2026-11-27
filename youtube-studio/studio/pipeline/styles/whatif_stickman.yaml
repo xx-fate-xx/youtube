@@ -1,0 +1,26 @@
+# What If channel: mocap stickmen drawn in code over painted backgrounds (studio/whatif). Only the painted
+# backgrounds are AI images; their prompts use `style` + `tech` (or `tech_short` for 9:16).
+name: What If stickman
+engine: whatif
+style: 'Hand-painted 2D side-scrolling game background, rich stylized painterly illustration with soft gradients,
+  crisp shapes and atmospheric perspective, cinematic lighting, high detail.'
+modes:
+  A: 'Bright daylight.'
+  B: 'Dusk or night, cool moonless light.'
+mode_names: {A: Day, B: Night}
+eras:
+  w: 'Present day.'
+  '-': ''
+shots:
+  wide: 'Side view, wide.'
+  medium: 'Side view.'
+  close: 'Side view.'
+  macro: 'Side view.'
+  cutaway: 'Side view.'
+  infographic: 'Side view.'
+  dynamic: 'Side view.'
+tech: '16:9 wide. The foreground is a broad, fairly flat ground strip across the whole bottom fifth of the image,
+  evenly lit, with nothing tall on it, leaving room for small characters to walk. Empty scene: no people, no
+  characters, no animals, no text, no logos, no UI.'
+tech_short: '9:16 vertical. The foreground is a broad, fairly flat ground strip across the bottom fifth, evenly lit,
+  with nothing tall on it. Empty scene: no people, no characters, no animals, no text, no logos, no UI.'

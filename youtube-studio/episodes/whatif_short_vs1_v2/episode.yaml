@@ -1,0 +1,68 @@
+# YouTube Short (1080x1920) linked to whatif_teleport; media go to projects/whatif_short_vs1_v2/ (git-ignored).
+slug: whatif_short_vs1_v2
+title: 'Superpowers: Wrong Way vs Right Way'
+brand: What If (working title)
+channel: what_if
+format: short
+parent: whatif_teleport
+sound_library: whatif_teleport
+language: en-US
+style: whatif_stickman
+storyboard_end: "0:36"
+eras: {}
+image:
+  model: gpt_image_2_6
+  params:
+    aspect_ratio: '9:16'
+    quality: medium
+    resolution: 2k
+  price_credits: 1.75
+animation:
+  model: grok_video_v15_lite
+  resolution: 720p
+  duration: 4
+  price_credits: 4.0
+  max_clips: 1
+budget:
+  higgsfield_credits: 20
+  elevenlabs_credits: 1500
+  retry_reserve: 0.1
+narration:
+  voice_id: g14YnDYCsy3k7XLlcKlO
+  voice_name: Todd - Clear, Engaging and Educational
+  model: eleven_v4
+  intro_s: 0.2
+  gap_s: 0.0
+  outro_s: 0.8
+  lead_s: 0.12
+release:
+  hook: 'Three superpowers, the wrong way vs the right way, side by side: catch a falling cleaner or brake with them;
+    teleport to the North Pole or to your twin spot; shove a bystander or run beside the bullet and catch it.'
+  title_options:
+  - 'Superpowers: Wrong Way vs Right Way'
+  - Super Speed Done Wrong vs Done Right
+  - The Wrong Way to Use Superpowers
+  tags:
+  - what if
+  - superpowers
+  - super speed
+  - teleport
+  - physics
+  - animation
+  - shorts
+  hashtags:
+  - '#whatif'
+  - '#physics'
+  - '#shorts'
+  long_video: What If You Could Teleport? (Your Speed Comes Too) (link after upload)
+  sources:
+  - Same physics as the parent videos (super speed and teleport); no numbers are shown in this Short.
+  - NASA NSSDCA Earth Fact Sheet (Earth's rotation) — https://nssdc.gsfc.nasa.gov/planetary/factsheet/earthfact.html
+  notes:
+  - Illustrations are AI-generated in an original cartoon style. The music and sound effects are AI-generated.
+  - Wordless format test v2 (stacked split screen, whole AI keyframes instead of cut-out sprites, music-led) - compare retention with vs1 and the narrated Shorts.
+  known_items:
+  - 'Pinned comment: Why does the right way work? Full video 👉 (link)'
+  - Set the long video as the Short's related video.
+  - The bullet, dust and sparks are small code-drawn effects (as in the super-speed Shorts); all characters and
+    backgrounds are Higgsfield art.

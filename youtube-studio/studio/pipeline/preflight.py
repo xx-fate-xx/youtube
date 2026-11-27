@@ -25,6 +25,8 @@ def estimate() -> dict:
     state = production.load_state() if (e.prod / "state.json").is_file() else {"frames": {}, "reference_media_ids": {}}
     dec = production.decisions(state) if (e.src / "prompts.jsonl").is_file() else {}
     todo = [f["n"] for f in frames if dec.get(f["n"], {}).get("decision") not in production.SKIP]
+    if e.style().get("engine") == "whatif":
+        todo = []        # drawn in code from the art library: no image per shot (new art is a separate paid step)
     images = len(todo) * img["price_credits"]
     reserve = math.ceil(images * bud["retry_reserve"] / img["price_credits"]) * img["price_credits"]
     clips_done = sum(1 for v in state.get("anim", {}).values() if v.get("decision") == "accepted")

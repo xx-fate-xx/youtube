@@ -1,0 +1,76 @@
+key: ink_mindset
+name: Ink Mindset   # working title; alternatives: "One Brushstroke", "Quiet Ink". Handle availability not assumed.
+id_prefix: im
+language: en-US
+runtime_minutes: [0.5, 0.7]          # Shorts only, 30-40 s
+audience: >
+  People 16-35 scrolling Shorts who want a calm push toward discipline, patience and self-respect,
+  without shouting gurus or fake statistics.
+positioning: >
+  Wordless visual parables in sumi-e ink. Each Short shows 3 original metaphors (one idea each, two ways of living
+  side by side). Calm, beautiful, honest: the opposite of loud motivation. Inspired by the genre of animated
+  motivation Shorts (e.g. @SimplyAnimatedVisuals) - genre only: we never reuse their look (white stickmen on black),
+  their metaphors, compositions or titles.
+tone:
+  - calm, warm, a little wise, never preachy
+  - the picture carries the meaning; text is 1-3 words per panel
+  - hope over shame (no "you are lazy" framing)
+storytelling_structure:
+  - "Frame 1 already moving, the two labels visible from 0 s (hook = the comparison itself)"
+  - "Metaphor 1, 2, 3: ~9-12 s each, a visible change every ~3 s, each ends with an ink-bleed wipe"
+  - "Final beat: the vermilion accent (light / seed / gold) fills the frame, then the first frame returns (loop)"
+do:
+  - invent our own metaphors; check the backlog against the reference channel before writing (no domino, scales, boulder,
+    door-with-keys, island HELP, campfire, gym, rooftop, life-graph, running-track scenes)
+  - one recurring hero; a second figure only when the comparison needs it
+  - proverbs are fine when they are folk proverbs (no attribution); no quotes credited to real people
+  - every number on screen must be sourced, or there is no number at all (the reference channel uses invented
+    "93% of people" stats; we do not)
+dont:
+  - fake percentages, fake studies, fake quotes
+  - reused or ripped footage, AI-voice quote compilations, mass-produced near-duplicates
+  - cultural caricature (no fake Asian lettering, no "wise master" stereotypes)
+narration:
+  mode: none                       # wordless; music + brush/paper sound design
+  tone: no narrator (music-led)
+  sentence_pause_s: 0.0
+  scene_pause_s: 0.0
+visual:
+  style: minimalist sumi-e ink brush painting on warm cream rice paper, expressive black brush strokes, grey ink washes,
+    a single vermilion accent per scene, lots of empty paper
+  reference_image: projects/motivation_styles/style_4_ink.png   # approved by the user 2026-11-24
+  background: "#F4EDE0"            # rice paper
+  foreground: "#1A1A1A"            # ink
+  accent: "#D9412B"                # vermilion: the light / seed / goal / gold seam
+  accent_2: "#5E6B5A"              # pale moss wash (rare second accent, e.g. plants)
+  muted: "#8C877E"                 # grey wash
+  font_family: "brush-style handwritten (OFL font, e.g. Kalam / Caveat Brush - pick and license-check before use)"
+  hero: simple ink figure, round head, no facial features (posture carries the emotion), drawn with a loose brush
+  signature: small vermilion seal stamp (our own mark, no characters) in the corner of every end frame
+  motion: motion-comic keyframes (studio/whatif/comic.py) + ink FX to build - brush draw-on, ink bleed wipe, paper grain
+shorts_style: >
+  1080x1920, 30-40 s, three metaphors, labels top of each panel, loop ending. Music-led (soft piano / strings /
+  ambient, no fake-oriental cliches), brush and paper SFX. 3-4 Shorts per week, each reviewed by the operator and
+  uploaded Private first.
+budget_per_short_usd: 1.5          # ~8-12 keyframes Nano Banana 2.1 2K on fal (~$0.07 each) + rerolls; music from ElevenLabs plan
+idea_backlog:                      # our own metaphors (label pair -> picture)
+  - "COMFORT / GROWTH: armchair in a small circle of light vs walking into the dark with a lantern, the path lights up behind"
+  - "WAITING / PLANTING: one waits under a bare tree for fruit; the other plants one seed a day; seasons wash past; he sits in his own shade"
+  - "ONE PERFECT / ONE HUNDRED: one figure frozen over a blank sheet trying to paint a perfect circle; the other paints 100 rough circles, the last one is beautiful"
+  - "CRACKED / REPAIRED: a bowl breaks; its cracks are filled with vermilion and it shines more than before (kintsugi idea)"
+  - "SHALLOW / DEEP: a storm; the tall tree with shallow roots falls, the small tree with deep roots bends and stands"
+  - "CARRYING / LETTING GO: a backpack filling with stones (grudges), he sets them down one by one and walks lighter"
+  - "SHORTCUT / PATH: a paper bridge over a gorge tears; the long stone path around arrives"
+  - "AGAINST THE WIND: a kite rises only when the wind pushes against it"
+  - "DROP BY DROP: a single drop of water carves a stone over many nights (folk proverb)"
+  - "EMPTY LAMP / RESTED LAMP: one keeps burning until the flame dies; the other stops to refill oil and burns all night"
+  - "ECHO: what he shouts at himself in a valley comes back to him; he changes the words"
+  - "NOISE / ONE STROKE: a cloud of buzzing ink blots (thoughts); one calm brush stroke at a time clears the page"
+  - "LOOKING SIDEWAYS / LOOKING AHEAD: staring at a neighbour's mountain he trips; eyes on his own path he climbs"
+  - "THREAD / ROPE: one thread snaps under a weight; a thread a day braided into a rope lifts it"
+  - "THE MOUNTAIN SHRINKS: a huge mountain; each step he takes, it becomes a hill behind him"
+  - "SHADOW CRITIC: his shadow towers and mocks him; he raises the lantern and the shadow shrinks to his size"
+  - "SAND / STONE: words written in sand wash away, deeds carved in stone stay"
+  - "STILL WATER: muddy pond after a splash; he waits, the mud settles, he can see the bottom (patience)"
+  - "BORROWED WINGS / OWN FEET: paper wings borrowed from others tear in the wind; his own steps reach the top"
+  - "THE BLANK PAGE: the first brush stroke is the hardest; after it the page fills itself"

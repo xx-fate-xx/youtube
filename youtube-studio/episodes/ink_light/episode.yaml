@@ -1,0 +1,16 @@
+# Metaphor test (not for upload): STAY vs STEP OUT, Blender (studio/ink3d/scene_light.py) + comic-engine composite.
+slug: ink_light
+title: Ink Mindset - STAY vs STEP OUT (test)
+brand: Ink Mindset (working title)
+channel: ink_mindset
+format: short
+sound_library: ink_short_01
+language: en-US
+style: whatif_stickman
+storyboard_end: "0:11"
+eras: {}
+release:
+  notes:
+  - Internal test - not for upload.
+  - 'Music: Five Armies by Kevin MacLeod (incompetech.com), Licensed under Creative Commons: By Attribution 4.0 License, http://creativecommons.org/licenses/by/4.0/'
+  - 'Motion data: CMU Graphics Lab Motion Capture Database (mocap.cs.cmu.edu)'

@@ -1,0 +1,15 @@
+# Prototype (not for upload): EXCUSES vs STEPS rendered in Blender (studio/ink3d/scene_bricks.py), composited by
+# the comic engine with labels, ink FX and the epic music test track.
+slug: ink_proto3d
+title: Ink Mindset 3D prototype (EXCUSES vs STEPS)
+brand: Ink Mindset (working title)
+channel: ink_mindset
+format: short
+sound_library: ink_short_01
+language: en-US
+style: whatif_stickman
+storyboard_end: "0:10"
+eras: {}
+release:
+  notes:
+  - Internal prototype - not for upload. Motion data: CMU Graphics Lab Motion Capture Database (mocap.cs.cmu.edu).

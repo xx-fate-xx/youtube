@@ -1,0 +1,23 @@
+# Comfort vs Growth — ink_mindset pilot. Wordless (music-led), stacked split screen, brush labels.
+# Header: #n | m:ss | mode | shot | characters | era | title. Syntax: studio/pipeline/frames.py.
+
+#1 | 0:00 | A | wide | - | w | -
+RU: Комфорт (кресло, телефон, паутина) против роста (фонарь, тропа, вершина)
+VO: [music] COMFORT vs GROWTH
+SCENE: -
+CHAPTER: Short
+
+#2 | 0:11 | A | wide | - | w | -
+RU: Ждать под голым деревом против сажать по семечку каждый день
+VO: [music] WAITING vs PLANTING
+SCENE: -
+
+#3 | 0:22 | A | wide | - | w | -
+RU: Ждать идеального круга против ста неровных — сотый красивый
+VO: [music] ONE PERFECT vs ONE HUNDRED
+SCENE: -
+
+#4 | 0:33 | A | wide | - | w | -
+RU: Красная заливка, печать, петля в начало
+VO: [music] BEGIN.
+SCENE: -

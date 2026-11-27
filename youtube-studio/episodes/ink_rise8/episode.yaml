@@ -1,0 +1,44 @@
+# ink_mindset Short #2 "Rise Eight" (1080x1920): PLAN IT/STEP IN, QUIT/REST, AVOID IT/FACE IT, WAIT FOR CALM/RISE 8.
+# Skits animated pose to pose and drawn in 2D (studio/ink3d/skits.py + stage2d.py, 60 fps), composited by the
+# comic engine (studio/whatif/ink_short.py).
+slug: ink_rise8
+title: Rise Eight
+brand: Ink Mindset
+channel: ink_mindset
+format: short
+sound_library: ink_short_01
+language: en-US
+style: whatif_stickman
+storyboard_end: "0:30"
+fps: 60
+eras: {}
+release:
+  hook: 'Same start, different choice: one plans, one steps in; one quits, one rests; one runs from it, one walks
+    into it; one waits for calm, one rises the eighth time.'
+  title_options:
+  - Fall Seven Times. Rise Eight.
+  - Step In.
+  - What You Fear Is Smaller Than You Think
+  tags:
+  - motivation
+  - discipline
+  - self improvement
+  - mindset
+  - motivational shorts
+  - animation
+  - stickman
+  - fall seven times stand up eight
+  hashtags:
+  - '#motivation'
+  - '#discipline'
+  - '#shorts'
+  sources:
+  - No facts or numbers are shown in this Short; "fall seven times, stand up eight" is a traditional Japanese
+    proverb; all scenes are our own.
+  notes:
+  - 'Music: "Waka Floka Type" (Mixkit, Mixkit Stock Music Free License - free for YouTube incl. monetisation,
+    no attribution required).'
+  - 'Animation: original pose-to-pose stick-figure animation (studio/ink3d), no third-party motion. Backgrounds:
+    AI-generated ink paintings (Higgsfield, Nano Banana 2; one location per skit) and locally generated ink ground
+    textures. Sound effects:
+    AI-generated (ElevenLabs).'

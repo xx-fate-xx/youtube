@@ -1,0 +1,7 @@
+# The Rift — ink_mindset pilot. Wordless, music-led (Head Bang cut from 7.9 s: drop 5.03 s, beat 0.617 s).
+
+#1 | 0:00 | B | wide | - | w | -
+RU: WAIT/PUSH (0-7.5), DOUBT/JUMP (7.5-12.4), STAY DOWN/HIT BACK (12.4-18), QUIT/ONE MORE (18-30)
+VO: [music] WAIT vs PUSH, DOUBT vs JUMP, STAY DOWN vs HIT BACK, QUIT vs ONE MORE
+SCENE: -
+CHAPTER: Short

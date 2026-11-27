@@ -1,0 +1,40 @@
+# ink_mindset pilot Short (1080x1920): STAY / STEP OUT -> STAY DOWN / GET UP -> DAY ONE. Blender motion
+# (studio/ink3d) + 2D stick hero (stick2d) composited by the comic engine. Media in projects/ (git-ignored).
+slug: ink_pilot
+title: Day One
+brand: Ink Mindset
+channel: ink_mindset
+format: short
+sound_library: ink_short_01
+language: en-US
+style: whatif_stickman
+storyboard_end: "0:26"
+eras: {}
+release:
+  hook: 'Two of you, side by side, at 3 AM: one stays in the little circle of light, one steps into the dark. One
+    stays down after the fall, one gets up. Day one starts now.'
+  title_options:
+  - Day One.
+  - Stay or Step Out?
+  - The Night You Decide
+  tags:
+  - motivation
+  - discipline
+  - self improvement
+  - mindset
+  - motivational shorts
+  - animation
+  - stickman
+  hashtags:
+  - '#motivation'
+  - '#discipline'
+  - '#shorts'
+  sources:
+  - No facts or numbers are shown in this Short; all metaphors are our own.
+  notes:
+  - 'Music: "Five Armies" by Kevin MacLeod (incompetech.com). Licensed under Creative Commons: By Attribution 4.0
+    License. http://creativecommons.org/licenses/by/4.0/'
+  - 'Animation: Universal Animation Library by Quaternius (CC0). Backgrounds: AI-generated ink paintings
+    (Higgsfield). Sound effects: AI-generated (ElevenLabs).'
+  known_items:
+  - The music credit line above must stay in the description (CC BY 4.0).

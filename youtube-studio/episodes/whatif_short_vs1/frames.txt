@@ -1,0 +1,23 @@
+# Superpowers: Wrong Way vs Right Way — wordless format test (music-led, split screen, 2-word labels).
+# Header: #n | m:ss | mode | shot | characters | era | title. Syntax: studio/pipeline/frames.py.
+
+#1 | 0:00 | B | wide | - | w | -
+RU: Поймать падающего: руками (краш) против торможения на 60 футов (жив)
+VO: [music] CATCH vs BRAKE
+SCENE: -
+CHAPTER: Short
+
+#2 | 0:11 | B | wide | - | w | -
+RU: Телепорт: на полюс (скольжение) против точки-близнеца (стоишь на месте)
+VO: [music] NORTH POLE vs YOUR TWIN
+SCENE: -
+
+#3 | 0:22 | B | wide | - | w | -
+RU: Пуля: толкнуть человека (краш) против бежать рядом и поймать (все целы)
+VO: [music] SHOVE vs MATCH
+SCENE: -
+
+#4 | 0:33 | B | wide | - | w | -
+RU: Финальная карточка и петля в начало
+VO: [music] PHYSICS SAYS NO
+SCENE: -

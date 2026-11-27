@@ -1,0 +1,65 @@
+# YouTube Short (1080x1920) linked to whatif_super_speed; media go to projects/whatif_short_water_run/ (git-ignored).
+slug: whatif_short_water_run
+title: You Can Run on Water. Here's the Catch
+brand: What If (working title)
+channel: what_if
+format: short
+parent: whatif_super_speed
+sound_library: whatif_super_speed
+language: en-US
+style: whatif_stickman
+storyboard_end: "0:51"
+eras: {}
+image:
+  model: gpt_image_2_6
+  params:
+    aspect_ratio: '9:16'
+    quality: low
+    resolution: 2k
+  price_credits: 1.25
+animation:
+  model: grok_video_v15_lite
+  resolution: 720p
+  duration: 4
+  price_credits: 4.0
+  max_clips: 1
+budget:
+  higgsfield_credits: 6
+  elevenlabs_credits: 1000
+  retry_reserve: 0.1
+narration:
+  voice_id: g14YnDYCsy3k7XLlcKlO
+  voice_name: Todd - Clear, Engaging and Educational
+  model: eleven_v4
+  intro_s: 0.2
+  gap_s: 0.0
+  outro_s: 0.8
+  lead_s: 0.12
+render_names:
+  mixed: whatif_short_water_run_voiced
+release:
+  hook: 'A basilisk lizard really runs on water. Scientists worked out what a human would need to do the same: feet slapping
+    the water faster than a highway car, with about fifteen times our muscle power. With super speed? Easy. Just never stop.'
+  title_options:
+  - You Can Run on Water. Here's the Catch
+  - Could You Run on Water Like a Lizard?
+  - Running on Water Needs 15x Your Muscles
+  tags:
+  - what if
+  - super speed
+  - basilisk lizard
+  - run on water
+  - physics
+  - shorts
+  sources:
+  - Minetti et al. 2012, PLoS ONE, humans running in place on water at simulated reduced gravity — https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0037300
+  - Glasheen & McMahon 1996, Nature 380:340, a hydrodynamic model of locomotion on water (cited by Minetti et al.)
+  hashtags:
+  - '#whatif'
+  - '#physics'
+  - '#science'
+  long_video: What If You Had Super Speed? (And Nothing Could Hurt You) (link after upload)
+  notes:
+  - Our own calculations are simplified (rounded numbers, idealised physics) and marked as estimates.
+  known_items:
+  - Upload the long video's link here and set it as the Short's related video.

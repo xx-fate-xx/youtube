@@ -1,0 +1,47 @@
+# YouTube Short (1080x1920), channel ink_mindset (pilot). Media go to projects/ink_short_01/ (git-ignored).
+slug: ink_short_01
+title: Comfort vs Growth (Ink Mindset pilot)
+brand: Ink Mindset (working title)
+channel: ink_mindset
+format: short
+language: en-US
+style: whatif_stickman          # routes rendering to the comic engine (studio/whatif); art is whole keyframes
+storyboard_end: "0:36"
+eras: {}
+image:
+  model: nano_banana_2
+  params:
+    aspect_ratio: '4:3'
+    resolution: 2k
+  price_credits: 2.0
+budget:
+  higgsfield_credits: 30
+  elevenlabs_credits: 2500
+  retry_reserve: 0.1
+release:
+  hook: 'Three choices, side by side, in ink: stay comfortable or walk into the dark with a lantern; wait under a bare
+    tree or plant a seed every day; wait to paint one perfect circle or paint a hundred rough ones.'
+  title_options:
+  - Comfort or Growth?
+  - The Lantern, the Seed and the Circle
+  - Waiting vs Doing (in ink)
+  tags:
+  - motivation
+  - self improvement
+  - discipline
+  - mindset
+  - animation
+  - ink painting
+  - shorts
+  hashtags:
+  - '#motivation'
+  - '#mindset'
+  - '#shorts'
+  sources:
+  - No facts or numbers are shown in this Short; all metaphors are our own.
+  notes:
+  - Illustrations are AI-generated (Higgsfield, Nano Banana 2) in an original sumi-e ink style. Music and sound effects
+    are AI-generated (ElevenLabs).
+  - Pilot of the ink_mindset channel (wordless, music-led, stacked split screen, three metaphors, loop ending).
+  known_items:
+  - Labels are written in Caveat Brush (OFL, assets/fonts/caveatbrush).

@@ -1,0 +1,12 @@
+# Day One — ink_mindset pilot. Wordless, music-led (Five Armies from 6.20 s, beat 0.794 s).
+
+#1 | 0:00 | B | wide | - | w | -
+RU: STAY / STEP OUT (0-8 с), затем STAY DOWN / GET UP (8-16 с) — две половины
+VO: [music] STAY vs STEP OUT, STAY DOWN vs GET UP
+SCENE: -
+CHAPTER: Short
+
+#2 | 0:16 | A | wide | - | w | -
+RU: Финал на весь экран: спринт к солнцу, прыжок, стоп-кадр, DAY ONE.
+VO: [music] DAY ONE.
+SCENE: -

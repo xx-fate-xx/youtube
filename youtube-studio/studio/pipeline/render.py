@@ -35,7 +35,7 @@ from .episode import FONTS, ep
 W, H, FPS = 1920, 1080, 30      # set per episode format in run()
 SRC = (3840, 2160)               # supersampled source: sub-pixel smooth camera moves
 CAPTION_Y = 0.64                 # Shorts: caption centre (fraction of the height)
-CAPTION_X = 0.45                 # left of the Shorts button column
+CAPTION_X = 0.50                 # Shorts: centred (operator preference 2026-11-22)
 NAVY, TURQ, SILVER = (7, 27, 53), (34, 229, 239), (237, 234, 241)
 FONT_B = FONTS / "Inter-Bold.ttf"
 FONT_R = FONTS / "Inter-Regular.ttf"
@@ -343,8 +343,15 @@ def caption_groups(words: list[tuple[str, float, float]], max_chars: int = 16,
         start, end = g[0][1], g[-1][2] + 0.15
         if i + 1 < len(groups):
             end = min(end, groups[i + 1][0][1])
-        out.append((" ".join(x[0] for x in g), start, max(end, start + 0.35)))
-    return out
+        out.append((caption_text(" ".join(x[0] for x in g)), start, max(end, start + 0.35)))
+    return [o for o in out if o[0]]
+
+
+def caption_text(s: str) -> str:
+    """Burned captions read cleaner without commas, full stops, colons, quotes or dashes; '?' and '!' stay, as do
+    separators inside numbers (6,000 / 1.5) and apostrophes."""
+    s = re.sub(r"(?<!\d)[.,](?!\d)|[.,](?=\s|$)|[;:…“”\"]|(?<!\w)[-–—]+(?!\w)", "", s)
+    return re.sub(r"\s+", " ", s).strip()
 
 
 def ass_time(t: float) -> str:
@@ -353,9 +360,9 @@ def ass_time(t: float) -> str:
 
 
 def captions_ass(groups: list[tuple[str, float, float]], offset: float = 0.0) -> str:
-    """ASS script: white Inter Display ExtraBold with a dark outline, centred left of the Shorts buttons."""
+    """ASS script: white Inter Display ExtraBold with a dark outline, centred horizontally."""
     x, y = round(CAPTION_X * W), round(CAPTION_Y * H)
-    head = (f"[Script Info]\nScriptType: v4.00+\nPlayResX: {W}\nPlayResY: {H}\nWrapStyle: 0\n\n"
+    head = (f"[Script Info]\nScriptType: v4.00+\nPlayResX: {W}\nPlayResY: {H}\nWrapStyle: 2\n\n"
             "[V4+ Styles]\nFormat: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, "
             "BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, "
             "Shadow, Alignment, MarginL, MarginR, MarginV, Encoding\n"
@@ -391,6 +398,9 @@ def run(only: str | None = None, crf: int = 18, plan_only: bool = False, silent:
         remux: bool = False, out: Path | None = None) -> Path | None:
     """Render (or print the motion plan with plan_only). Returns the video path."""
     from types import SimpleNamespace
+    if ep().style().get("engine") == "whatif" and not plan_only:     # mocap stickmen engine (studio/whatif)
+        from ..whatif import render as whatif_render
+        return whatif_render.run(only=only, crf=crf, silent=silent)
     a = SimpleNamespace(only=only, crf=crf, plan=plan_only, silent=silent, remux=remux)
     global W, H, SRC
     W, H = ep().size

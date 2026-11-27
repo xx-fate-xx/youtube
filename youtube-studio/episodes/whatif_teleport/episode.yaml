@@ -1,0 +1,106 @@
+# What If channel (working title "Physics Says No") — episode 2, long video. Media go to projects/whatif_teleport/
+# (git-ignored). Art: new plates/poses in projects/whatif_teleport/art + the pilot's library (copied, never moved).
+slug: whatif_teleport
+title: What If You Could Teleport? (Your Speed Comes Too)
+brand: What If (working title)
+channel: what_if
+format: long
+language: en-US
+style: whatif_stickman
+storyboard_end: "9:53"
+image:
+  model: gpt_image_2_6
+  params: {aspect_ratio: "16:9", quality: medium, resolution: 2k}
+  price_credits: 1.75
+animation: {model: grok_video_v15_lite, resolution: 720p, duration: 4, price_credits: 4.0, max_clips: 0}
+budget:
+  higgsfield_credits: 51          # v1 40 + rework 11 (approved 2026-11-23: +25 incl. retries)
+  elevenlabs_credits: 14000       # v2 narration 5.8k + SFX + v3 re-voice ~6.5k (approved 2026-11-23)
+  retry_reserve: 0.10
+narration: {voice_id: g14YnDYCsy3k7XLlcKlO, voice_name: "Todd - Clear, Engaging and Educational", model: eleven_v4, intro_s: 0.2, gap_s: 1.6, outro_s: 6.5}
+sound_library: whatif_super_speed
+render_names:
+  mixed: whatif_teleport_voiced
+release:
+  hook: 'You can teleport anywhere, instantly. One rule: your speed comes with you. That turns a rescue into a crash, a
+    trip to the North Pole into a skid faster than a bullet, and the spinning planet into a trap. We test it with real physics,
+    and find the one secret route where it works perfectly.'
+  title_options:
+  - What If You Could Teleport? (Your Speed Comes Too)
+  - Never Teleport to the North Pole
+  - Teleporting Would Kill You. Here's Why
+  tags:
+  - what if
+  - teleportation
+  - teleport
+  - superpowers physics
+  - earth rotation
+  - physics explained
+  - conservation of momentum
+  - science animation
+  hashtags:
+  - '#whatif'
+  - '#physics'
+  - '#science'
+  sources:
+  - NASA NSSDCA Earth Fact Sheet (radius, rotation, orbital speed) — https://nssdc.gsfc.nasa.gov/planetary/factsheet/earthfact.html
+  - NASA NSSDCA Moon Fact Sheet — https://nssdc.gsfc.nasa.gov/planetary/factsheet/moonfact.html
+  - NASA Glenn, speed of sound — https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/speed-of-sound-interactive/
+  - NASA Glenn, Earth atmosphere model — https://www.grc.nasa.gov/www/k-12/airplane/atmosmet.html
+  - NASA, Space Station facts and figures (5 miles per second) — https://www.nasa.gov/international-space-station/space-station-facts-and-figures/
+  - Davis, Body Physics §8.4, terminal velocity of a skydiver (120 mph) — https://phys.libretexts.org/Bookshelves/Conceptual_Physics/Body_Physics_-_Motion_to_Metabolism_(Davis)/08%3A_Skydiving
+  - FAA Pilot's Handbook of Aeronautical Knowledge, Ch. 16 (time of useful consciousness) — https://www.faasafety.gov/files/notices/2014/Dec/FAA-H-8083-25A_Pilot's_Hdbk_of_Aeronautical_Knowledge_CH-16.pdf
+  - NOAA Ocean Service, water pressure at depth — https://oceanservice.noaa.gov/facts/pressure.html
+  - NOAA NCEI, Challenger Deep — https://www.ncei.noaa.gov/node/239
+  - Federal 9 mm 115 gr ballistics (≈1,180 ft/s) — https://le.vistaoutdoor.com/ammunition/federal/handgun/details.aspx?id=525
+  - NASA, International Space Station (orbits about 250 miles up) — https://www.nasa.gov/international-space-station/
+  - NASA, ISS transition plan FAQ (~257 miles, 415 km) — https://www.nasa.gov/faqs-the-international-space-station-transition-plan/
+  - NASA NSSDCA Mars Fact Sheet — https://nssdc.gsfc.nasa.gov/planetary/factsheet/marsfact.html
+  - ESA, Europe's Spaceport (Kourou, 460 m/s from Earth's rotation) — https://www.esa.int/Enabling_Support/Space_Transportation/Europe_s_Spaceport/Europe_s_Spaceport2
+  notes:
+  - Our own calculations are simplified (rounded numbers, idealised physics) and marked as estimates. The rule of the power
+    (you keep your speed as seen from space) is our premise; everything after it follows from it.
+  thumbnails:
+  - name: thumbnail_a_pole
+    plate: pole_plate
+    crop:
+    - 500
+    - 520
+    - 2300
+    side: left
+    sprites:
+    - - t1
+      - 900
+      - 640
+      - 330
+    lines:
+    - - NEVER
+      - 120
+    - - TELEPORT
+      - 112
+    - - HERE
+      - 140
+  - name: thumbnail_b_launch
+    plate: jungle_plate
+    crop:
+    - 500
+    - 420
+    - 2300
+    side: left
+    sprites:
+    - - t2
+      - 960
+      - 600
+      - 520
+    lines:
+    - - GO EAST,
+      - 110
+    - - GET LAUNCHED
+      - 92
+  known_items:
+  - The window-cleaner and car scenes are hypothetical illustrations, not real events.
+  - Thumbnails are composed from the episode art (no extra generation).
+approval:
+  checkpoint_1: "2026-11-23 approved by operator (AskUserQuestion): script v2 after independent fact-check (4 required
+    fixes applied, payoff rewritten to the mirror-twin route); budget Higgsfield <= 40 of 279.12, ElevenLabs ~6,000;
+    voice Todd."

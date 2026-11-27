@@ -1,0 +1,9 @@
+# Own sound set for the ink_mindset pilot (projects/ink_short_01/sfx).
+spots:
+  sfx_brush: {prompt: 'A single quick stroke of a soft calligraphy brush on rice paper, close and dry, no reverb', seconds: 1}
+  sfx_bleed: {prompt: 'Soft deep whoosh of ink spreading through water, gentle low swell, no impact', seconds: 1.5}
+  sfx_stamp: {prompt: 'A wooden seal stamp pressed firmly onto paper on a wooden table, one soft thud', seconds: 1}
+ambience: {}
+music:
+  music_ink: {prompt: 'Calm hopeful solo piano with soft warm strings, slow gentle build to a warm uplifting peak, minimal
+      and intimate, instrumental, made for a 36 second motivational short, no vocals, no drums', seconds: 36}

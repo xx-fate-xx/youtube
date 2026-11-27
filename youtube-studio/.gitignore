@@ -13,3 +13,7 @@ diagram_previews/
 
 # chart PNGs are rendered from the committed SVGs by `studio pipe build`
 episodes/*/overlays/*.png
+
+# downloaded music (licences in assets/music/library/LICENSES.md; media are never committed)
+assets/music/**/*.mp3
+assets/music/**/*.wav

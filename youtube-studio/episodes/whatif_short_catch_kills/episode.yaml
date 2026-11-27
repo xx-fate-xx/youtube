@@ -1,0 +1,67 @@
+# YouTube Short (1080x1920) linked to whatif_super_speed; media go to projects/whatif_short_catch_kills/ (git-ignored).
+slug: whatif_short_catch_kills
+title: Why Catching Them Kills Them
+brand: What If (working title)
+channel: what_if
+format: short
+parent: whatif_super_speed
+sound_library: whatif_super_speed
+language: en-US
+style: whatif_stickman
+storyboard_end: "0:58"
+eras: {}
+image:
+  model: gpt_image_2_6
+  params:
+    aspect_ratio: '9:16'
+    quality: low
+    resolution: 2k
+  price_credits: 1.25
+animation:
+  model: grok_video_v15_lite
+  resolution: 720p
+  duration: 4
+  price_credits: 4.0
+  max_clips: 1
+budget:
+  higgsfield_credits: 6
+  elevenlabs_credits: 1000
+  retry_reserve: 0.1
+narration:
+  voice_id: g14YnDYCsy3k7XLlcKlO
+  voice_name: Todd - Clear, Engaging and Educational
+  model: eleven_v4
+  intro_s: 0.2
+  gap_s: 0.0
+  outro_s: 0.8
+  lead_s: 0.12
+render_names:
+  mixed: whatif_short_catch_kills_voiced
+release:
+  hook: Super speed, an unbreakable body, a window cleaner falling from the 30th floor. You get there in time and catch
+    them... and that's almost certainly what kills them. Here's how a real rescue would have to work.
+  title_options:
+  - Why Catching Them Kills Them
+  - You Caught Them. That's the Problem.
+  - Superheroes Shouldn't Catch People
+  tags:
+  - what if
+  - super speed
+  - superhero physics
+  - g-force
+  - physics
+  - shorts
+  sources:
+  - FAI Skydiving Commission, belly-to-earth speed ~200 km/h — https://www-2025.fai.org/node/24646
+  - FAA AM 63-15 (Snyder 1963), survival of high-velocity free falls — https://rosap.ntl.bts.gov/view/dot/20857
+  - Smith & Meaney 2002, roller coasters and g-forces — https://www.engineering.upenn.edu/~molneuro/pdfs/SmithMeaney2002_RollerCoasters.pdf
+  - CTBUH, height criteria (storey heights) — https://www.skyscrapercenter.com/criteria
+  hashtags:
+  - '#whatif'
+  - '#physics'
+  - '#science'
+  long_video: What If You Had Super Speed? (And Nothing Could Hurt You) (link after upload)
+  notes:
+  - Our own calculations are simplified (rounded numbers, idealised physics) and marked as estimates.
+  known_items:
+  - Upload the long video's link here and set it as the Short's related video.

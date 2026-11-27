@@ -1,0 +1,56 @@
+# YouTube Short (1080x1920) linked to whatif_super_speed; media go to projects/whatif_short_sonic_wall/ (git-ignored).
+title: Hitting a Wall at the Speed of Sound
+slug: whatif_short_sonic_wall
+channel: what_if
+format: short
+parent: whatif_super_speed
+sound_library: whatif_super_speed
+language: en-US
+style: whatif_stickman
+storyboard_end: "0:58"
+end_screen: 1.0
+image:
+  model: gpt_image_2_6
+  params: {aspect_ratio: "9:16", quality: low, resolution: 2k}
+  price_credits: 1.25
+budget:
+  higgsfield_credits: 6
+  elevenlabs_credits: 1000
+  retry_reserve: 0.10
+narration: {voice_id: g14YnDYCsy3k7XLlcKlO, voice_name: "Todd - Clear, Engaging and Educational", model: eleven_v4, intro_s: 0.2, gap_s: 0.0, outro_s: 0.8}
+render_names:
+  mixed: whatif_short_sonic_wall_voiced
+release:
+  hook: Your bones are a hundred times stronger. You hit a concrete wall at the speed of sound. Your bones survive. Your
+    organs don't.
+  title_options:
+  - Unbreakable Bones vs. a Wall at Mach 1
+  - Hitting a Wall at the Speed of Sound
+  - Why Strong Bones Aren't Enough
+  tags:
+  - what if
+  - g-force
+  - john paul stapp
+  - speed of sound
+  - shorts
+  hashtags:
+  - '#whatif'
+  - '#physics'
+  - '#science'
+  sources:
+  - Smithsonian NASM, John Paul Stapp (632 mph, 46.2 g) — https://airandspace.si.edu/stories/editorial/man-behind-high-speed-safety-standards
+  - Guinness World Records, highest g-force survived (non-voluntary) — https://www.guinnessworldrecords.com/world-records/67617-highest-g-force-endured-non-voluntary
+  - Merck Manual, traumatic aortic disruption (organs moving inside the body) — https://www.merckmanuals.com/professional/injuries-poisoning/thoracic-trauma/aortic-disruption-traumatic
+  - NASA Glenn, speed of sound — https://www.grc.nasa.gov/WWW/K-12/BGP/sound.html
+  long_video: What If You Had Super Speed? (And Nothing Could Hurt You) (link after upload)
+  notes:
+  - The characters and backgrounds are AI-generated drawings in an original cartoon style; animation, chalk diagrams and
+    all calculations are our own. The narration voice, sound effects and music are AI-generated.
+  - Our own calculations are simplified (rounded numbers, idealised physics) and marked as estimates.
+  known_items:
+  - Upload the long video first; paste its link here and set it as the related video.
+approval:
+  checkpoint_1_units: "2026-11-22 approved by operator: narration converted to US units (channel rule), numbers unchanged;
+    v1 kept as script_v1.md."
+  checkpoint_1: "2026-11-22 approved by operator: scripts (long + 3 Shorts) after fact-check; budget <=25 Higgsfield
+    credits and ~17-19k ElevenLabs credits for the pilot set; spend only after the free engine is ready; voice Todd."

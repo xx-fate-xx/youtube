@@ -1,0 +1,157 @@
+# What-if channel (4th channel, working title) — pilot long video. Media go to projects/whatif_super_speed/ (git-ignored).
+# Visual engine (mocap stickmen over painted backgrounds) is not yet part of studio/pipeline: see script.md.
+slug: whatif_super_speed
+title: What If You Had Super Speed? (And Nothing Could Hurt You)
+brand: What If (working title)
+channel: what_if
+format: long
+language: en-US
+style: whatif_stickman            # to be created with the engine
+storyboard_end: "9:59"
+image:
+  model: gpt_image_2_6
+  params: {aspect_ratio: "16:9", quality: low, resolution: 2k}
+  price_credits: 1.25
+budget:
+  higgsfield_credits: 25          # ~8 new painted backgrounds + night variants + retries
+  elevenlabs_credits: 18000       # narration ~8k chars + new sound library
+  retry_reserve: 0.10
+narration:
+  voice_id: g14YnDYCsy3k7XLlcKlO
+  voice_name: Todd - Clear, Engaging and Educational
+  model: eleven_v4
+render_names:
+  mixed: whatif_super_speed_voiced
+release:
+  hook: 'Super speed and a body nothing can hurt. Sounds like you could save anyone. We test that with real physics in five
+    rescues: a fall from the 30th floor, a burning tower, a runaway truck, a bullet, and the 2004 Indian Ocean tsunami.
+    The twist: you''re unbreakable. The people you save are not.'
+  title_options:
+  - What If You Had Super Speed? (And Nothing Could Hurt You)
+  - You're Unbreakable. They're Not. (Super Speed Physics)
+  - Could a Speedster Actually Save Anyone? The Physics
+  tags:
+  - what if
+  - super speed
+  - superpowers physics
+  - physics explained
+  - g-force
+  - speed of sound
+  - terminal velocity
+  - john paul stapp
+  - tsunami warning system
+  - science animation
+  hashtags:
+  - '#whatif'
+  - '#physics'
+  - '#science'
+  sources:
+  - FAI Skydiving Commission, belly-to-earth speed ~200 km/h — https://www-2025.fai.org/node/24646
+  - The Physics Factbook, terminal velocity of a skydiver — https://hypertextbook.com/facts/1998/JianHuang.shtml
+  - CTBUH, height criteria (storey heights) — https://www.skyscrapercenter.com/criteria
+  - OpenStax University Physics, motion with constant acceleration — https://openstax.org/books/university-physics-volume-1/pages/3-4-motion-with-constant-acceleration
+  - FAA AM 63-15 (Snyder 1963), survival of high-velocity free falls — https://rosap.ntl.bts.gov/view/dot/20857
+  - Smithsonian NASM, John Paul Stapp — https://airandspace.si.edu/stories/editorial/man-behind-high-speed-safety-standards
+  - NASA History, Stapp's sled runs — https://www.nasa.gov/wp-content/uploads/static/history/afspbio/part4-2.htm
+  - Smith & Meaney 2002, roller coasters and g-forces — https://www.engineering.upenn.edu/~molneuro/pdfs/SmithMeaney2002_RollerCoasters.pdf
+  - CPSC, fire deaths and smoke inhalation — https://www.cpsc.gov/s3fs-public/fireinj2009.pdf
+  - US Fire Administration, home fire escape plans — https://usfa.fema.gov/prevention/home-fires/prepare-for-fire/home-fire-escape-plans
+  - IBC stair and landing widths (Humboldt County handout) — https://humboldtcountynv.gov/DocumentCenter/View/3386/Commercial-Stair-Handout-4-19
+  - FHWA, truck size and weight (80,000 lb) — https://ops.fhwa.dot.gov/freight/sw/overview/index.htm
+  - Utah DOT Truck Smart, stopping distances — https://trucksmart.udot.utah.gov/stopping-distances/
+  - CDC NCHS, body measurements — https://www.cdc.gov/nchs/fastats/body-measurements.htm
+  - NBS 1948, friction of shoe materials — https://nvlpubs.nist.gov/nistpubs/jres/40/jresv40n5p339_A1b.pdf
+  - FMVSS 208, 49 CFR 571.208 (crash tests at 35 mph) — https://www.govinfo.gov/content/pkg/CFR-2016-title49-vol6/pdf/CFR-2016-title49-vol6-sec571-208.pdf
+  - Federal 9 mm 115 gr ballistics — https://le.vistaoutdoor.com/ammunition/federal/handgun/details.aspx?id=525
+  - Woods et al. 2015, simple reaction time — https://pmc.ncbi.nlm.nih.gov/articles/PMC4374455
+  - UK MoD JSP 403, ricochet hazards — https://assets.publishing.service.gov.uk/media/5a7aaadfe5274a34770e6472/JSP403_Vol2_Chap05_DLRSC.pdf
+  - USGS, the 2004 Indian Ocean tsunami — https://www.usgs.gov/news/featured-story/indian-ocean-tsunami-remembered-scientists-reflect-2004-indian-ocean-killed
+  - NOAA JetStream, tsunami propagation — https://www.noaa.gov/jetstream/tsunamis/tsunami-propagation
+  - NOAA JetStream, 2004 tsunami toll — https://www.noaa.gov/jetstream/2004tsu_max
+  - UN News, June 2005, warning systems — https://news.un.org/en/story/2005/06/143132
+  - Minetti et al. 2012, running on water — https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0037300
+  - NASA Dryden, sonic booms — https://www.nasa.gov/centers/dryden/pdf/120274main_FS-016-DFRC.pdf
+  - EARSC 2006, Indian Ocean warning system running — https://earsc.org/2006/06/27/indian-ocean-tsunami-warning-system-up-and-running/
+  - AFP / phys.org 2011, regional warning centres take over — https://phys.org/news/2011-10-indian-ocean-tsunami-oct.html
+  notes:
+  - The characters and backgrounds are AI-generated drawings in an original cartoon style; animation, chalk diagrams and
+    all calculations are our own. The narration voice, sound effects and music are AI-generated.
+  - Our own calculations are simplified (rounded numbers, idealised physics) and marked as estimates.
+  - The 2004 tsunami chapter is told with respect for the victims; no victims are depicted.
+  thumbnails:
+  - name: thumbnail_a_unbreakable
+    plate: tower_plate
+    crop:
+    - 900
+    - 560
+    - 2600
+    side: left
+    sprites:
+    - - hero4
+      - 1060
+      - 670
+      - 440
+    - - cleaner3
+      - 1085
+      - 215
+      - 250
+    lines:
+    - - YOU'RE
+      - 92
+    - - UNBREAKABLE.
+      - 92
+    - - THEY'RE NOT.
+      - 108
+  - name: thumbnail_b_bullet
+    plate: night_plate
+    crop:
+    - 700
+    - 560
+    - 2400
+    side: left
+    sprites:
+    - - c2
+      - 1000
+      - 690
+      - 450
+    lines:
+    - - CATCH
+      - 124
+    - - A BULLET?
+      - 124
+  - name: thumbnail_c_truck
+    plate: highway_plate
+    crop:
+    - 600
+    - 600
+    - 2300
+    side: left
+    sprites:
+    - - b4
+      - 1190
+      - 640
+      - 370
+    - - b3
+      - 900
+      - 650
+      - 420
+    lines:
+    - - STOP A
+      - 116
+    - - TRUCK?
+      - 146
+  known_items:
+  - 'Running on water (rescue 5): the original Glasheen & McMahon 1996 paper is paywalled; numbers come from secondary sources
+    that agree (Minetti et al. 2012).'
+  - 'Shorts link here: upload this video first, then paste its link into each Short''s description and pick it as the Short''s
+    related video.'
+approval:
+  budget_raise_2: "2026-11-22 approved by operator: Higgsfield pilot budget raised to ~120 credits total to redraw all
+    37 poses one per generation (medium), 3-pose test first."
+  budget_raise_1: "2026-11-22 approved by operator: Higgsfield pilot budget raised to 70 credits total (26 spent on
+    character reference, AI-video tests and the motion-comic prototype; format = pose-to-pose motion comic)."
+  checkpoint_1: "2026-11-22 approved by operator: scripts (long + 3 Shorts) after fact-check; budget <=25 Higgsfield
+    credits and ~17-19k ElevenLabs credits for the pilot set; spend only after the free engine is ready; voice Todd."
+  checkpoint_1_v2: "2026-11-22 approved by operator: script v2 (long = 5 rescues, ~9.5 min; Short speed_kills v2 in US
+    units ending 'But what if you were invulnerable?'); v1 kept as script_levels_v1.md / script_v1.md; same budget and voice."
+end_screen: 14      # seconds of end screen after the last line (YouTube end-screen elements)

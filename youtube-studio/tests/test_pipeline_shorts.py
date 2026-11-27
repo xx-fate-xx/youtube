@@ -119,7 +119,11 @@ def test_caption_groups_are_short_and_ordered():
     groups = render.caption_groups(words)
     assert all(len(g[0]) <= 16 or " " not in g[0] for g in groups)
     assert all(len(g[0].split()) <= 3 for g in groups)
-    assert groups[0][0] == "In 1880s Paris,"
+    assert groups[0][0] == "In 1880s Paris"
+    assert render.caption_text("6,000 pounds, the weight") == "6,000 pounds the weight"
+    assert render.caption_text("about 1.5 ft.") == "about 1.5 ft"
+    assert render.caption_text("invulnerable? Then") == "invulnerable? Then"
+    assert render.caption_text("don't — ever: “really”…") == "don't ever really"
     assert all(a[2] <= b[1] + 1e-9 for a, b in zip(groups, groups[1:], strict=False))
     render.W, render.H = 1080, 1920
     ass = render.captions_ass(groups)

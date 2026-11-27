@@ -1,0 +1,8 @@
+# Be the Light — ink_mindset Short #3. Wordless, music-led (Waka Floka Type cut from 9.7 s: drop 5.06 s, 808 hits
+# 12.56 / 21.04 / 28.45 s). Four A|B skits of 7.4 s.
+
+#1 | 0:00 | B | wide | - | w | -
+RU: WAIT FOR LIGHT/BE THE LIGHT (0-7.4), STAY SAFE/STEP OUT (7.4-14.8), SLEEP IN/5 AM (14.8-22.2), WAIT FOR WIND/MAKE WIND (22.2-29.6)
+VO: [music] WAIT FOR LIGHT vs BE THE LIGHT, STAY SAFE vs STEP OUT, SLEEP IN vs 5 AM, WAIT FOR WIND vs MAKE WIND
+SCENE: -
+CHAPTER: Short

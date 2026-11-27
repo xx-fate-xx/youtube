@@ -1,0 +1,8 @@
+# Rise Eight — ink_mindset Short #2. Wordless, music-led (Waka Floka Type cut from 9.7 s: drop 5.06 s, 808 hits
+# 12.56 / 21.04 / 28.45 s). Four A|B skits of 7.4 s.
+
+#1 | 0:00 | B | wide | - | w | -
+RU: PLAN IT/STEP IN (0-7.4), QUIT/REST (7.4-14.8), AVOID IT/FACE IT (14.8-22.2), WAIT FOR CALM/RISE 8 (22.2-29.6)
+VO: [music] PLAN IT vs STEP IN, QUIT vs REST, AVOID IT vs FACE IT, WAIT FOR CALM vs RISE 8
+SCENE: -
+CHAPTER: Short

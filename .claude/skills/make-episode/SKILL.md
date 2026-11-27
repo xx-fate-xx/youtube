@@ -52,9 +52,12 @@ Input: `$ARGUMENTS` — a topic, a competitor video link, or a competitor script
    3 music cues sized to chapter groups (instrumental, "made to sit under voice-over"). Place them in
    frames.txt with AMB / SFX / MUSIC.
 5. Fact-check (subagents per chapter) → fix → `factcheck_report.md`.
-6. `studio pipe build`, `studio pipe originality`, `studio pipe preflight`.
+6. Retention pass: go through `retention.md` (this folder) item by item; write the retention risk map into
+   the script notes and fix the script.
+7. `studio pipe build`, `studio pipe originality`, `studio pipe preflight`.
 
-**CHECKPOINT 1** — show the user: topic angle, chapter list, word count/length, fact-check summary,
+**CHECKPOINT 1** — show the user: topic angle, chapter list, word count/length, hook (0–30 s) and retention
+risk map, fact-check summary,
 originality result, cost estimate (Higgsfield / ElevenLabs). Ask with AskUserQuestion. Only after "yes":
 `studio pipe approve --note "..."`.
 
@@ -116,6 +119,10 @@ not cover a face, the object the narration talks about or a chart; fix with
 area (nothing below 85 % of the height: that band belongs to subtitles), so a large `--dy` may not move them.
 
 ### 8. Render and QA
+What If engine: before any full render run `python -m studio.whatif.layout_check episodes/<slug>` (must be 0) AND
+`python -m studio.whatif.motion_review episodes/<slug> projects/<slug>/review/motion.jpg` and look at every sheet:
+falls vertical and head-first, fire/speed trails behind the motion, no position jumps between segments, figures
+inside the frame, props in real proportion to the hero (car ≈ 0.8 of his height). Stills alone miss motion bugs.
 `studio pipe render --only 1-20` (preview; look at sampled frames) → full `studio pipe render` in the
 background (~7 min for 9 min of video) → `studio pipe check` must say OK → look at ~10 sampled frames of the
 final file (titles, effects, AI clips).
@@ -136,7 +143,8 @@ voice, eras, characters and sound library, and its facts must come from that epi
 2. Script in `episodes/<slug>/script_source.py` with `studio.pipeline.scriptgen.Script` (see
    `episodes/enginovue_short_breathing_clock/`), then `python script_source.py`. Rules: one idea; a true hook in the
    first sentence; 110–135 words (≤ 55 s spoken, hard limit 60 s); 11–12 shots; 2–3 short titles; the last line
-   points to the long video. Narration is written new — never cut from the long video. No GFX charts (16:9 only).
+   points to the long video. Apply the Shorts part of `retention.md` (action in the first frame, change every
+   ~3 s, loop ending). Narration is written new — never cut from the long video. No GFX charts (16:9 only).
    Effects/ambiences/music ids from the parent's sounds.yaml (MUSIC on shot 1; a fresh cue is optional).
 3. Copy the long video's narration to `projects/<slug>/input/long_video_narration.txt`, `studio pipe build`,
    `studio pipe originality` (must pass), then an independent fact-check subagent against the parent's research

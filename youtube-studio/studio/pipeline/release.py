@@ -187,13 +187,16 @@ def build() -> Path:
     rel = e.cfg.get("release") or {}
     out = e.release_dir
     out.mkdir(parents=True, exist_ok=True)
-    timing = json.loads((e.audio / "narration_timing.json").read_text(encoding="utf-8"))
-    start = {f["n"]: f["start"] for f in timing["frames"]}
-    video = e.render_dir / f"{render.names()['mixed']}.mp4"
+    tf = e.audio / "narration_timing.json"
+    wordless = e.vertical and not tf.is_file()        # a music-only Short: the silent render, no captions
+    timing = None if wordless else json.loads(tf.read_text(encoding="utf-8"))
+    start = {f["n"]: f["start"] for f in timing["frames"]} if timing else {}
+    video = e.render_dir / f"{render.names()['silent' if wordless else 'mixed']}.mp4"
     if not video.is_file():
         raise SystemExit(f"{video} not found: render the final mix first")
     shutil.copy2(video, out / "video.mp4")
-    (out / "captions_en.srt").write_text(captions(timing), encoding="utf-8")
+    if timing:
+        (out / "captions_en.srt").write_text(captions(timing), encoding="utf-8")
     if e.vertical:     # a Short: no chapters, a line pointing to the long video, #Shorts
         tags = list(dict.fromkeys([*rel.get("hashtags", []), "#Shorts"]))
         desc = rel.get("hook", "").strip() + "\n\nFull story: " + (rel.get("long_video") or "(link to the long video)")
@@ -226,6 +229,11 @@ def build() -> Path:
         + "\nTags: " + ", ".join(rel.get("tags", [])) + "\n", encoding="utf-8")
     for k, th in enumerate(rel.get("thumbnails", [])):
         name = th.get("name") or f"thumbnail_{chr(97 + k)}"
+        if "plate" in th:          # What If: composed from the episode's plates and HD poses
+            from ..whatif import render as whatif_render
+            from ..whatif import thumbs
+            thumbs.compose(whatif_render.library("art"), th, out / f"{name}.jpg")
+            continue
         thumb(th["frame"], [tuple(x) for x in th["lines"]], th.get("side", "right"), out / f"{name}.jpg",
               th.get("side", "right"))
     known = "\n".join(f"- {x}" for x in rel.get("known_items", [])) or "- none recorded"

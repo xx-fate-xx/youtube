@@ -1,0 +1,4 @@
+# Uses the sound library of ink_short_01 (music_epic, sfx_*).
+spots: {}
+ambience: {}
+music: {}

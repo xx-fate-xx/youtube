@@ -1,0 +1,68 @@
+# YouTube Short (1080x1920) linked to whatif_teleport; media go to projects/whatif_short_tp_vacation/ (git-ignored).
+slug: whatif_short_tp_vacation
+title: Teleport to Boston? Car Crash
+brand: What If (working title)
+channel: what_if
+format: short
+parent: whatif_teleport
+sound_library: whatif_teleport
+language: en-US
+style: whatif_stickman
+storyboard_end: "0:48"
+eras: {}
+image:
+  model: gpt_image_2_6
+  params:
+    aspect_ratio: '9:16'
+    quality: medium
+    resolution: 2k
+  price_credits: 1.75
+animation:
+  model: grok_video_v15_lite
+  resolution: 720p
+  duration: 4
+  price_credits: 4.0
+  max_clips: 1
+budget:
+  higgsfield_credits: 6
+  elevenlabs_credits: 1000
+  retry_reserve: 0.1
+narration:
+  voice_id: g14YnDYCsy3k7XLlcKlO
+  voice_name: Todd - Clear, Engaging and Educational
+  model: eleven_v4
+  intro_s: 0.2
+  gap_s: 0.0
+  outro_s: 0.8
+  lead_s: 0.12
+render_names:
+  mixed: whatif_short_tp_vacation_voiced
+release:
+  hook: 'A teleporter keeps your speed, and every city on the spinning Earth moves at its own speed and direction. New York
+    to Boston: a car crash. London: faster than sound. Tokyo: double that.'
+  title_options:
+  - Teleport to Boston? Car Crash
+  - Your Teleport Vacation Is a Crash
+  - Why Teleporting to London Launches You
+  tags:
+  - what if
+  - teleport
+  - teleportation
+  - earth rotation
+  - new york
+  - physics
+  - shorts
+  sources:
+  - NASA NSSDCA Earth Fact Sheet (radius, rotation) — https://nssdc.gsfc.nasa.gov/planetary/factsheet/earthfact.html
+  - NASA Glenn, speed of sound — https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/speed-of-sound-interactive/
+  hashtags:
+  - '#whatif'
+  - '#physics'
+  - '#science'
+  long_video: What If You Could Teleport? (Your Speed Comes Too) (link after upload)
+  notes:
+  - Our own calculations are simplified (rounded numbers, idealised physics). The rule (a teleporter keeps your speed as
+    seen from space) is our premise.
+  known_items:
+  - 'Pinned comment: Full video: the one long trip where you touch down without a bump 👉 (link)'
+  - Set the long video as the Short's related video.

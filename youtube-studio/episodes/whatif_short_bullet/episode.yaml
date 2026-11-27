@@ -1,0 +1,69 @@
+# YouTube Short (1080x1920) linked to whatif_super_speed; media go to projects/whatif_short_bullet/ (git-ignored).
+slug: whatif_short_bullet
+title: Can You Catch a Bullet?
+brand: What If (working title)
+channel: what_if
+format: short
+parent: whatif_super_speed
+sound_library: whatif_super_speed
+language: en-US
+style: whatif_stickman
+storyboard_end: "0:58"
+eras: {}
+image:
+  model: gpt_image_2_6
+  params:
+    aspect_ratio: '9:16'
+    quality: low
+    resolution: 2k
+  price_credits: 1.25
+animation:
+  model: grok_video_v15_lite
+  resolution: 720p
+  duration: 4
+  price_credits: 4.0
+  max_clips: 1
+budget:
+  higgsfield_credits: 6
+  elevenlabs_credits: 1000
+  retry_reserve: 0.1
+narration:
+  voice_id: g14YnDYCsy3k7XLlcKlO
+  voice_name: Todd - Clear, Engaging and Educational
+  model: eleven_v4
+  intro_s: 0.2
+  gap_s: 0.0
+  outro_s: 0.8
+  lead_s: 0.12
+render_names:
+  mixed: whatif_short_bullet_voiced
+release:
+  hook: Can you catch a bullet with super speed? Yes, but not the way you think. A 9 mm pistol bullet crosses a street about
+    eight times faster than you can react, shoving people aside is a crash, and blocking it sends the pieces flying. Here's
+    the one move that works.
+  title_options:
+  - Can You Catch a Bullet?
+  - 'Super Speed vs. a Bullet: The Only Move That Works'
+  - Your Brain Is Too Slow to Catch a Bullet
+  tags:
+  - what if
+  - super speed
+  - catch a bullet
+  - reaction time
+  - physics
+  - shorts
+  sources:
+  - Federal 9 mm 115 gr ballistics (≈1,180 ft/s) — https://le.vistaoutdoor.com/ammunition/federal/handgun/details.aspx?id=525
+  - Woods et al. 2015, simple reaction time — https://pmc.ncbi.nlm.nih.gov/articles/PMC4374455
+  - UK MoD JSP 403, ricochet hazards — https://assets.publishing.service.gov.uk/media/5a7aaadfe5274a34770e6472/JSP403_Vol2_Chap05_DLRSC.pdf
+  - Smithsonian NASM, John Paul Stapp (46.2 g) — https://airandspace.si.edu/stories/editorial/man-behind-high-speed-safety-standards
+  - NASA Dryden, sonic booms — https://www.nasa.gov/centers/dryden/pdf/120274main_FS-016-DFRC.pdf
+  hashtags:
+  - '#whatif'
+  - '#physics'
+  - '#science'
+  long_video: What If You Had Super Speed? (And Nothing Could Hurt You) (link after upload)
+  notes:
+  - Our own calculations are simplified (rounded numbers, idealised physics) and marked as estimates.
+  known_items:
+  - Upload the long video's link here and set it as the Short's related video.

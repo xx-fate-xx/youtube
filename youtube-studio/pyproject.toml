@@ -40,6 +40,7 @@ packages = ["studio"]
 [tool.ruff]
 line-length = 100
 target-version = "py312"
+extend-exclude = ["studio/whatif/prototypes"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "B", "UP", "SIM"]
@@ -52,3 +53,9 @@ testpaths = ["tests"]
 # ported production modules: long FFmpeg filter graphs, prompts and report lines read better unwrapped
 "studio/pipeline/*.py" = ["E501"]
 "episodes/*/overlays.py" = ["E501"]
+"studio/whatif/*.py" = ["E501"]
+"studio/ink3d/*.py" = ["E501"]
+"episodes/*/scenes*.py" = ["E501"]
+"episodes/*/comic_scenes.py" = ["E501"]
+"episodes/*/script_source.py" = ["E501"]
+"tests/test_whatif_engine.py" = ["E501"]

@@ -1,0 +1,13 @@
+{
+  "family": "Caveat Brush",
+  "license": "SIL Open Font License 1.1 (OFL-1.1)",
+  "copyright": "Copyright 2015 Google Inc. All Rights Reserved. (designer: Pablo Impallari)",
+  "source_url": "https://github.com/google/fonts/tree/main/ofl/caveatbrush",
+  "downloaded_at": "2026-11-24",
+  "license_file": "OFL.txt",
+  "use_in_video": "Permitted: text rendered into video frames/thumbnails is a document created using the font; no attribution required in the video. Redistribution of the font file must keep OFL.txt and must not sell the font by itself.",
+  "files": {
+    "CaveatBrush-Regular.ttf": "e565bd7bffd895ca64f8d1cb77c816b9b38d9c010246386a07c9648592f6f282",
+    "OFL.txt": "21b54eb0d7513524798a00dfbaf99a02c003a0012a728cc5f0e02d24c50482fb"
+  }
+}

@@ -1,0 +1,54 @@
+# YouTube Short (1080x1920) linked to whatif_super_speed; media go to projects/whatif_short_speed_kills/ (git-ignored).
+title: How Fast Before Super Speed Kills You?
+slug: whatif_short_speed_kills
+channel: what_if
+format: short
+parent: whatif_super_speed
+sound_library: whatif_super_speed
+language: en-US
+style: whatif_stickman
+storyboard_end: "0:54"
+end_screen: 1.0
+image:
+  model: gpt_image_2_6
+  params: {aspect_ratio: "9:16", quality: low, resolution: 2k}
+  price_credits: 1.25
+budget:
+  higgsfield_credits: 6
+  elevenlabs_credits: 1000
+  retry_reserve: 0.10
+narration: {voice_id: g14YnDYCsy3k7XLlcKlO, voice_name: "Todd - Clear, Engaging and Educational", model: eleven_v4, intro_s: 0.2, gap_s: 0.0, outro_s: 0.8}
+render_names:
+  mixed: whatif_short_speed_kills_voiced
+release:
+  hook: Super speed, but a completely normal human body. How fast can you go before the air itself becomes the danger?
+  title_options:
+  - How Fast Before Super Speed Kills You?
+  - 'Super Speed, Normal Body: The Air Wins'
+  - At Mach 3 the Air Hits 900 °F
+  tags:
+  - super speed
+  - what if
+  - physics
+  - speed of sound
+  - shorts
+  hashtags:
+  - '#whatif'
+  - '#physics'
+  - '#science'
+  sources:
+  - NOAA NHC, Saffir–Simpson hurricane wind scale — https://www.nhc.noaa.gov/aboutsshws.php
+  - NASA Glenn, speed of sound — https://www.grc.nasa.gov/WWW/K-12/BGP/sound.html
+  - Pugh 1971, air resistance in running (drag area) — https://pubmed.ncbi.nlm.nih.gov/5574828/
+  long_video: What If You Had Super Speed? (And Nothing Could Hurt You) (link after upload)
+  notes:
+  - The characters and backgrounds are AI-generated drawings in an original cartoon style; animation, chalk diagrams and
+    all calculations are our own. The narration voice, sound effects and music are AI-generated.
+  - Our own calculations are simplified (rounded numbers, idealised physics) and marked as estimates.
+  known_items:
+  - Upload the long video first; paste its link here and set it as the related video.
+approval:
+  checkpoint_1: "2026-11-22 approved by operator: scripts (long + 3 Shorts) after fact-check; budget <=25 Higgsfield
+    credits and ~17-19k ElevenLabs credits for the pilot set; spend only after the free engine is ready; voice Todd."
+  checkpoint_1_v2: "2026-11-22 approved by operator: script v2 (long = 5 rescues, ~9.5 min; Short speed_kills v2 in US
+    units ending 'But what if you were invulnerable?'); v1 kept as script_levels_v1.md / script_v1.md; same budget and voice."
